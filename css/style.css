@@ -1,0 +1,74 @@
+.icon{
+    height:38px;
+}
+.logo{
+    height:70px;
+}
+.logo-context{
+    font-family:"Noto+Sans+TC";
+}
+.carousel-img{
+    height:372px;
+    max-width:100%;
+}
+.carousel-indicators .c-indicator{
+    width: 15px;   
+    height: 15px;        
+    border-radius: 50%;   
+    background-color: gray;
+    border: none;        
+    opacity: 0.5;         
+}
+.carousel-indicators .active {
+    width: 15px;   
+    height: 15px;        
+    border-radius: 50%;   
+    background-color: white;
+    border: none;        
+    opacity: 1;  
+}
+.controlbar .searchbar{
+    height:30px;
+    width:150px;
+    border-radius: 15px;
+}
+.search-icon {
+    right: 25px;   
+    top: 30%;
+    color: gray;   
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+}
+input:focus + .search-icon {
+    opacity: 0; 
+}
+.dropdown-toggle{
+    height:30px;
+}
+.list-group-flush{
+    width:200px;
+}
+.list-group-item{
+    font-family:"Noto+Sans+TC";
+}
+.card-img-top{
+    height:350px;
+    max-width:100%;
+}
+.footer-list{
+    list-style: none;
+}
+.fanpage-icon{
+    height:44px;
+    width:100%;
+}
+.line{
+    height:40px;
+}
+.copyright{
+    font-size:10px;
+}
+.followus_title{
+    font-family:"Noto+Sans+TC";
+    letter-spacing:3px;
+}
