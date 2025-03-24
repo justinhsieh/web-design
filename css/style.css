@@ -64,9 +64,6 @@ input:focus + .search-icon {
     height:350px;
     max-width:100%;
 }
-.footer-list{
-    list-style: none;
-}
 .fanpage-icon{
     height:44px;
     width:100%;
@@ -80,4 +77,48 @@ input:focus + .search-icon {
 .followus_title{
     font-family:"Noto+Sans+TC";
     letter-spacing:3px;
+}
+.price{
+    color: palevioletred;
+    font-size: 25px;
+}
+.back-to-top {
+    position: fixed;
+    bottom: 50px;
+    right: 20px; 
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: none;
+    background-size: cover;
+    background-position: center;
+    background-image: url("../img/top.png");
+}
+.pagination .page-item.active .page-link {
+    background-color:lightslategray;
+    color: white;
+    border-color: lightslategray;
+}
+.item-color{
+     padding: 4px;
+}
+.item-color.active{
+    background-color:lightslategray;
+    color: white;
+    border-color: lightslategray;
+}
+.spec-comment.active{
+    background-color:lightslategray;
+    color: white;
+    border-color: lightslategray;
+}
+th[scope="row"]{
+    background-color:lightslategray;
+    color: white;
+}
+.comment-submit{
+    background-color:lightslategray;
+    color: white;
+    border-color: lightslategray;
 }
