@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+    <!-- 自定義CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- 自訂義script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+    <!-- 網頁圖示 -->
+    <link rel="icon" type="image/x-icon" href="img/hacker.png">
+</head>
+<body>
+  <!-- 導覽列 -->
+  <header>
+    <nav class="navbar navbar-expand-lg bg-light border-bottom border-1 border-black">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img src="img/hacker.png" alt="logo" class="logo">
+          <span class="logo-context fs-3 fw-bold">3C用品店</span>
+        </a>
+        <div class="tool-right me-4">
+          <a href="#" alt="account">
+            <img src="img/user.png" class="icon pe-2">
+          </a>
+          <a href="#" alt="shopping-cart">
+            <img src="img/shopping-cart.png" class="icon" >
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- 帳號密碼 -->
+   <main>
+    <section class="h-100 d-flex align-items-center">
+        <div class="container p-3">
+            <div class="row justify-content-center">
+                <div class="col-4 border border-2 p-5">
+                    <form action="#">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">會員信箱</label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email會員信箱">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">會員密碼</label>
+                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="*************">
+                        </div>
+                        <button type="button" class="btn btn-dark w-100 mb-3">登入</button>
+                    </form>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn">忘記密碼</button>
+                    </div>
+                </div>
+                <div class="col-4 d-flex flex-column justify-content-center align-items-center border border-2 border-start-0 gap-3 p-5">
+                    <span>首次購物，馬上加入會員!</span>
+                    <button type="button" class="btn btn-dark">註冊會員</button>
+                </div>
+            </div>
+        </div>
+    </section>
+   </main>
+  <!-- 頁尾 -->
+  <footer class="bg-dark">
+    <div class="container-fluid">
+      <div class="row bg-dark py-5 align-items-center">
+        <div class="col-12 col-md-6 text-light d-flex justify-content-center mt-3">
+          <span class="d-flex w-75 border border-2 border-white rounded">防詐騙提醒：3C用品店絕不會以電話或簡訊通知訂單/分期出錯、或變更付款方式，更不會要您前往ATM進行任何操作！不應在3C用品店以外的任何地方輸入3C用品店帳密(例如非政府官方的電子發票app)，以免權益受損！</span>
+        </div>
+        <div class="col-12 col-md-6 d-flex mt-3">
+          <div class="col-6 d-flex justify-content-end">
+            <div class="subscribe">
+              <div class="title text-light">E-MAIL</div>
+              <div class="input-group mt-3 emailbox">
+                <input type="text" class="form-control" placeholder="輸入E-mail" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2">訂閱</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="followus">
+              <div class="title text-light text-center followus_title">FOLLOW US ON</div>
+              <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="#" title="facebook">
+                  <img src="img/social-media.png" class="fanpage-icon">
+                </a>
+                <a href="#" title="Instagram">
+                  <img src="img/instagram.png" class="fanpage-icon">
+                </a>
+                <a href="#" title="Line" class="border border-2 border-black rounded">
+                  <img src="img/line.png" class="line fanpage-icon">
+                </a>
+              </div>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+    <div class="container text-center">
+      <div class="row">
+        <div class="col">
+          <p class="copyright text-light">COPYRIGHT@3C用品店 CO.,LTD.ALL RIGHTS RESERVED.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
