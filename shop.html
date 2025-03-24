@@ -1,74 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>product</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>shop</title>
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
     <!-- 自定義CSS -->
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <!-- 導覽列 -->
-  <header>
-    <nav class="navbar navbar-expand-lg bg-light border-bottom border-1 border-black">
-      <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="#">
-          <img src="img/Adobe Express - file.png" alt="logo" class="logo">
-          <span class="logo-context fs-3 fw-bold">3C用品店</span>
-        </a>
-        <div class="tool-right me-4">
-          <a href="#" alt="account">
-            <img src="img/user.png" class="icon pe-2">
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- 自訂義script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+    <!-- 網頁圖示 -->
+    <link rel="icon" type="image/x-icon" href="img/hacker.png" />
+    <script>
+      $(function () {
+        $(".spec-btn").click(function () {
+          $(".intro").show();
+          $(".comment").hide();
+        });
+        $(".comment-btn").click(function () {
+          $(".intro").hide();
+          $(".comment").show();
+        });
+        $(".spec-comment").click(function(){
+          $(".spec-comment").removeClass("active");
+          $(this).addClass("active");
+        })
+        $(".item-color").click(function(){
+          $(".item-color").removeClass("active");
+          $(this).addClass("active");
+        })
+      });
+    </script>
+  </head>
+  <body>
+    <!-- 導覽列 -->
+    <header>
+      <nav
+        class="navbar navbar-expand-lg bg-light border-bottom border-1 border-black"
+      >
+        <div class="container-fluid">
+          <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="img/hacker.png" alt="logo" class="logo" />
+            <span class="logo-context fs-3 fw-bold">3C用品店</span>
           </a>
-          <a href="#" alt="shopping-cart">
-            <img src="img/shopping-cart.png" class="icon" >
-          </a>
+          <div class="tool-right me-4">
+            <a href="#" alt="account">
+              <img src="img/user.png" class="icon pe-2" />
+            </a>
+            <a href="#" alt="shopping-cart">
+              <img src="img/shopping-cart.png" class="icon" />
+            </a>
+          </div>
         </div>
-      </div>
-    </nav>
-  </header>
-  <!-- 商品 -->
-   <div class="container">
-    <div class="row">
-        <div class="col-2"><div class="list-group list-group-flush">
-            <a href="#" class="list-group-item">
-              iPhone
-            </a>
-            <a href="#" class="list-group-item">
-              iPad
-            </a>
-            <a href="#" class="list-group-item">
-              AI手機
-            </a>
-            <a href="#" class="list-group-item">
-              安卓手機
-            </a>
-            <a href="#" class="list-group-item">
-              一般手機
-            </a>
-          </div></div>
-        <div class="col-4">
-            <img src="img/11453217_R1.jpg" alt="" class="w-100">
-        </div>
-        <div class="col-6">
-            <h4 class="p-3">SONY 索尼 WH-1000XM5 主動式降噪旗艦藍芽耳機(台灣公司貨保固12+6)</h4>
+      </nav>
+    </header>
+    <!-- 商品 -->
+    <main>
+      <div class="container">
+        <div class="row pt-3">
+          <div class="col-4">
+            <img
+              src="img/11453217_R1.jpg"
+              alt=""
+              class="w-100 border border-3 border-black"
+            />
+          </div>
+          <div class="col-8">
+            <h4 class="p-3">
+              SONY 索尼 WH-1000XM5 主動式降噪旗艦藍芽耳機(台灣公司貨保固12+6)
+            </h4>
             <ul>
               <li class="text-body-secondary">業界領先降噪技術</li>
               <li class="text-body-secondary">碳纖維驅動單體創造超凡音質</li>
               <li class="text-body-secondary">卓越的無噪音通話</li>
             </ul>
-            <p class="border-top border-bottom p-3">售價<span class="price">11,900</span>元</p>
+            <p class="border-top border-bottom p-3">
+              售價<span class="price">11,900</span>元
+            </p>
+            <p>品牌名稱:SONY索尼</p>
+            <div class="d-flex align-items-center">
+              <p>顏色:</p>
+              <ul class="list-group list-group-horizontal text-center w-25 ms-2 pb-3">
+                <button type="button" class="list-group-item list-group-item-action item-color active" aria-current="true">
+                  黑色
+                </button>
+                <button type="button" class="list-group-item list-group-item-action item-color">
+                  白色
+                </button>
+                <button type="button" class="list-group-item list-group-item-action item-color">
+                  玫瑰灰
+                </button>
+              </ul>
+            </div>
             <div class="mb-3">
               <span>數量：</span>
-              <select class="form-select-sm" aria-label="Default select example">
+              <select
+                class="form-select-sm"
+                aria-label="Default select example"
+              >
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -78,75 +130,187 @@
               <button type="button" class="btn btn-danger">直接購買</button>
               <button type="button" class="btn btn-primary">加入購物車</button>
             </div>
-            
+          </div>
         </div>
-    </div>
-   </div>
-  <!-- 頁尾 -->
-  <footer class="bg-dark">
-    <div class="container-fluid">
-      <div class="row bg-dark py-5 align-items-center">
-        <div class="col-12 col-md-6 d-flex text-light justify-content-center">
-          <ul class="footer-list">
-            <li class="title mt-3 mb-2">關於NET</li>
-            <li><a href="#" class="link-light link-underline-dark">品牌故事</a></li>
-            <li class="mt-1"><a href="#" class="link-light link-underline-dark">門市據點</a></li>
-            <li class="mt-1"><a href="#" class="link-light link-underline-dark" target="_blank">人才招募</a></li>
-          </ul>
-          <ul class="footer-list">
-            <li class="title mt-3 mb-2">購物須知</li>
-            <li><a href="#" class="link-light link-underline-dark">訂購流程</a></li>
-            <li class="mt-1"><a href="#" class="link-light link-underline-dark">十天鑑賞期</a></li>
-            <li class="mt-1"><a href="#" class="link-light link-underline-dark">全台商品修改</a></li>
-          </ul>
-          <ul class="footer-list">
-            <li class="title mt-3 mb-2">會員服務</li>
-            <li><a href="#" class="link-light link-underline-dark">會員中心</a></li>
-            <li class="mt-1"><a href="#" class="link-light link-underline-dark">客服中心</a></li>
-          </ul>
-          <ul class="footer-list">
-            <li class="title mt-3 mb-2">聲明條款</li>
-            <li><a href="#" class="link-light link-underline-dark">隱私權保護</a></li>
-            <li class="mt-1"><a href="#" class="link-light link-underline-dark">政令宣導</a></li>
-            <li class="mt-1"><a href="#" class="link-light link-underline-dark">工作條款</a></li>
-          </ul>
-        </div>
-        <div class="col-12 col-md-6 d-flex mt-3">
-          <div class="col-6 d-flex justify-content-end">
-            <div class="subscribe">
-              <div class="title text-light">E-MAIL</div>
-              <div class="input-group mt-3 emailbox">
-                <input type="text" class="form-control" placeholder="輸入E-mail" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">訂閱</button>
+        <div class="row mt-3">
+          <div class="mt-1">
+            <ul class="list-group list-group-horizontal text-center w-25 pb-3">
+              <button type="button"class="list-group-item list-group-item-action spec-comment spec-btn active"aria-current="true">
+                商品規格
+              </button>
+              <button type="button" class="list-group-item list-group-item-action spec-comment comment-btn">
+                商品評價
+              </button>
+            </ul>
+          </div>
+          <div class="intro">
+            <table class="table w-75 border border-2">
+              <tbody>
+                <tr>
+                  <th scope="row" class="w-25 border-end border-2">品牌名稱</th>
+                  <td>SONY 索尼</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="w-25 border-end border-2">款式</th>
+                  <td>耳罩式</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="w-25 border-end border-2">類型</th>
+                  <td>藍芽主體</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="w-25 border-end border-2">商品規格</th>
+                  <td>
+                    尺寸與重量 <br />
+                    尺寸與重量細節敘述 <br />
+                    重量 約 250 g <br />
+                    一般功能 <br />
+                    一般功能細節敘述 <br />
+                    耳機類型 封閉式、動態 <br />
+                    驅動單體 30 mm <br />
+                    磁體 釹 <br />
+                    阻抗 (Ohm) 48 ohm (1 kHz) (裝置開啟並透過耳機線連接)、16 ohm
+                    (1 kHz) (裝置未開啟並透過耳機線連接) <br />
+                    頻率響應 4 Hz 至 40,000 Hz (JEITA) <br />
+                    頻率響應 (啟動模式) 4 Hz 至 40,000 Hz <br />
+                    頻率響應 (藍牙通訊模式) 20 Hz 至 20,000 Hz (44.1 kHz 取樣)
+                    20 Hz 至 40,000Hz (LDAC 96 kHz 取樣，990 kbps) <br />
+                    靈敏度 (dB/mW) 102 dB (1 kHz) / mW
+                    (透過耳機線連接至開啟的裝置)、100 dB (1 kHz) / mW
+                    (透過耳機線連接至未開啟的裝置) <br />
+                    音量控制 觸控感應器 <br />
+                    電線類型 單邊 (可拆式) <br />
+                    電線長度 約 1.2 m <br />
+                    插座 鍍金 L 型立體聲迷你插頭 <br />
+                    輸入 立體聲迷你插孔 <br />
+                    穿戴方式 耳掛式 <br />
+                    DSEE Extreme 有 <br />
+                    被動操作 有 <br />
+                    環境聲模式 有 <br />
+                    電池 <br />
+                    電池細節敘述 <br />
+                    電池充電時間 約 3.5 小時 <br />
+                    電池充電方式 USB <br />
+                    電池續航力 (音樂連續播放時間) 最長 30 小時
+                    (降噪功能開啟)，最長 40 小時 (降噪功能關閉) <br />
+                    電池續航力 (連續通訊時間) 最長 24 小時 (降噪功能開啟)，最長
+                    32 小時 (降噪功能關閉) <br />
+                    Bluetooth☆ 規格 <br />
+                    Bluetooth☆ 規格細節敘述 <br />
+                    Bluetooth☆ 版本 藍牙規格 5.2 版 <br />
+                    有效範圍 10 m <br />
+                    頻率範圍 2.4 GHz 頻段 (2.4000 GHz-2.4835 GHz) <br />
+                    外型 A2DP、AVRCP、HFP、HSP <br />
+                    支援的音訊格式 SBC、AAC、LDAC <br />
+                    支援的內容保護 SCMS-T <br />
+                    降噪功能 <br />
+                    降噪功能細節敘述 <br />
+                    個人NC優化器 自動降噪優化器 <br />
+                    氣壓優化 有 <br />
+                    環境聲模式 有 <br />
+                    快速注意模式 有 <br />
+                    證書號碼 CI33206021I813-00
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="border border-2 mb-2 comment" style="display: none">
+            <div class="border-bottom border-2 my-2">
+              <span>商品評價:</span>
+            </div>
+            <form action="" method="" class="mt-2 d-flex flex-column">
+              <div class="d-flex align-items-center gap-2">
+                <span>名字:</span>
+                <textarea
+                  name="content"
+                  rows="5"
+                  cols="100"
+                  placeholder="留下你的評論"
+                ></textarea>
+                <input type="submit" class="me-auto comment-submit mt-auto" />
+              </div>
+            </form>
+            <div class="d-flex flex-column border border-2 my-2 w-75">
+              <div class="d-flex">
+                <div>名字:00000000</div>
+                <div class="ms-auto">日期:2025/03/23</div>
+              </div>
+              <div class="mt-3">
+                <span> 評論:11111111 </span>
               </div>
             </div>
           </div>
-          <div class="col-6">
-            <div class="followus">
-              <div class="title text-light text-center followus_title">FOLLOW US ON</div>
-              <div class="d-flex justify-content-center gap-3 mt-3">
-                <a href="#" title="facebook">
-                  <img src="img/social-media.png" class="fanpage-icon">
-                </a>
-                <a href="#" title="Instagram">
-                  <img src="img/instagram.png" class="fanpage-icon">
-                </a>
-                <a href="#" title="Line" class="border border-2 border-black rounded">
-                  <img src="img/line.png" class="line fanpage-icon">
-                </a>
+        </div>
+      </div>
+    </main>
+    <!-- 頁尾 -->
+    <footer class="bg-dark">
+      <div class="container-fluid">
+        <div class="row bg-dark py-5 align-items-center">
+          <div
+            class="col-12 col-md-6 text-light d-flex justify-content-center mt-3"
+          >
+            <span class="d-flex w-75 border border-2 border-white rounded"
+              >防詐騙提醒：3C用品店絕不會以電話或簡訊通知訂單/分期出錯、或變更付款方式，更不會要您前往ATM進行任何操作！不應在3C用品店以外的任何地方輸入3C用品店帳密(例如非政府官方的電子發票app)，以免權益受損！</span
+            >
+          </div>
+          <div class="col-12 col-md-6 d-flex mt-3">
+            <div class="col-6 d-flex justify-content-end">
+              <div class="subscribe">
+                <div class="title text-light">E-MAIL</div>
+                <div class="input-group mt-3 emailbox">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="輸入E-mail"
+                    aria-label="Recipient's username"
+                    aria-describedby="button-addon2"
+                  />
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="button-addon2"
+                  >
+                    訂閱
+                  </button>
+                </div>
               </div>
             </div>
-          </div>          
+            <div class="col-6">
+              <div class="followus">
+                <div class="title text-light text-center followus_title">
+                  FOLLOW US ON
+                </div>
+                <div class="d-flex justify-content-center gap-3 mt-3">
+                  <a href="#" title="facebook">
+                    <img src="img/social-media.png" class="fanpage-icon" />
+                  </a>
+                  <a href="#" title="Instagram">
+                    <img src="img/instagram.png" class="fanpage-icon" />
+                  </a>
+                  <a
+                    href="#"
+                    title="Line"
+                    class="border border-2 border-black rounded"
+                  >
+                    <img src="img/line.png" class="line fanpage-icon" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="container text-center">
-      <div class="row">
-        <div class="col">
-          <p class="copyright text-light">COPYRIGHT@3C用品店 CO.,LTD.ALL RIGHTS RESERVED.</p>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col">
+            <p class="copyright text-light">
+              COPYRIGHT@3C用品店 CO.,LTD.ALL RIGHTS RESERVED.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
-</body>
+    </footer>
+  </body>
 </html>
