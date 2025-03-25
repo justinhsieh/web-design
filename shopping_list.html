@@ -16,6 +16,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script src="./js/jquery-3.6.0.js.下載"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -56,20 +57,131 @@
 
     <!--購物車-->
     <div class="container px-5 py-5">
-      <form action="">
+      <form action="#" method="post" name="orderMake" action>
         <div class="shopping-cart">
           <ul class="shopping-cart-ul" id="shoppingCartList">
             <!--購物車頁簽-->
+            <li class="selected" cart_name="newNormal">
+              宅配/電子票劵
+              <b>(1)</b>
+            </li>
           </ul>
         </div>
         <div class="shopping-cart-inner">
-          <div class="shoppingCartNoGoods">
-            <div class="noGoods">
-              購物車內無任何商品，您也可以回至首頁查看！
-            </div>
-          </div>
+          <ul class="shopping-cart-inner-ul" id="shoppingCartInner">
+            <li name="ec10">
+              <table width="100%" border="0" class="CartContent">
+                <tbody>
+                  <tr>
+                    <td class="cart-checkout-box grayCheck">
+                      <p>
+                        <label>
+                          <span>
+                            <input type="checkbox" name="goods[]" value="1" checked/>
+                          </span>
+                        </label>
+                      </p>
+                    </td>
+                    <td class="cart-img">
+                      <img
+                        src="img/小米_Xiaomi_15_Ultra.webp"
+                        alt="小米_Xiaomi_15_Ultra"
+                        width="120px"
+                        height="120px"
+                      />
+                    </td>
+                    <td class="cart-detail">
+                        <p class="cart-productNumber">
+                            11911911
+                        </p>
+                        <a class="cart-productName" href="" target="_blank">	官方旗艦館【小米】Xiaomi 15 Ultra 5G 6.73吋(16G/1TB/Qualcomm Snapdragon 8 Elite/5000萬鏡頭畫素)</a>
+                        <p>
+                            <span>
+                                <b>顏色:</b>
+                                <b>經典黑銀</b>
+                            </span>
+                        </p>
+                    </td>
+                    <td class="cart-price">
+                        單價 : 
+                        <span class="cart-price-color">
+                            <b>
+                                <i>$</i>
+                                <span class="cart-price-size" id="cart-price-size" value="37999">37,999</span> 
+                            </b>
+                        </span>
+                    </td>
+                    <td class="cart-amount">
+                        <label class="minus">
+                            <input type="button" class="remove-button" value="-" prdkey="1742221577812001">
+                        </label>
+                        <label class="additive">
+                            <input type="button" class="add-button" value="+" prdkey="1742221577812001">
+                        </label>
+                    </td>
+                    <td class="cart-other">
+                      <p>移除</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <table class="account" id="Cart-account">
+                <tbody>
+                  <tr>
+                    <td class="cart-checkout-box">
+                      <p class="titleCheckbox">
+                        <input type="checkbox" checked>
+                      </p>
+                    </td>
+                    <td class="cart-title-box">
+                      <p>全選</p>
+                    </td>
+                    <td class="pay-info-box">
+                      <p>
+                        商品總金額&nbsp;:&nbsp;
+                        <span>
+                          <i>$</i>
+                          <span class="cart-price-size">
+                            37,999
+                          </span>
+                        </span>
+                      </p>
+                    </td>
+                    <td class="checkbox-button selected">
+                      <a>結帳(1)</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="return-shopping-button">
+                <a href="test.html">繼續購物</a>
+              </p>
+            </li>
+          </ul>
         </div>
-        <div class="fillInDataArea" id="custData" style="display: block;"></div>
+        <div class="fillInDataArea" id="custData" style="display: block">
+          <h3>付款資料</h3>
+          <form action="#" method="post">
+            <div class="form-group py-2">
+              <label for="account-name" class="form-label">姓名</label>
+              <input type="text" name="account-name" class="form-control" placeholder="ex.王小明"/>
+            </div>
+            <div class="form-group py-2">
+              <label for="account-address" class="form-label">地址</label>
+              <input type="text" name="account-address" class="form-control"/>
+            </div>
+            <div class="form-group py-2">
+              <label for="account-card" class="form-label">卡號</label>
+              <input type="text" name="account-card" class="form-control" placeholder="xxxx-xxxx-xxxx">
+            </div>
+            <div class="form-group py-2">
+              <label for="account-phone" class="form-label">電話</label>
+              <input type="text" name="account-phone" class="form-control" placeholder="09xx-xxxxxx" readonly />
+            </div>
+          </form>
+        </div>
       </form>
     </div>
   </body>
