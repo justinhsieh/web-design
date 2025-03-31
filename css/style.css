@@ -122,3 +122,7 @@ th[scope="row"]{
     color: white;
     border-color: lightslategray;
 }
+.error{
+    color: red;
+    font-size: 12px;
+}
