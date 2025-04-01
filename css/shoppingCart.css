@@ -1,46 +1,33 @@
-label{display: inline-block;}
-/**購物車分類列表**/
-.shopping-cart{display:inline-block; margin: 0px 0px 2px 0px; font-size: 0px; border-bottom: 2px solid #e1e1e1; width: 100%; box-sizing: border-box;}
-.shopping-cart .shopping-cart-ul {overflow-y: hidden;overflow-x: auto;white-space: nowrap;box-sizing: border-box; margin: 0px; padding: 0px;}
-.shopping-cart .shopping-cart-ul li {display:inline-block;padding:0px 20px;font:bold 19px/48px Microsoft JhengHei, sans-serif;cursor:pointer;text-align:center;color:#000000;}
-.shopping-cart .shopping-cart-ul li.selected {background:rgb(85, 211, 243) ; color:#ffffff}
-
-/**購物車內容**/
-.shopping-cart-inner {display:inline-block;width:100%;}
-.shopping-cart-inner-ul {background:#ffffff;}
-.shopping-cart-inner-ul li {border-bottom:30px solid #f5f5f5; list-style-type: none;}
-.cart-checkout-box{padding: 20px 5px 20px 5px; width: 20px;}
-.cart-img{width: 120px;}
-.cart-detail{padding: 5px 20px 5px 20px; height: 120px; font-size: 14px; width: 300px;}
-.cart-productNumber{font-size: 12px; color: gray;}
-.cart-productName{width: 100%; font: bold 15px/20px Microsoft JhengHei, sans-serif; color: #000000;text-decoration: none;margin: 0px 0px 10px 0px;}
-.cart-price{padding: 0px 20px 0px 20px; width: 100px;}
-.cart-price-color{color: crimson;}
-.cart-price-size{font-size: 25px;}
-.cart-amount{padding:10px 10px; width: 90px;}
-.minus{height: 30px; width: 30px;}
-.additive{height: 30px; width: 30px;}
-.goods-count{width: 30px;}
-.remove-button{height: 100%; width: 100%; text-align: center; font-size: 12px;}
-.add-button{height: 100%; width: 100%; text-align: center;font-size: 12px;}
-.cart-other{width: 100px; text-align: center;}
-/**結帳**/
-.account{width: 100%;}
-table.account tbody tr td{padding: 15px 0px;}
-table.account tbody tr td.pay-info-box{float: right; text-align: center;}
-table.account tbody tr td.pay-info-box p span{color: crimson;}
-.account-button{ text-align: center; width: 160px;}
-.account-button-a{color: #ffffff; font:bold 19px/48px Microsoft JhengHei, sans-serif; background-color:  rgb(85, 211, 243);padding: 10px 40px 10px 40px; text-align: center; border: 0px; text-decoration: none;}
-.return-shopping-button{text-align: right; box-sizing: border-box;}
-/**結帳資料**/
-div.fillInDataArea h3{background-color: #857979; color: #ffffff; font: bold 16px/30px Microsoft JhengHei, sans-serif; padding: 0px 10px}
-.account-name{width: 100px;}
-.total-account{padding: 10px; text-align: center;display: block; width: 100%; box-sizing: border-box; background-color: #e1e1e1;}
-.total-account table thead tr td{font-weight: bold; padding: 0px 50px;}
-.set-center{width: 60%;margin: auto;}
-.redTxt{color: crimson;}
-.payment{font-size: 25px;}
-.submit-account{margin: 10px 0px; text-align: center;}
-/**購物車內無任何商品**/
-.shoppingCartNoGoods {display:inline-block; width: 1220px; margin:0px auto; padding:0px; border-bottom:30px solid #f5f5f5; text-align:center; background: #ffffff}
-.shoppingCartNoGoods .noGoods {display: inline-block; margin: 0px; padding:300px 0px 20px 0px; background: transparent url("../img/noGoods.png") no-repeat center 15px/90% auto; font:bold 16px/20px Microsoft JhengHei, sans-serif;}
+.cart-header {
+    background-color: #48c8ff;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.cart-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+.total-section {
+    background-color: #f5f5f5;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.payment-section {
+    background-color: #7a6b67;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+}
+.confirm-btn {
+    background-color: #48c8ff;
+    border: none;
+    padding: 10px;
+    font-size: 1.1rem;
+}
+.remove-item{
+    text-decoration: none;
+    color: black;
+}
