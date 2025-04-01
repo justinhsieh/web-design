@@ -14,12 +14,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
     <!-- 自定義CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <!-- 自訂義script -->
+    <!-- Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/localization/messages_zh_TW.js "></script>
     <!-- 網頁圖示 -->
     <link rel="icon" type="image/x-icon" href="img/hacker.png">
+    <!-- 自訂義script -->
     <script>
       $(function() {
         $("#register").validate({
@@ -99,8 +100,8 @@
                     <div class="w-75">
                       <form action="#" id="register">
                         <div class="mb-3">
-                          <label for="exampleFormControlInput1" class="form-label">會員帳號</label>
-                          <input type="text" class="form-control" id="exampleFormControlInput1" name="account" placeholder="帳號長度介於6-10">
+                          <label for="account" class="form-label">會員帳號</label>
+                          <input type="text" class="form-control" id="account" name="account" placeholder="帳號長度介於5-10">
                         </div>
                         <div class="mb-3">
                             <label for="pwd" class="form-label">會員密碼</label>
@@ -119,7 +120,7 @@
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
                         <span>已有帳號？</span>
-                        <button type="button" class="btn text-danger">登入</button>
+                        <a href="login.html" class="text-danger link-underline link-underline-opacity-0">登入</a>
                     </div>
                   </div>
                 </div>
