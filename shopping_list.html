@@ -31,6 +31,40 @@
     <!-- 自定義CSS -->
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/shoppingCart.css" />
+    <script>
+      $(function(){
+        $("#account-button").on("click", function(){
+          $("#custData").show();
+        });
+        $("#cancel-goods").on("click", function(){
+          $(this).closest("table").remove();
+        });
+        $(".add-button").on("click", function(){
+          let input = $(this).closest("td").find(".goods-count");
+          let count = parseInt(input.val(), 10) + 1;
+          input.val(count);
+        });
+        $(".remove-button").on("click", function(){
+          let input = $(this).closest("td").find(".goods-count");
+          let count = parseInt(input.val(), 10) - 1;
+          if(count<=0){
+            $(this).closest("table").remove();
+          }else{
+            input.val(count);
+          }
+        });
+        $("#shopping-cart-inner").on("change", "#check-all", function(){
+          let selectall = $(this).is(":checked");
+          $("#shopping-cart-inner").find(".good").each(function(){
+            if(selectall){
+              if(!$(this).is(":checked")) $(this).trigger("click");
+            }else{
+              if($(this).is(":checked")) $(this).trigger("click");
+            }
+          });
+        });
+      });
+    </script>
   </head>
   <body>
     <!-- 導覽列 -->
@@ -40,7 +74,7 @@
       >
         <div class="container-fluid">
           <a class="navbar-brand d-flex align-items-center" href="#">
-            <img src="img/Adobe Express - file.png" alt="logo" class="logo" />
+            <img src="#" alt="logo" class="logo" />
             <span class="logo-context fs-3 fw-bold">3C用品店 | 購物車</span>
           </a>
           <div class="tool-right me-4">
@@ -67,7 +101,7 @@
             </li>
           </ul>
         </div>
-        <div class="shopping-cart-inner">
+        <div class="shopping-cart-inner" id="shopping-cart-inner">
           <ul class="shopping-cart-inner-ul" id="shoppingCartInner">
             <li name="ec10">
               <table width="100%" border="0" class="CartContent">
@@ -77,7 +111,7 @@
                       <p>
                         <label>
                           <span>
-                            <input type="checkbox" name="goods[]" value="1" checked/>
+                            <input type="checkbox" name="goods[]" class="good" value="1" checked/>
                           </span>
                         </label>
                       </p>
@@ -115,12 +149,15 @@
                         <label class="minus">
                             <input type="button" class="remove-button" value="-" prdkey="1742221577812001">
                         </label>
+                        <label>
+                            <input type="text" class="goods-count" value="1">
+                        </label>
                         <label class="additive">
                             <input type="button" class="add-button" value="+" prdkey="1742221577812001">
                         </label>
                     </td>
                     <td class="cart-other">
-                      <p>移除</p>
+                      <a id="cancel-goods">移除</a>
                     </td>
                   </tr>
                 </tbody>
@@ -132,7 +169,7 @@
                   <tr>
                     <td class="cart-checkout-box">
                       <p class="titleCheckbox">
-                        <input type="checkbox" checked>
+                        <input type="checkbox" id="check-all" checked>
                       </p>
                     </td>
                     <td class="cart-title-box">
@@ -143,25 +180,25 @@
                         商品總金額&nbsp;:&nbsp;
                         <span>
                           <i>$</i>
-                          <span class="cart-price-size">
+                          <span class="cart-price-size" id="total-account">
                             37,999
                           </span>
                         </span>
                       </p>
                     </td>
-                    <td class="checkbox-button selected">
-                      <a>結帳(1)</a>
+                    <td class="account-button selected">
+                      <a class="account-button-a" id="account-button" href="#custData">結帳(1)</a>
                     </td>
                   </tr>
                 </tbody>
               </table>
               <p class="return-shopping-button">
-                <a href="test.html">繼續購物</a>
+                <a href="index.html">繼續購物</a>
               </p>
             </li>
           </ul>
         </div>
-        <div class="fillInDataArea" id="custData" style="display: block">
+        <div class="fillInDataArea" id="custData" style="display: none">
           <h3>付款資料</h3>
           <form action="#" method="post">
             <div class="form-group py-2">
@@ -181,6 +218,37 @@
               <input type="text" name="account-phone" class="form-control" placeholder="09xx-xxxxxx" readonly />
             </div>
           </form>
+          <div class="total-account">
+            <table class="set-center">
+              <thead>
+                <tr id="payW" class="row">
+                  <td class="payInfo col">
+                    <span>信用卡</span>
+                  </td>
+                  <td class="col">=</td>
+                  <td id="pay-sum-title" class="col">
+                    本次訂單金額
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="payM" class="row">
+                  <td class="payInfo redtxt col">
+                    <i>$</i>
+                    <b id="paySumB" class="payment"></b>
+                  </td>
+                  <td class="col">=</td>
+                  <td class="redTxt col">
+                    <i>$</i>
+                    <b id="sum" class="payment"></b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="submit-account">
+            <a class="account-button-a" id="submit-account"> 確認結帳 </a>
+          </div>
         </div>
       </form>
     </div>
