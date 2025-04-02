@@ -19,15 +19,13 @@
     background-color: #7a6b67;
     color: white;
     padding: 10px;
+    margin: 10px 0px;
     font-weight: bold;
-}
-.confirm-btn {
-    background-color: #48c8ff;
-    border: none;
-    padding: 10px;
-    font-size: 1.1rem;
 }
 .remove-item{
     text-decoration: none;
     color: black;
+}
+.quantity{
+    width: 40px;
 }
