@@ -1,6 +1,7 @@
 html,body{
     height:100%;
     margin:0;
+    padding:0;
     display:flex;
     flex-direction: column;
 }
@@ -95,7 +96,7 @@ input:focus + .search-icon {
     background-position: center;
     background-image: url("../img/top.png");
 }
-.pagination .page-item.active .page-link {
+.pagination .page-item.active .page-link, .item-color.active, .spec-comment.active, .comment-submit{
     background-color:lightslategray;
     color: white;
     border-color: lightslategray;
@@ -103,26 +104,35 @@ input:focus + .search-icon {
 .item-color{
      padding: 4px;
 }
-.item-color.active{
-    background-color:lightslategray;
-    color: white;
-    border-color: lightslategray;
-}
-.spec-comment.active{
-    background-color:lightslategray;
-    color: white;
-    border-color: lightslategray;
-}
 th[scope="row"]{
     background-color:lightslategray;
     color: white;
 }
-.comment-submit{
-    background-color:lightslategray;
-    color: white;
-    border-color: lightslategray;
-}
 .error{
     color: red;
     font-size: 12px;
+}
+.fa-brands{
+    color:#3f465a;
+    font-size:40px;
+}
+#homepage-header{
+    background-image: url("../img/homepage-header.jpg");
+    background-size: cover;
+    padding-top: 15rem;
+    padding-bottom: 12.5rem;
+}
+.homepage-nav{
+    background-color: transparent !important;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    position:fixed;
+    z-index:3;
+}
+.homepage-nav-title, .welcome{
+    font-family:"Noto+Sans+TC";
+    letter-spacing: 3px;
+}
+.shop-color{
+    width:200px;
 }
