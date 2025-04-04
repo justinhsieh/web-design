@@ -30,15 +30,15 @@
         class="navbar navbar-expand-lg bg-light border-bottom border-1 border-black"
       >
         <div class="container-fluid">
-          <a class="navbar-brand d-flex align-items-center" href="#">
+          <a class="navbar-brand d-flex align-items-center" href="index.html">
             <img src="img/hacker.png" alt="logo" class="logo" />
-            <span class="logo-context fs-3 fw-bold">3C用品店 | 購物車</span>
+            <span class="logo-context fs-3 fw-bold">3C用品店|購物車</span>
           </a>
           <div class="tool-right me-4">
-            <a href="#" alt="account">
+            <a href="personal_id.html" alt="account">
               <img src="img/user.png" class="icon pe-2" />
             </a>
-            <a href="#" alt="shopping-cart">
+            <a href="shopping_list.html" alt="shopping-cart">
               <img src="img/shopping-cart.png" class="icon" />
             </a>
           </div>
@@ -48,10 +48,10 @@
     <div class="container py-5">
       <!-- 購物車標題 -->
       <nav class="nav nav-tabs mt-3">
-        <a class="nav-link" id="items-nav">全部 (1)</a>
-        <a class="nav-link active" id="phone-nav">手機/平板 (1)</a>
-        <a class="nav-link" id="camera-nav">相機/相機配件 (0)</a>
-        <a class="nav-link" id="computer-nav">電腦/筆電 (0)</a>
+        <a class="nav-link" id="items-nav">全部 (<span id="items-count">1</span>)</a>
+        <a class="nav-link active" id="phone-nav">手機/平板 (<span id="phone-count">1</span>)</a>
+        <a class="nav-link" id="camera-nav">相機/相機配件 (<span id="camera-count">0</span>)</a>
+        <a class="nav-link" id="computer-nav">電腦/筆電 (<span id="computer-count">0</span>)</a>
       </nav>
       <!-- 購物車內容 -->
       <div id="phone" class="type">
@@ -197,25 +197,23 @@
             alert("訂單已提交！");
             form.submit();
           },
-          rules:{
-
-          },
+          rules: {},
           messages: {
             name: {
               required: "帳號為必填欄位",
               minlength: "最少需2個字",
-              maxlength: "最多需5個字"
+              maxlength: "最多需5個字",
             },
             address: {
               required: "地址為必填欄位",
             },
             card: {
               required: "卡號為必填欄位",
-              pattern: "錯誤格式"
+              pattern: "錯誤格式",
             },
             phone: {
               required: "電話為必填欄位",
-              pattern: "錯誤格式"
+              pattern: "錯誤格式",
             },
           },
         });
