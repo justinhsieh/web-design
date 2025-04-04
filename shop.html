@@ -35,6 +35,16 @@
     <!-- 自定義Script -->
     <script>
       $(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 200) {
+                $("#backToTop").css("display", "flex");
+            } else {
+                $("#backToTop").css("display", "none");
+            }
+        });
+        $("#backToTop").click(function () {
+            $("html").animate({ scrollTop: 0 });
+        });
         $(".spec-btn").click(function () {
           $(".intro").show();
           $(".comment").hide();
@@ -319,5 +329,6 @@
         </div>
       </div>
     </footer>
+    <button id="backToTop" class="back-to-top"></button>
   </body>
 </html>
