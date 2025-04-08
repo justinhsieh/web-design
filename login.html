@@ -27,7 +27,6 @@
       $(function() {
         $("#login").validate({
           submitHandler: function(form) {
-              alert("success!");
               form.submit();
           },
           rules:{
@@ -57,7 +56,6 @@
         });
         $("#subscribe").validate({
           submitHandler: function(form) {
-              alert("success!");
               form.submit();
           },
           rules:{
@@ -73,6 +71,18 @@
           errorPlacement: function (error, element) {
             $("#error-container").html(error);
         }
+        });
+        $("#login").on("submit", function(e) {
+          e.preventDefault(); // 阻止表單預設提交行為
+          let account = $("#account").val();
+          let password = $("#pwd").val();
+    
+          if (account === "admin" && password === "admin123456") {
+            // 登入成功，導向管理者後台
+            window.location.href = "admin.html";
+          } else if(account === "member" && password === "member123456") {
+            window.location.href = "index.html";
+          }
         });
       });
     </script>
@@ -115,7 +125,7 @@
         <div class="container p-3">
             <div class="row justify-content-center">
                 <div class="col-4 border border-2 p-5">
-                    <form action="#" id="login">
+                    <form action="#" id="login" method="POST">
                         <div class="mb-3">
                             <label for="account" class="form-label">會員帳號</label>
                             <input type="text" class="form-control" id="account" name="account" placeholder="Account會員帳號">
@@ -124,7 +134,7 @@
                             <label for="pwd" class="form-label">會員密碼</label>
                             <input type="password" class="form-control" id="pwd" name="pwd" placeholder="*************">
                         </div>
-                        <button type="submit" class="btn btn-dark w-100 mb-3">登入</button>
+                        <button type="submit" class="btn btn-dark w-100 mb-3 login-btn">登入</button>
                     </form>
                     <div class="d-flex justify-content-center">
                         <button type="button" class="btn"><a href="forget.html" class="link-underline link-underline-opacity-0 text-black">忘記密碼</a></button>
