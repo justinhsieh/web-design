@@ -94,7 +94,7 @@ input:focus + .search-icon {
     display: none;
     background-size: cover;
     background-position: center;
-    background-image: url("../img/top.png");
+    background-image: url("../images/top.png");
 }
 .pagination .page-item.active .page-link, .item-color.active, .spec-comment.active, .comment-submit{
     background-color:lightslategray;
@@ -117,7 +117,7 @@ th[scope="row"]{
     font-size:40px;
 }
 #homepage-header{
-    background-image: url("../img/homepage-header.jpg");
+    background-image: url("../images/homepage-header.jpg");
     background-size: cover;
     padding-top: 15rem;
     padding-bottom: 12.5rem;
