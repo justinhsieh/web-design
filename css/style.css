@@ -108,10 +108,6 @@ th[scope="row"]{
     background-color:lightslategray;
     color: white;
 }
-.error{
-    color: red;
-    font-size: 12px;
-}
 .fa-brands{
     color:#3f465a;
     font-size:40px;
@@ -119,6 +115,7 @@ th[scope="row"]{
 #homepage-header{
     background-image: url("../images/homepage-header.jpg");
     background-size: cover;
+    background-position: center center;
     padding-top: 15rem;
     padding-bottom: 12.5rem;
 }
@@ -136,3 +133,27 @@ th[scope="row"]{
 .shop-color{
     width:200px;
 }
+label.error{
+    color: red;
+    font-size: 12px;
+}
+#show_review div.customer_review{
+    background-color: #d5d8dc  ;
+}
+i.like_unlike:hover, i.like_unlike.selected{
+    color:#558edd;
+    cursor:pointer;
+}
+i.like_unlike {
+    transition: transform 0.2s ease-in-out;
+}
+i.like_unlike.selected {
+    animation: grow 0.3s ease-in-out;
+}
+  
+@keyframes grow {
+    0%   { transform: scale(1) scaleY(var(--scaleY, 1)); }
+    50%  { transform: scale(1.5) scaleY(var(--scaleY, 1)); }
+    100% { transform: scale(1) scaleY(var(--scaleY, 1)); }
+}
+  
