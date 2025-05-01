@@ -77,7 +77,7 @@
   <header>
     <nav class="navbar navbar-expand-lg bg-light border-bottom border-1 border-black">
       <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <a class="navbar-brand d-flex align-items-center" href="index.php">
           <img src="images/hacker.png" alt="logo" class="logo">
           <span class="logo-context fs-3 fw-bold">3C用品店|忘記密碼</span>
         </a>
