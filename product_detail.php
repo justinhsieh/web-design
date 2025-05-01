@@ -87,36 +87,21 @@
               </tbody>
             </table>
           </div>';
-    $html .= '<div class="border border-2 mb-2 comment" style="display: none">
-            <form action="" method="" class="mt-2 d-flex flex-column" id="com">
-              <div class="border-bottom border-2 my-2 rating">
-                <span>商品評價:</span>
-                <i class="fa-solid fa-star" data-value="1"></i>
-                <i class="fa-solid fa-star" data-value="2"></i>
-                <i class="fa-solid fa-star" data-value="3"></i>
-                <i class="fa-solid fa-star" data-value="4"></i>
-                <i class="fa-solid fa-star" data-value="5"></i>
+    $html .= '<div class="row border rounded" style="background-color:#eaeded;">
+                <div class="mb-2 comment mt-2" id="review" style="display: none;"></div>
+                <div class="row mx-auto border-top border-2 border-secondary" id="show_review" style="display:none;"></div>
               </div>
-              <input type="hidden" name="ratingValue" id="ratingValue">
-              <div class="d-flex align-items-center gap-2">
-                <span>客戶名字:</span>
-                <textarea name="content" rows="3" cols="100" placeholder="留下你的評論"></textarea>
-                <input type="submit" class="comment-submit mt-auto">
-                <span id="error-container-1"></span>
+            <div class="row mt-4" id="review_pagination" style="display:none;">
+              <div class="col">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination mt-3 position-relative justify-content-center">
+                  </ul>
+                </nav>
               </div>
-            </form>
             </div>
           </div>';
 $conn->close();
 echo $html;    
           
 ?>
-          <!-- <div class="d-flex flex-column border border-2 my-2 w-75">
-            <div class="d-flex">
-              <div>名字:00000000</div>
-              <div class="ms-auto">日期:2025/03/23</div>
-            </div>
-            <div class="mt-3">
-              <span> 評論:11111111 </span>
-            </div>
-          </div> -->
+          
