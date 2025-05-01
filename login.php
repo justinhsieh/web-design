@@ -113,7 +113,7 @@
                         <button type="submit" class="btn btn-dark w-100 mb-3 login-btn">登入</button>
                     </form>
                     <div class="d-flex justify-content-center">
-                        <button type="button" class="btn"><a href="forget.html" class="link-underline link-underline-opacity-0 text-black">忘記密碼</a></button>
+                        <button type="button" class="btn"><a href="forget.php" class="link-underline link-underline-opacity-0 text-black">忘記密碼</a></button>
                     </div>
                 </div>
                 <div class="col-4 d-flex flex-column justify-content-center align-items-center border border-2 border-start-0 gap-3 p-5">
