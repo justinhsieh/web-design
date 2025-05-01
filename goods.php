@@ -1,4 +1,4 @@
-<?php include 'header.php' ?>
+<?php include 'head.php' ?>
 <script>
   $(function () {
     $(window).scroll(function () {
@@ -9,7 +9,7 @@
         }
     });
     $("#backToTop").click(function () {
-        $("html").animate({ scrollTop: 0 });
+        $("html").animate({ scrollTop: 0 },0);
     });
     $(".drop_item").click(function(){
       $(".dropdown-toggle").html($(this).html());
@@ -80,7 +80,7 @@
     function generatePagination(currentPage, totalPages) {
       let html = '';
 
-      if(totalPages !== 0){
+      if(totalPages > 0){
         html += `<li class="page-item page_f ${currentPage === 1 ? 'disabled' : ''}">
           <a class="page-link text-dark" href="#" data-page="1" aria-label="First">
             <span aria-hidden="true">&laquo;</span>
@@ -88,13 +88,12 @@
         </li>`;
       }
       
-
       for (let i = 1; i <= totalPages; i++) {
         html += `<li class="page-item page_ ${i === currentPage ? 'active' : ''}">
           <a class="page-link text-dark" href="#" data-page="${i}">${i}</a>
         </li>`;
       }
-      if(totalPages !== 0){
+      if(totalPages > 0){
         html += `<li class="page-item page_e ${currentPage === totalPages ? 'disabled' : ''}">
           <a class="page-link text-dark" href="#" data-page="${totalPages}" aria-label="Last">
             <span aria-hidden="true">&raquo;</span>
@@ -165,7 +164,7 @@
   <header>
     <nav class="navbar navbar-expand-lg bg-light border-bottom border-1 border-black">
       <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <a class="navbar-brand d-flex align-items-center" href="index.php">
           <img src="images/hacker.png" alt="logo" class="logo">
           <span class="logo-context fs-3 fw-bold">3C用品店</span>
         </a>
