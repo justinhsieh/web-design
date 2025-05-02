@@ -76,25 +76,37 @@
 <body>
   <!-- 導覽列 -->
   <header>
-    <nav class="navbar navbar-expand-lg bg-light border-bottom border-1 border-black">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="index.php">
           <img src="images/hacker.png" alt="logo" class="logo">
           <span class="logo-context fs-3 fw-bold">3C用品店|註冊會員</span>
         </a>
-        <nav aria-label="breadcrumb" class="ms-auto me-3">
-          <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="login.php" class="link-underline link-underline-opacity-0">登入</a></li>
-            <li class="breadcrumb-item"><a href="register.php" class="link-underline link-underline-opacity-0">註冊</a></li>
-          </ol>
-        </nav>
-        <div class="tool-right me-4 d-flex">
-          <a href="personal_id.html" alt="account">
-            <img src="images/user.png" class="icon pe-2">
-          </a>
-          <a href="shopping_list.html" alt="shopping-cart">
-            <img src="images/shopping-cart.png" class="icon" >
-          </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item ms-auto d-md-none">
+              <a class="nav-link active" aria-current="page" href="login.php">登入</a>
+            </li>
+            <li class="nav-item ms-auto d-md-none">
+              <a class="nav-link" href="personal_id.html">會員資料</a>
+            </li>
+            <li class="nav-item ms-auto d-md-none">
+              <a class="nav-link" href="shopping_list.html">購物車</a>
+            </li>
+            <li class="nav-item ms-auto d-none">
+              <a class="nav-link" href="admin.html">管理者後台</a>
+            </li>
+          </ul>
+        </div>
+        <div class="d-none d-md-flex ms-auto gap-3 icon-link">
+          <span class="fw-bold mt-auto">您好，帳號名稱</span>
+          <a href="login.php"><i class="fa-solid fa-right-to-bracket fs-1" style="color: lightslategray;"></i></a>
+          <a href="personal_id.html"><i class="fa-solid fa-user fs-1" style="color: lightslategray;"></i></a>
+          <a href="shopping_list.html"><i class="fa-solid fa-cart-shopping fs-1" style="color: lightslategray;"></i></a>
+          <a href="admin.html" class="d-none"><i class="fa-solid fa-gears fs-1" style="color: lightslategray;"></i></a>
         </div>
       </div>
     </nav>
@@ -103,37 +115,37 @@
    <main>
     <section class="h-100 d-flex align-items-center">
         <div class="container p-3 h-100">
-            <div class="row h-100">
-                <div class="col-12 d-flex justify-content-center align-items-center">
-                  <div class="d-flex flex-column justify-content-center align-items-center w-50 h-100 border border-2">
-                    <div class="w-75">
-                      <form action="#" id="register">
-                        <div class="mb-3">
-                          <label for="account" class="form-label">會員帳號</label>
-                          <input type="text" class="form-control" id="account" name="account" placeholder="帳號長度介於5-10">
-                        </div>
-                        <div class="mb-3">
-                            <label for="pwd" class="form-label">會員密碼</label>
-                            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密碼長度介於6-12">
-                        </div>
-                        <div class="mb-3">
-                          <label for="pwd2" class="form-label">密碼確認</label>
-                          <input type="password" class="form-control" id="pwd2" name="pwd2">
-                        </div>
-                        <div class="mb-3">
-                          <label for="exampleFormControlInput3" class="form-label">會員信箱</label>
-                          <input type="email" class="form-control" id="exampleFormControlInput3" name="email" placeholder="Email會員信箱">
-                        </div>
-                        <button type="submit" class="btn btn-dark w-100 mb-3">註冊會員</button>
-                      </form>
+          <div class="row h-100 d-flex justify-content-center">
+            <div class="col-12 col-md-8">
+              <div class="d-flex flex-column justify-content-center align-items-center h-100 border border-2">
+                <div class="w-75">
+                  <form action="#" id="register">
+                    <div class="mb-3">
+                      <label for="account" class="form-label">會員帳號</label>
+                      <input type="text" class="form-control" id="account" name="account" placeholder="帳號長度介於5-10">
                     </div>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <span>已有帳號？</span>
-                        <a href="login.php" class="text-danger link-underline link-underline-opacity-0">登入</a>
+                    <div class="mb-3">
+                        <label for="pwd" class="form-label">會員密碼</label>
+                        <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密碼長度介於6-12">
                     </div>
-                  </div>
+                    <div class="mb-3">
+                      <label for="pwd2" class="form-label">密碼確認</label>
+                      <input type="password" class="form-control" id="pwd2" name="pwd2">
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput3" class="form-label">會員信箱</label>
+                      <input type="email" class="form-control" id="exampleFormControlInput3" name="email" placeholder="Email會員信箱">
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100 mb-3">註冊會員</button>
+                  </form>
                 </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <span>已有帳號？</span>
+                    <a href="login.php" class="text-danger link-underline link-underline-opacity-0">登入</a>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
     </section>
    </main>
