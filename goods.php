@@ -47,8 +47,8 @@
 
     $("#subscribe").validate({
       submitHandler: function(form) {
-          alert("success!");
           form.submit();
+          showToast("感謝訂閱！")
       },
       rules:{
         email:{
@@ -154,6 +154,14 @@
     // 預設載入第一頁全部商品
     loadProducts(1, currentCategory, currentSubcategory);
 
+    function showToast(message){
+      const toastEl = $('#liveToast')[0];
+        if (toastEl) {
+          $(".toast-body").text(message);
+          const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
+          toastBootstrap.show();
+        }
+    }
   });
 </script>
 <style>
