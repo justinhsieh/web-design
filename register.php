@@ -45,9 +45,11 @@
             }
           }
         });
+
         $("#subscribe").validate({
           submitHandler: function(form) {
               form.submit();
+              showToast("感謝訂閱！")
           },
           rules:{
             email:{
@@ -64,6 +66,15 @@
             $("#error-container").html(error);
           }
         });
+
+        function showToast(message){
+          const toastEl = $('#liveToast')[0];
+            if (toastEl) {
+              $(".toast-body").text(message);
+              const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
+              toastBootstrap.show();
+            }
+        }
       });
     </script>
     <style>
