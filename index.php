@@ -19,7 +19,6 @@
         });
         $("#subscribe").validate({
           submitHandler: function(form) {
-              alert("success!");
               form.submit();
           },
           rules:{
@@ -30,11 +29,12 @@
           messages: {
             email: {
                 required:"信箱為必填欄位",
+                email:"請輸入正確的電子信箱格式"
             }
           },
           errorPlacement: function (error, element) {
             $("#error-container").html(error);
-        }
+          }
         });
         $(document).on('click','.card a',function(e){
           e.preventDefault();
