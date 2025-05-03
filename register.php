@@ -47,22 +47,22 @@
         });
         $("#subscribe").validate({
           submitHandler: function(form) {
-              alert("success!");
               form.submit();
           },
           rules:{
-            email2:{
-              required:true
+            email:{
+              required:true,
             }
           },
           messages: {
-            email2:{
-                required:"信箱為必填欄位"
+            email: {
+                required:"信箱為必填欄位",
+                email:"請輸入正確的電子信箱格式"
             }
           },
           errorPlacement: function (error, element) {
             $("#error-container").html(error);
-        }
+          }
         });
       });
     </script>
@@ -76,7 +76,7 @@
 <body>
   <!-- 導覽列 -->
   <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-md bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="index.php">
           <img src="images/hacker.png" alt="logo" class="logo">
@@ -101,11 +101,15 @@
             </li>
           </ul>
         </div>
-        <div class="d-none d-md-flex ms-auto gap-3 icon-link">
+        <div class="d-none d-md-flex ms-auto me-3 gap-3 icon-link">
           <span class="fw-bold mt-auto">您好，帳號名稱</span>
           <a href="login.php"><i class="fa-solid fa-right-to-bracket fs-1" style="color: lightslategray;"></i></a>
           <a href="personal_id.html"><i class="fa-solid fa-user fs-1" style="color: lightslategray;"></i></a>
-          <a href="shopping_list.html"><i class="fa-solid fa-cart-shopping fs-1" style="color: lightslategray;"></i></a>
+          <a href="shopping_list.html">
+            <i class="fa-solid fa-cart-shopping fs-1 position-relative" style="color: lightslategray;">
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill px-2 py-1 fs-5 bg-warning">9</span>
+            </i>
+          </a>
           <a href="admin.html" class="d-none"><i class="fa-solid fa-gears fs-1" style="color: lightslategray;"></i></a>
         </div>
       </div>
