@@ -33,6 +33,7 @@
         $("#subscribe").validate({
           submitHandler: function(form) {
               form.submit();
+              showToast("感謝訂閱！")
           },
           rules:{
             email:{
@@ -58,9 +59,17 @@
             // 登入成功，導向管理者後台
             window.location.href = "admin.html";
           } else if(account === "member" && password === "member123456") {
-            window.location.href = "goods.html";
+            window.location.href = "goods.php";
           }
         });
+        function showToast(message){
+          const toastEl = $('#liveToast')[0];
+            if (toastEl) {
+              $(".toast-body").text(message);
+              const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
+              toastBootstrap.show();
+            }
+        }
       });
     </script>
     <style>
