@@ -58,12 +58,14 @@
           messages: {
             email: {
                 required:"信箱為必填欄位",
+                email:"請輸入正確的電子信箱格式"
             }
           },
           errorPlacement: function (error, element) {
-            $("#error-container-2").html(error);
-        }
+            $("#error-container").html(error);
+          }
         });
+        
         function loadReview(page,product){
           $.get('get_review.php',{page:page,product:product},function(response){
             $("#review").html(response.review_html);
@@ -160,30 +162,46 @@
   </head>
   <body>
     <!-- 導覽列 -->
-    <header>
-      <nav class="navbar navbar-expand-lg bg-light border-bottom border-1 border-black">
-        <div class="container-fluid">
-          <a class="navbar-brand d-flex align-items-center" href="index.php">
-            <img src="images/hacker.png" alt="logo" class="logo">
-            <span class="logo-context fs-3 fw-bold">3C用品店|商品頁面</span>
-          </a>
-          <nav aria-label="breadcrumb" class="ms-auto me-3">
-            <ol class="breadcrumb mb-0">
-              <li class="breadcrumb-item"><a href="login.php" class="link-underline link-underline-opacity-0">登入</a></li>
-              <li class="breadcrumb-item"><a href="register.php" class="link-underline link-underline-opacity-0">註冊</a></li>
-            </ol>
-          </nav>
-          <div class="tool-right me-4 d-flex">
-            <a href="personal_id.html" alt="account">
-              <img src="images/user.png" class="icon pe-2">
-            </a>
-            <a href="shopping_list.html" alt="shopping-cart">
-              <img src="images/shopping-cart.png" class="icon" >
-            </a>
-          </div>
+  <header>
+    <nav class="navbar navbar-expand-md bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="index.php">
+          <img src="images/hacker.png" alt="logo" class="logo">
+          <span class="logo-context fs-3 fw-bold">3C用品店</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item ms-auto d-md-none">
+              <a class="nav-link active" aria-current="page" href="login.php">登入</a>
+            </li>
+            <li class="nav-item ms-auto d-md-none">
+              <a class="nav-link" href="personal_id.html">會員資料</a>
+            </li>
+            <li class="nav-item ms-auto d-md-none">
+              <a class="nav-link" href="shopping_list.html">購物車</a>
+            </li>
+            <li class="nav-item ms-auto d-none">
+              <a class="nav-link" href="admin.html">管理者後台</a>
+            </li>
+          </ul>
         </div>
-      </nav>
-    </header>
+        <div class="d-none d-md-flex ms-auto me-3 gap-3 icon-link">
+          <span class="fw-bold mt-auto">您好，帳號名稱</span>
+          <a href="login.php"><i class="fa-solid fa-right-to-bracket fs-1" style="color: lightslategray;"></i></a>
+          <a href="personal_id.html"><i class="fa-solid fa-user fs-1" style="color: lightslategray;"></i></a>
+          <a href="shopping_list.html">
+            <i class="fa-solid fa-cart-shopping fs-1 position-relative" style="color: lightslategray;">
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill px-2 py-1 fs-5 bg-warning">9</span>
+            </i>
+          </a>
+          <a href="admin.html" class="d-none"><i class="fa-solid fa-gears fs-1" style="color: lightslategray;"></i></a>
+        </div>
+      </div>
+    </nav>
+  </header>
     <!-- 商品 -->
     <main>
       <div class="container">
