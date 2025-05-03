@@ -20,6 +20,7 @@
         $("#subscribe").validate({
           submitHandler: function(form) {
               form.submit();
+              showToast("感謝訂閱！")
           },
           rules:{
             email:{
@@ -36,12 +37,22 @@
             $("#error-container").html(error);
           }
         });
+
         $(document).on('click','.card a',function(e){
           e.preventDefault();
           let product_name = $(this).closest('.card').find('.card-title').text();
           let url = 'shop.php?product_name=' + encodeURIComponent(product_name);
           window.location.href = url;
         })
+
+        function showToast(message){
+          const toastEl = $('#liveToast')[0];
+            if (toastEl) {
+              $(".toast-body").text(message);
+              const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
+              toastBootstrap.show();
+            }
+        }
       });
     </script>
 </head>
