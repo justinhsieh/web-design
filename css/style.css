@@ -1,5 +1,6 @@
 html,body{
     height:100%;
+    width:100%;
     margin:0;
     padding:0;
     display:flex;
@@ -18,7 +19,7 @@ main{
     font-family:"Noto+Sans+TC";
 }
 .carousel-img{
-    height:372px;
+    object-fit:cover;
     max-width:100%;
 }
 .carousel-indicators .c-indicator{
@@ -55,11 +56,9 @@ input:focus + .search-icon {
 .dropdown-toggle{
     height:30px;
 }
-.list-group-flush{
-    width:200px;
-}
-.list-group-item{
+.list-group-horizontal .list-group-item{
     font-family:"Noto+Sans+TC";
+    white-space: nowrap;
 }
 .card-img-top{
     height:350px;
@@ -156,4 +155,9 @@ i.like_unlike.selected {
     50%  { transform: scale(1.5) scaleY(var(--scaleY, 1)); }
     100% { transform: scale(1) scaleY(var(--scaleY, 1)); }
 }
-  
+
+@media (min-width: 768px) {
+    .input-width-md-75 {
+      width: 75%;
+    }
+}
