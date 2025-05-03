@@ -8,39 +8,47 @@
                 $("#backToTop").css("display", "none");
             }
         });
+
         $("#backToTop").click(function () {
             $("html").animate({ scrollTop: 0 },0);
         });
+
         $(".spec-btn").click(function () {
           $(".intro").show();
           $(".comment").hide();
           $("#show_review").hide();
           $("#review_pagination").hide();
         });
+
         $(".comment-btn").click(function () {
           $(".intro").hide();
           $(".comment").show();
           $("#show_review").show();
           $("#review_pagination").show();
         });
+
         $(".spec-comment").click(function(){
           $(".spec-comment").removeClass("active");
           $(this).addClass("active");
         })
+
         $(".item-color").click(function(){
           $(".item-color").removeClass("active");
           $(this).addClass("active");
         })
+
         $(document).on('mouseenter', '.rating i', function () {
           $(this).prevAll().addBack().addClass("hovered");
         }).on('mouseleave', '.rating i', function () {
           $(".rating i").removeClass("hovered");
         });
+
         $(document).on('click','.rating i',function(){
           $(".rating i").removeClass("selected");
           $(this).prevAll().addBack().addClass("selected");
           $("#ratingValue").val($(this).data("value"));
         })
+
         $.validator.addMethod("ratingRequired", function(value, element) {
           return value !== "";
         }, "請選擇星星評分");
@@ -49,6 +57,7 @@
         $("#subscribe").validate({
           submitHandler: function(form) {
               form.submit();
+              showToast("感謝訂閱！")
           },
           rules:{
             email:{
@@ -65,52 +74,48 @@
             $("#error-container").html(error);
           }
         });
-        
+
         function loadReview(page,product){
           $.get('get_review.php',{page:page,product:product},function(response){
             $("#review").html(response.review_html);
             $('.pagination').html(response.pagination);
             $('#show_review').html(response.show_review)
             $("#com").validate({
-          ignore:[],
-          submitHandler: function(form) {
-              $.post('review2db.php',{
-              rating:$('#ratingValue').val(),
-              comment:$('[name="content"]').val(),
-              productName:product
-            },function(response){
-              loadReview(1,product);
-              const toastEl = $('#liveToast')[0];
-              if (toastEl) {
-                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
-                toastBootstrap.show();
+              ignore:[],
+              submitHandler: function(form) {
+                  $.post('review2db.php',{
+                  rating:$('#ratingValue').val(),
+                  comment:$('[name="content"]').val(),
+                  productName:product
+                },function(response){
+                  loadReview(1,product);
+                  showToast("謝謝您的評論！")
+                  $('.review_id').val(response.id);
+                },'json')
+              },
+              rules: {
+                ratingValue: {
+                  ratingRequired: true
+                },
+                content: {
+                  required: true,
+                  maxlength:100
+                }
+              },
+              messages: {
+                content: {
+                  required: "請輸入留言",
+                  maxlength:"輸入不可超過100個字"
+                }
+              },
+              errorPlacement: function (error, element) {
+                if (element.attr("name") === "ratingValue") {
+                  $("#error-container-3").html(error);
+                }else if(element.attr("name") === "content"){
+                  $("#error-container-1").html(error);
+                }
               }
-              $('.review_id').val(response.id);
-            },'json')
-          },
-          rules: {
-            ratingValue: {
-              ratingRequired: true
-            },
-            content: {
-              required: true,
-              maxlength:100
-            }
-          },
-          messages: {
-            content: {
-              required: "請輸入留言",
-              maxlength:"輸入不可超過100個字"
-            }
-          },
-          errorPlacement: function (error, element) {
-            if (element.attr("name") === "ratingValue") {
-              $("#error-container-3").html(error);
-            }else if(element.attr("name") === "content"){
-              $("#error-container-1").html(error);
-            }
-          }
-        });
+            });
           },'json')
         }
         // 點擊分頁按鈕
@@ -148,6 +153,14 @@
           }
           },'json')
         })
+        function showToast(message){
+          const toastEl = $('#liveToast')[0];
+            if (toastEl) {
+              $(".toast-body").text(message);
+              const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
+              toastBootstrap.show();
+            }
+        }
       });
     </script>
     <style>
