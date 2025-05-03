@@ -2,7 +2,7 @@
 <footer class="bg-dark">
     <div class="container-fluid">
       <div class="row bg-dark py-5 align-items-center">
-
+        
         <div class="col-12 col-md-6 text-light mt-3">
           <span class="d-flex border border-2 border-white rounded ms-2">防詐騙提醒：3C用品店絕不會以電話或簡訊通知訂單/分期出錯、或變更付款方式，更不會要您前往ATM進行任何操作！不應在3C用品店以外的任何地方輸入3C用品店帳密(例如非政府官方的電子發票app)，以免權益受損！</span>
         </div>
