@@ -3,7 +3,18 @@
       $(function() {
         $("#login").validate({
           submitHandler: function(form) {
-              form.submit();
+            let account = $("#account").val();
+            let password = $("#pwd").val();
+            $.post('check_login.php',{account:account,pwd:password},function(response){
+              if(response.status === "SUCCESS"){
+                showToast("登入成功！3秒後跳轉到首頁");
+                setTimeout(() => {
+                    window.location.href = 'index.php';
+                }, 3000);
+              }else{
+                showToast('請輸入正確的帳號密碼！');
+              }
+            })
           },
           rules:{
             account:{
@@ -30,10 +41,17 @@
             }
           }
         });
+
         $("#subscribe").validate({
           submitHandler: function(form) {
-              form.submit();
-              showToast("感謝訂閱！")
+            let email = $('#email').val().toLowerCase().trim();
+            $.post('subscriber.php',{email:email},function(response){
+              if(response.status === "OK"){
+                showToast("感謝訂閱！")
+              }else{
+                $("#error-container").html("電子信箱已被使用過");
+              }
+            },'json');
           },
           rules:{
             email:{
@@ -50,22 +68,11 @@
             $("#error-container").html(error);
           }
         });
-        $("#login").on("submit", function(e) {
-          e.preventDefault(); // 阻止表單預設提交行為
-          let account = $("#account").val();
-          let password = $("#pwd").val();
-    
-          if (account === "admin" && password === "admin123456") {
-            // 登入成功，導向管理者後台
-            window.location.href = "admin.html";
-          } else if(account === "member" && password === "member123456") {
-            window.location.href = "goods.php";
-          }
-        });
+
         function showToast(message){
           const toastEl = $('#liveToast')[0];
             if (toastEl) {
-              $(".toast-body").text(message);
+              $("#toast-message").text(message);
               const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
               toastBootstrap.show();
             }
@@ -104,7 +111,7 @@
                     <button type="submit" class="btn btn-dark w-100 mb-3 login-btn">登入</button>
                 </form>
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="btn"><a href="forget.php" class="link-underline link-underline-opacity-0 text-black">忘記密碼</a></button>
+                    <a href="forget.php" class="link-underline link-underline-opacity-0 text-black">忘記密碼</a>
                 </div>
             </div>
             <div class="col-12 col-md-4 d-flex flex-column justify-content-center align-items-center border border-2 border-start-0 gap-3 p-5">
@@ -116,5 +123,20 @@
     </section>
    </main>
    <?php include'footer.php'; ?>
+   <div class="toast_1 position-fixed start-50 translate-middle p-3">
+      <div id="liveToast" class="toast bg-danger-subtle" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <i class="fa-solid fa-bell" style="color:rgb(123, 93, 193);"></i>
+          <strong class="me-auto ms-2">通知</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          <span id="toast-message" class="fw-bold fs-6">你好</span>
+          <div class="mt-2 pt-2 border-top text-black">
+            如果您的瀏覽器沒有自動跳轉，請點擊<a href="login.php" class="link-primary text-decoration-none">這裡</a>。
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>

@@ -10,9 +10,9 @@
         <div class="col-12 col-md-6 mt-3">
           <div class="row">
             <!-- Email -->
-            <div class="col-12 col-lg-7 mb-3 mb-md-0">
+            <div class="col-12 col-lg-7 mb-3 mb-md-0 mt-lg-auto mt-xl-0 ps-xl-5">
               <div class="subscribe">
-                <div class="text-light fs-6 mb-2">Email:</div>
+                <div class="text-light fs-6 mb-2 d-flex">Email:</div>
                 <form action="" id="subscribe" class="d-flex flex-column flex-sm-row gap-2">
                   <input type="email" class="form-control input-width-md-75" id="email" name="email" placeholder="輸入E-mail" aria-label="email">
                   <button class="btn btn-outline-light" type="submit">訂閱</button>
@@ -22,9 +22,9 @@
             </div>
             <!-- Social Icons -->
             <div class="col-12 col-lg-5">
-              <div class="followus text-center text-md-start">
+              <div class="followus text-center text-md-start text-lg-center pe-lg-5">
                 <div class="text-light fw-bold mb-2 followus_title">FOLLOW US ON</div>
-                <div class="d-flex justify-content-center justify-content-md-start gap-3 fs-4">
+                <div class="d-flex justify-content-center justify-content-md-start justify-content-lg-center gap-3 fs-4">
                   <a href="#" class="text-light" title="Facebook">
                     <i class="fa-brands fa-square-facebook"></i>
                   </a>
@@ -41,9 +41,12 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <p class="copyright text-light text-center">COPYRIGHT@3C用品店 CO.,LTD.ALL RIGHTS RESERVED.</p>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p class="copyright text-light text-center">COPYRIGHT@3C用品店 CO.,LTD.ALL RIGHTS RESERVED.</p>
+        </div>
       </div>
     </div>
+    
   </footer>

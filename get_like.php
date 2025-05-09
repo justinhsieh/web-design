@@ -29,6 +29,6 @@
     $stmt->close();
     echo json_encode([
         'like_cnt' => $like_cnt
-     ]);
-     $conn->close();
+    ]);
+    $conn->close();
 ?>
