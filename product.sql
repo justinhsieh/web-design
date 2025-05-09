@@ -27,6 +27,38 @@ USE `group_11`;
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `member`
+--
+
+CREATE TABLE `member` (
+  `id` int(11) NOT NULL COMMENT '會員編號',
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '登入帳號',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '加密密碼',
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '電子郵件',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '姓名',
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '手機號碼',
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '地址',
+  `gender` enum('M','F','O') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'O' COMMENT '性別:M=男、F=女、O=其他',
+  `birthdate` date DEFAULT NULL COMMENT '生日',
+  `created_at` datetime DEFAULT NULL COMMENT '註冊時間',
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
+  `last_login_at` datetime DEFAULT NULL COMMENT '最後登入時間',
+  `status` tinyint(1) NOT NULL COMMENT '帳號狀態:1=啟用、0=停用',
+  `role` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user' COMMENT '權限角色'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `member`
+--
+
+INSERT INTO `member` (`id`, `username`, `password`, `email`, `name`, `phone`, `address`, `gender`, `birthdate`, `created_at`, `updated_at`, `last_login_at`, `status`, `role`) VALUES
+(9, '12345', '$2y$10$8IG3fiuwXgroT7SFgLS2K.sNtCTrlUnz0nKmMwke34asji1XetuUq', '5555@sss.555', NULL, NULL, NULL, 'O', NULL, NULL, NULL, NULL, 0, 'user'),
+(10, '111111', '$2y$10$dqDsEyor0f8rvdE4zQ0N5OH9gxdfqBsrXrOclWBQV5WV9e8RAL86.', '5555@sss.5551', NULL, NULL, NULL, 'O', NULL, NULL, NULL, NULL, 0, 'user'),
+(11, '123456', '$2y$10$/K3wlgHYz9VR8Yvbz8ctQutjbak6N1LF0tmB8NpT9PXWQGKB7clSO', 'justinhsieh670@gmail.com', NULL, NULL, NULL, 'O', NULL, NULL, '2025-05-08 18:53:46', NULL, 0, 'user');
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `product`
 --
 
@@ -112,9 +144,39 @@ CREATE TABLE `reviews` (
 INSERT INTO `reviews` (`account`, `time`, `comment`, `pid`, `rating`, `review_id`, `like_cnt`, `unlike_cnt`) VALUES
 ('', '2025-05-03 12:29:32', 'sad', 1, 4, 1, 0, 0);
 
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `subscriber`
+--
+
+CREATE TABLE `subscriber` (
+  `id` int(11) NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `subscriber`
+--
+
+INSERT INTO `subscriber` (`id`, `email`) VALUES
+(4, 'jusss@gmaaa.ccc'),
+(2, 'justinhsieh@gmail.com'),
+(1, 'justinhsieh670@gmail.com'),
+(5, 'qweeqweqw@fdsfsdf.fff'),
+(3, 'www@mgg.cc');
+
 --
 -- 已傾印資料表的索引
 --
+
+--
+-- 資料表索引 `member`
+--
+ALTER TABLE `member`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- 資料表索引 `product`
@@ -129,8 +191,21 @@ ALTER TABLE `reviews`
   ADD PRIMARY KEY (`review_id`);
 
 --
+-- 資料表索引 `subscriber`
+--
+ALTER TABLE `subscriber`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- 在傾印的資料表使用自動增長(AUTO_INCREMENT)
 --
+
+--
+-- 使用資料表自動增長(AUTO_INCREMENT) `member`
+--
+ALTER TABLE `member`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '會員編號', AUTO_INCREMENT=12;
 
 --
 -- 使用資料表自動增長(AUTO_INCREMENT) `product`
@@ -143,6 +218,12 @@ ALTER TABLE `product`
 --
 ALTER TABLE `reviews`
   MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- 使用資料表自動增長(AUTO_INCREMENT) `subscriber`
+--
+ALTER TABLE `subscriber`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
