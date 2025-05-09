@@ -56,8 +56,14 @@
         
         $("#subscribe").validate({
           submitHandler: function(form) {
-              form.submit();
-              showToast("感謝訂閱！")
+            let email = $('#email').val().toLowerCase().trim();
+            $.post('subscriber.php',{email:email},function(response){
+              if(response.status === "OK"){
+                showToast("感謝訂閱！")
+              }else{
+                $("#error-container").html("電子信箱已被使用過");
+              }
+            },'json');
           },
           rules:{
             email:{
@@ -174,47 +180,7 @@
     </style>
   </head>
   <body>
-    <!-- 導覽列 -->
-  <header>
-    <nav class="navbar navbar-expand-md bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="index.php">
-          <img src="images/hacker.png" alt="logo" class="logo">
-          <span class="logo-context fs-3 fw-bold">3C用品店</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item ms-auto d-md-none">
-              <a class="nav-link active" aria-current="page" href="login.php">登入</a>
-            </li>
-            <li class="nav-item ms-auto d-md-none">
-              <a class="nav-link" href="personal_id.html">會員資料</a>
-            </li>
-            <li class="nav-item ms-auto d-md-none">
-              <a class="nav-link" href="shopping_list.html">購物車</a>
-            </li>
-            <li class="nav-item ms-auto d-none">
-              <a class="nav-link" href="admin.html">管理者後台</a>
-            </li>
-          </ul>
-        </div>
-        <div class="d-none d-md-flex ms-auto me-3 gap-3 icon-link">
-          <span class="fw-bold mt-auto">您好，帳號名稱</span>
-          <a href="login.php"><i class="fa-solid fa-right-to-bracket fs-1" style="color: lightslategray;"></i></a>
-          <a href="personal_id.html"><i class="fa-solid fa-user fs-1" style="color: lightslategray;"></i></a>
-          <a href="shopping_list.html">
-            <i class="fa-solid fa-cart-shopping fs-1 position-relative" style="color: lightslategray;">
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill px-2 py-1 fs-5 bg-warning">9</span>
-            </i>
-          </a>
-          <a href="admin.html" class="d-none"><i class="fa-solid fa-gears fs-1" style="color: lightslategray;"></i></a>
-        </div>
-      </div>
-    </nav>
-  </header>
+    <?php include'header.php'; ?>
     <!-- 商品 -->
     <main>
       <div class="container">
@@ -227,15 +193,15 @@
     <?php include'footer.php'; ?>
     <button id="backToTop" class="back-to-top"></button>
     
-  <div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast_1 position-fixed start-50 translate-middle p-3">
+    <div id="liveToast" class="toast bg-danger-subtle" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header">
-        <i class="fa-solid fa-bell" style="color: #82769e;"></i>
+        <i class="fa-solid fa-bell" style="color:rgb(123, 93, 193);"></i>
         <strong class="me-auto ms-2">通知</strong>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
-      <div class="toast-body">
-        謝謝您的評論！
+      <div class="toast-body fw-bold fs-6">
+        <span id="toast-message">123</span>
       </div>
     </div>
   </div>
