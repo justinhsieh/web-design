@@ -37,7 +37,7 @@
                 <a href="#"><img src="'.$row['pic'].'" class="card-img-top"></a>
                 <div class="card-body">
                     <span class="fs-5">'.$row['name'].'</span>
-                    <h5 class="card-title">售價<span class="price">'.number_format($row['price']).'</span>元</h5>
+                    <h5 class="card-title">售價<span class="price text-danger fs-3">'.number_format($row['price']).'</span>元</h5>
                     <div class="d-flex gap-3">
                     <button type="button" class="btn btn-danger">直接購買</button>
                     <button type="button" class="btn btn-primary">加入購物車</button>

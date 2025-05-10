@@ -1,4 +1,7 @@
-<?php include 'head.php' ?>
+<?php 
+  session_start();
+  include 'head.php'; 
+?>
 <script>
   $(function () {
     $(window).scroll(function () {

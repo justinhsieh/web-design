@@ -1,4 +1,7 @@
-<?php include 'head.php' ?>
+<?php 
+  session_start();
+  include 'head.php' 
+?>
     <script>
       $(function() {
         $("#login").validate({
@@ -6,13 +9,17 @@
             let account = $("#account").val();
             let password = $("#pwd").val();
             $.post('check_login.php',{account:account,pwd:password},function(response){
-              if(response.status === "SUCCESS"){
+              if(response.status === "USER"){
                 showToast("登入成功！3秒後跳轉到首頁");
                 setTimeout(() => {
                     window.location.href = 'index.php';
                 }, 3000);
+              }else if(response.status === "ADMIN"){
+                window.location.href = 'admin.html';
               }else{
-                showToast('請輸入正確的帳號密碼！');
+                $('#error-account').text("請輸入正確的帳號密碼");
+                $("#account").val('');
+                $("#pwd").val('');
               }
             })
           },
@@ -41,6 +48,9 @@
             }
           }
         });
+        $('#account,#pwd').on('input',function(){
+          $('#error-account').text('');
+        })
 
         $("#subscribe").validate({
           submitHandler: function(form) {
@@ -107,6 +117,7 @@
                     <div class="mb-3">
                         <label for="pwd" class="form-label">會員密碼</label>
                         <input type="password" class="form-control" id="pwd" name="pwd" placeholder="*************">
+                        <span id="error-account" class="text-danger small"></span>
                     </div>
                     <button type="submit" class="btn btn-dark w-100 mb-3 login-btn">登入</button>
                 </form>

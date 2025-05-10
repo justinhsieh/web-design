@@ -1,4 +1,7 @@
-<?php include'head.php'; ?>
+<?php 
+  session_start();
+  include 'head.php' 
+?>
     <script>
       $(function() {
         $("#send").validate({
@@ -34,9 +37,6 @@
               required:"密碼確認為必填欄位",
               equalTo:"兩次密碼不相符"
             }
-          },
-          errorPlacement: function (error, element) {
-            $("#error-container-1").html(error);
           }
         });
 

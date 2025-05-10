@@ -22,7 +22,7 @@
       $html .= '<li class="text-body-secondary">'.$function[$i].'</li>';
     }
     $html .='</ul>
-            <p class="border-top border-bottom p-3">售價<span class="price">'.number_format($row['price']).'</span>元</p>
+            <p class="border-top border-bottom p-3">售價<span class="price text-danger fs-3">'.number_format($row['price']).'</span>元</p>
             <p>品牌名稱:'.$row['brand'].'</p>
             <div class="d-flex align-items-center">
               <p>顏色:</p>
