@@ -1,14 +1,10 @@
 $(document).ready(function($){    
     $("#form-personalID, #form-add-customerID").validate({
     submitHandler: function(form){
-        alert("個人資料已儲存!");
         form.submit();
     },
     rules: {},
     messages: {
-        customerID:{
-            required: "ID為必填欄位"
-        },
         name: {
             required: "姓名為必填欄位"
         },
@@ -78,9 +74,6 @@ $(document).ready(function($){
         },
         rules: {},
         messages: {
-            productID:{
-                required: "商品編號為必填欄位"
-            },
             productTime:{
                 required: "上架時間為必填欄位",
                 pattern: "格式錯誤"
