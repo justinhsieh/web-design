@@ -1,5 +1,15 @@
-<?php include 'config.php';
-
+<?php 
+    session_start();
+    if(!isset($_SESSION['username'])){
+        http_response_code(403);
+        echo json_encode([
+            'id' => $last_id,
+            'status' => "unauthorized"
+        ]);
+        exit;
+    }
+    $status = "SUCCESS";
+    include 'config.php';
     header('Content-Type: application/json');
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $rating = intval($_POST['rating']?? 0);
@@ -14,15 +24,18 @@
         if ($row = $result->fetch_assoc()) {
             $pid = $row['pid'];
 
-            $stmt = $conn->prepare("INSERT INTO `reviews` (`time`, `comment`, `pid`, `rating`) VALUES (CURRENT_TIMESTAMP, ?, ?, ?)");
-            $stmt->bind_param("sii", $comment, $pid, $rating);
+            $stmt = $conn->prepare("INSERT INTO `reviews` (`username`,`time`, `comment`, `pid`, `rating`) VALUES (?,CURRENT_TIMESTAMP, ?, ?, ?)");
+            $stmt->bind_param("ssii",$_SESSION['username'],$comment, $pid, $rating);
             $stmt->execute();
+        }else{
+            $status = "ERROR";
         }
         $last_id = $conn->insert_id;
         $stmt->close();
     }
     echo json_encode([
-        'id' => $last_id
-     ]);
+        'id' => $last_id,
+        'status' => $status
+    ]);
     $conn->close();
 ?>

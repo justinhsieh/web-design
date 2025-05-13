@@ -55,7 +55,6 @@
         $.validator.addMethod("ratingRequired", function(value, element) {
           return value !== "";
         }, "請選擇星星評分");
-        const product = "<?php echo "{$_GET['product_name']}";?>";
         
         $("#subscribe").validate({
           submitHandler: function(form) {
@@ -84,47 +83,56 @@
           }
         });
 
+        const product = "<?php echo "{$_GET['product_name']}";?>";
         function loadReview(page,product){
           $.get('get_review.php',{page:page,product:product},function(response){
             $("#review").html(response.review_html);
             $('.pagination').html(response.pagination);
             $('#show_review').html(response.show_review)
-            $("#com").validate({
-              ignore:[],
-              submitHandler: function(form) {
-                  $.post('review2db.php',{
-                  rating:$('#ratingValue').val(),
-                  comment:$('[name="content"]').val(),
-                  productName:product
-                },function(response){
-                  loadReview(1,product);
-                  showToast("謝謝您的評論！")
-                  $('.review_id').val(response.id);
-                },'json')
-              },
-              rules: {
-                ratingValue: {
-                  ratingRequired: true
+            if(!response.is_login){
+              $('#com').html('<div class="text-danger text-center">請先 <a href="login.php" class="text-decoration-none">登入</a> 才能留言。</div>');
+            }else{
+              $("#com").validate({
+                ignore:[],
+                submitHandler: function(form) {
+                    $.post('review2db.php',{
+                    rating:$('#ratingValue').val(),
+                    comment:$('[name="content"]').val(),
+                    productName:product
+                  },function(response){
+                    if(response.status === "SUCCESS"){
+                      loadReview(1,product);
+                      showToast("謝謝您的評論！")
+                      $('.review_id').val(response.id);
+                    }else{
+                      showToast("系統發生錯誤，請再試一次！");
+                    }
+                  },'json')
                 },
-                content: {
-                  required: true,
-                  maxlength:100
+                rules: {
+                  ratingValue: {
+                    ratingRequired: true
+                  },
+                  content: {
+                    required: true,
+                    maxlength:100
+                  }
+                },
+                messages: {
+                  content: {
+                    required: "請輸入留言！",
+                    maxlength:"輸入不可超過100個字！"
+                  }
+                },
+                errorPlacement: function (error, element) {
+                  if (element.attr("name") === "ratingValue") {
+                    $("#error-container-3").html(error);
+                  }else if(element.attr("name") === "content"){
+                    $("#error-container-1").html(error);
+                  }
                 }
-              },
-              messages: {
-                content: {
-                  required: "請輸入留言",
-                  maxlength:"輸入不可超過100個字"
-                }
-              },
-              errorPlacement: function (error, element) {
-                if (element.attr("name") === "ratingValue") {
-                  $("#error-container-3").html(error);
-                }else if(element.attr("name") === "content"){
-                  $("#error-container-1").html(error);
-                }
-              }
-            });
+              });
+            }
           },'json')
         }
         // 點擊分頁按鈕
@@ -134,7 +142,9 @@
             loadReview(page,product);
           }
         });
+
         loadReview(1,product);
+
         $(document).on('mouseenter','i.like_unlike',function(){
           $(this).removeClass('fa-regular').addClass('fa-solid');
         }).on('mouseleave','i.like_unlike',function(){
@@ -142,6 +152,7 @@
             $(this).removeClass('fa-solid').addClass('fa-regular');
           }
         });
+
         $(document).on('click','i.like_unlike',function(){
           let select = 0;
           if(!$(this).hasClass('selected')){
@@ -162,10 +173,11 @@
           }
           },'json')
         })
+
         function showToast(message){
           const toastEl = $('#liveToast')[0];
             if (toastEl) {
-              $(".toast-body").text(message);
+              $("#toast-message").text(message);
               const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
               toastBootstrap.show();
             }
@@ -197,16 +209,16 @@
     <button id="backToTop" class="back-to-top"></button>
     
     <div class="toast_1 position-fixed start-50 translate-middle p-3">
-    <div id="liveToast" class="toast bg-danger-subtle" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <i class="fa-solid fa-bell" style="color:rgb(123, 93, 193);"></i>
-        <strong class="me-auto ms-2">通知</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-      <div class="toast-body fw-bold fs-6">
-        <span id="toast-message">123</span>
+      <div id="liveToast" class="toast bg-danger-subtle" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <i class="fa-solid fa-bell" style="color:rgb(123, 93, 193);"></i>
+          <strong class="me-auto ms-2">通知</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body fw-bold fs-6">
+          <span id="toast-message">123</span>
+        </div>
       </div>
     </div>
-  </div>
   </body>
 </html>

@@ -121,24 +121,7 @@
     <div class="mx-auto fs-1 fw-bold my-5">PRODUCT</div>
     <div class="container">
       <div class="row d-flex mb-5 justify-content-evenly">
-          <div class="col-12 col-md-4 card" style="width: 18rem;">
-              <a href="#"><img src="images/ipad11.png" class="card-img-top"></a>
-              <div class="card-body text-center">
-                <h5 class="card-title fw-bold">iPad 11 11吋/WiFi/128G 平板電腦</h5>
-              </div>
-          </div>
-          <div class="col-12 col-md-4 card" style="width: 18rem;">
-              <a href="#"><img src="images/ipadair.png" class="card-img-top"></a>
-              <div class="card-body text-center">
-                <h5 class="card-title fw-bold">iPad Air 11吋/WiFi/128G平板電腦</h5>
-              </div>
-          </div>
-          <div class="col-12 col-md-4 card" style="width: 18rem;">
-              <a href="#"><img src="images/ipadpro.png" class="card-img-top"></a>
-              <div class="card-body text-center">
-                <h5 class="card-title fw-bold">iPad Pro 11吋/WiFi/256G/M4晶片 平板電腦</h5>
-              </div>
-          </div>
+        <?php include'getIndexProduct.php'?>
       </div>
     </div>
   </div>

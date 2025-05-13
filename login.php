@@ -18,8 +18,6 @@
                 window.location.href = 'admin.html';
               }else{
                 $('#error-account').text("請輸入正確的帳號密碼");
-                $("#account").val('');
-                $("#pwd").val('');
               }
             })
           },
@@ -44,7 +42,7 @@
             pwd:{
                 required:"密碼為必填欄位",
                 minlength:"密碼最少要6個字",
-                maxlength:"密碼最少要12個字"
+                maxlength:"密碼最長12個字"
             }
           }
         });
