@@ -23,15 +23,15 @@
             }
           ?>
           <li class="nav-item ms-auto d-md-none">
-            <a class="nav-link" href="personal_id.html">會員資料</a>
+            <a class="nav-link" href="personal_id.php">會員資料</a>
           </li>
           <li class="nav-item ms-auto d-md-none">
-            <a class="nav-link" href="shopping_list.html">購物車</a>
+            <a class="nav-link" href="shopping_list.php">購物車</a>
           </li>
           <?php 
             if(isset($_SESSION['role']) && $_SESSION['role'] === "admin"){
               echo '<li class="nav-item ms-auto d-md-none">
-                      <a class="nav-link" href="admin.html">管理者後台</a>
+                      <a class="nav-link" href="admin.php">管理者後台</a>
                     </li>';
             }
           ?>
@@ -54,15 +54,15 @@
               echo '<a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-rotate-180 fs-1" style="color: lightslategray;"></i></a>';
             }
           ?>
-        <a href="personal_id.html"><i class="fa-solid fa-user fs-1" style="color: lightslategray;"></i></a>
-        <a href="shopping_list.html">
+        <a href="personal_id.php"><i class="fa-solid fa-user fs-1" style="color: lightslategray;"></i></a>
+        <a href="shopping_list.php">
           <i class="fa-solid fa-cart-shopping fs-1 position-relative" style="color: lightslategray;">
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill px-2 py-1 fs-5 bg-warning">9</span>
           </i>
         </a>
         <?php 
           if(isset($_SESSION['role']) && $_SESSION['role'] === "admin"){
-            echo '<a href="admin.html"><i class="fa-solid fa-gears fs-1" style="color: lightslategray;"></i></a>';
+            echo '<a href="admin.php"><i class="fa-solid fa-gears fs-1" style="color: lightslategray;"></i></a>';
           }
         ?>
       </div>
