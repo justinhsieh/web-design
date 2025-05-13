@@ -14,31 +14,31 @@
           <?php 
             if(!isset($_SESSION['username'],$_SESSION['role'])){
               echo '<li class="nav-item ms-auto d-md-none">
-                      <a class="nav-link active" aria-current="page" href="login.php">登入</a>
+                      <a class="nav-link active main_nav fs-4" aria-current="page" href="login.php">登入</a>
                     </li>';
             }else{
               echo '<li class="nav-item ms-auto d-md-none">
-                      <a class="nav-link" aria-current="page" href="logout.php">登出</a>
+                      <a class="nav-link main_nav fs-4" aria-current="page" href="logout.php">登出</a>
                     </li>';
             }
           ?>
           <li class="nav-item ms-auto d-md-none">
-            <a class="nav-link" href="personal_id.php">會員資料</a>
+            <a class="nav-link main_nav fs-4" href="personal_id.php">會員資料</a>
           </li>
           <li class="nav-item ms-auto d-md-none">
-            <a class="nav-link" href="shopping_list.php">購物車</a>
+            <a class="nav-link main_nav fs-4" href="shopping_list.php">購物車</a>
           </li>
           <?php 
             if(isset($_SESSION['role']) && $_SESSION['role'] === "admin"){
               echo '<li class="nav-item ms-auto d-md-none">
-                      <a class="nav-link" href="admin.php">管理者後台</a>
+                      <a class="nav-link main_nav fs-4" href="admin.php">管理者後台</a>
                     </li>';
             }
           ?>
         </ul>
       </div>
       <div class="d-none d-md-flex ms-auto me-3 gap-3 icon-link">
-        <span class="fw-bold mt-auto">
+        <span class="fw-bold mt-auto main_nav">
           <?php 
             if(isset($_SESSION['username'])){
               echo "您好，". htmlentities($_SESSION['username']);
@@ -49,20 +49,21 @@
         </span>
         <?php 
             if(!isset($_SESSION['username'],$_SESSION['role'])){
-              echo '<a href="login.php"><i class="fa-solid fa-right-to-bracket fs-1" style="color: lightslategray;"></i></a>';
+              echo '<a href="login.php" class="header_btn main_nav"><i class="fa-solid fa-right-to-bracket fs-4">登入</i></a>';
             }else{
-              echo '<a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-rotate-180 fs-1" style="color: lightslategray;"></i></a>';
+              echo '<a href="logout.php" class="header_btn main_nav"><i class="fa-solid fa-right-from-bracket fa-rotate-180 fs-4">登出</i></a>';
             }
           ?>
-        <a href="personal_id.php"><i class="fa-solid fa-user fs-1" style="color: lightslategray;"></i></a>
-        <a href="shopping_list.php">
-          <i class="fa-solid fa-cart-shopping fs-1 position-relative" style="color: lightslategray;">
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill px-2 py-1 fs-5 bg-warning">9</span>
+        <a href="personal_id.php" class="header_btn main_nav"><i class="fa-solid fa-user fs-4">會員資料</i></a>
+        <a href="shopping_list.php" class="header_btn main_nav text-decoration-none">
+          <i class="fa-solid fa-cart-shopping fs-4 position-relative">
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill px-1 py-0 bg-warning text-black-50">9</span>
           </i>
+          <span class="fa-solid fs-4">購物車</span>
         </a>
         <?php 
           if(isset($_SESSION['role']) && $_SESSION['role'] === "admin"){
-            echo '<a href="admin.php"><i class="fa-solid fa-gears fs-1" style="color: lightslategray;"></i></a>';
+            echo '<a href="admin.php" class="header_btn main_nav"><i class="fa-solid fa-gears fs-4">管理員介面</i></a>';
           }
         ?>
       </div>
