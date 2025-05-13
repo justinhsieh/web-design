@@ -1,55 +1,88 @@
-<?php 
-  session_start();
-  include 'head.php' 
-?>
-<script src="js/subscribe.js"></script>
-<script src="js/showToast.js"></script>
-<script>
-  $(function() {
-    $("#send").validate({
-      submitHandler: function(form) {
-        let password = $('#pwd1').val().trim();
-        $.post('reset_password.php',{password:password},function(response){
-          if(response.status === "SUCCESS"){
-            showToast("密碼更改成功！")
-            setTimeout(() => {
-                window.location.href = 'login.php';
-            }, 2000);
+<?php include'head.php'; ?>
+    <script>
+      $(function() {
+        $("#send").validate({
+          submitHandler: function(form) {
+            let password = $('#pwd1').val().trim();
+            $.post('reset_password.php',{password:password},function(response){
+              if(response.status === "SUCCESS"){
+                showToast("密碼更改成功！")
+                setTimeout(() => {
+                    window.location.href = 'login.php';
+                }, 2000);
+              }
+            },'json')
+          },
+          rules:{
+            pwd1:{
+              required:true,
+              minlength:6,
+              maxlength:12
+            },
+            pwd2:{
+              required:true,
+              equalTo:"#pwd1"
+            }
+          },
+          messages: {
+            pwd1:{
+                required:"密碼為必填欄位",
+                minlength:"密碼最少要6個字",
+                maxlength:"密碼最少要12個字"
+            },
+            pwd2: {
+              required:"密碼確認為必填欄位",
+              equalTo:"兩次密碼不相符"
+            }
+          },
+          errorPlacement: function (error, element) {
+            $("#error-container-1").html(error);
           }
-        },'json')
-      },
-      rules:{
-        pwd1:{
-          required:true,
-          minlength:6,
-          maxlength:12
-        },
-        pwd2:{
-          required:true,
-          equalTo:"#pwd1"
-        }
-      },
-      messages: {
-        pwd1:{
-            required:"密碼為必填欄位",
-            minlength:"密碼最少要6個字",
-            maxlength:"密碼最少要12個字"
-        },
-        pwd2: {
-          required:"密碼確認為必填欄位",
-          equalTo:"兩次密碼不相符"
-        }
-      }
-    });
+        });
 
-  });
-</script>
-<style>
-  .fa-brands{
-      color:#3f465a;
-      font-size:40px;
-  }
-</style>
+        $("#subscribe").validate({
+          submitHandler: function(form) {
+            let email = $('#email').val().toLowerCase().trim();
+            $.post('subscriber.php',{email:email},function(response){
+              if(response.status === "OK"){
+                showToast("感謝訂閱！")
+              }else{
+                $("#error-container").html("電子信箱已被使用過");
+              }
+            },'json');
+          },
+          rules:{
+            email:{
+              required:true,
+            }
+          },
+          messages: {
+            email: {
+                required:"信箱為必填欄位",
+                email:"請輸入正確的電子信箱格式"
+            }
+          },
+          errorPlacement: function (error, element) {
+            $("#error-container").html(error);
+          }
+        });
+
+        function showToast(message){
+          const toastEl = $('#liveToast')[0];
+            if (toastEl) {
+              $(".toast-message").text(message);
+              const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:2000});
+              toastBootstrap.show();
+            }
+        }
+      });
+    </script>
+    <style>
+      .fa-brands{
+         color:#3f465a;
+         font-size:40px;
+      }
+    </style>
 </head>
 <body>
   <?php include'header.php'; ?>

@@ -1,64 +1,90 @@
-<?php 
-  session_start();
-  include 'head.php' 
-?>
-<script src="js/subscribe.js"></script>
-<script src="js/showToast.js"></script>
-<script>
-  $(function() {
-    $("#login").validate({
-      submitHandler: function(form) {
-        let account = $("#account").val();
-        let password = $("#pwd").val();
-        $.post('check_login.php',{account:account,pwd:password},function(response){
-          if(response.status === "USER"){
-            showToast("登入成功！3秒後跳轉到首頁");
-            setTimeout(() => {
-                window.location.href = 'index.php';
-            }, 3000);
-          }else if(response.status === "ADMIN"){
-            window.location.href = 'admin.html';
-          }else{
-            $('#error-account').text("請輸入正確的帳號密碼");
+<?php include 'head.php' ?>
+    <script>
+      $(function() {
+        $("#login").validate({
+          submitHandler: function(form) {
+            let account = $("#account").val();
+            let password = $("#pwd").val();
+            $.post('check_login.php',{account:account,pwd:password},function(response){
+              if(response.status === "SUCCESS"){
+                showToast("登入成功！3秒後跳轉到首頁");
+                setTimeout(() => {
+                    window.location.href = response.redirect;
+                }, 3000);
+              }else{
+                showToast('請輸入正確的帳號密碼！');
+              }
+            })
+          },
+          rules:{
+            account:{
+              required:true,
+              minlength:5,
+              maxlength:10
+            },
+            pwd:{
+                required:true,
+                minlength:6,
+                maxlength:12
+            }
+          },
+          messages: {
+            account: {
+                required:"帳號為必填欄位",
+                minlength:"帳號最少要5個字",
+                maxlength:"帳號最長10個字"
+            },
+            pwd:{
+                required:"密碼為必填欄位",
+                minlength:"密碼最少要6個字",
+                maxlength:"密碼最少要12個字"
+            }
           }
-        })
-      },
-      rules:{
-        account:{
-          required:true,
-          minlength:5,
-          maxlength:10
-        },
-        pwd:{
-            required:true,
-            minlength:6,
-            maxlength:12
+        });
+
+        $("#subscribe").validate({
+          submitHandler: function(form) {
+            let email = $('#email').val().toLowerCase().trim();
+            $.post('subscriber.php',{email:email},function(response){
+              if(response.status === "OK"){
+                showToast("感謝訂閱！")
+              }else{
+                $("#error-container").html("電子信箱已被使用過");
+              }
+            },'json');
+          },
+          rules:{
+            email:{
+              required:true,
+            }
+          },
+          messages: {
+            email: {
+                required:"信箱為必填欄位",
+                email:"請輸入正確的電子信箱格式"
+            }
+          },
+          errorPlacement: function (error, element) {
+            $("#error-container").html(error);
+          }
+        });
+
+        function showToast(message){
+          const toastEl = $('#liveToast')[0];
+            if (toastEl) {
+              $("#toast-message").text(message);
+              const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
+              toastBootstrap.show();
+            }
         }
-      },
-      messages: {
-        account: {
-            required:"帳號為必填欄位",
-            minlength:"帳號最少要5個字",
-            maxlength:"帳號最長10個字"
-        },
-        pwd:{
-            required:"密碼為必填欄位",
-            minlength:"密碼最少要6個字",
-            maxlength:"密碼最長12個字"
-        }
+      });
+    </script>
+    <style>
+      .fa-brands{
+          color:#3f465a;
+          font-size:40px;
       }
-    });
-    $('#account,#pwd').on('input',function(){
-      $('#error-account').text('');
-    })
-  });
-</script>
-<style>
-  .fa-brands{
-      color:#3f465a;
-      font-size:40px;
-  }
-</style>
+    </style>
 </head>
 <body>
   <?php include'header.php'; ?>
@@ -81,7 +107,6 @@
                     <div class="mb-3">
                         <label for="pwd" class="form-label">會員密碼</label>
                         <input type="password" class="form-control" id="pwd" name="pwd" placeholder="*************">
-                        <span id="error-account" class="text-danger small"></span>
                     </div>
                     <button type="submit" class="btn btn-dark w-100 mb-3 login-btn">登入</button>
                 </form>

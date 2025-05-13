@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>shop</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/9bb96208a0.js" crossorigin="anonymous"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet"/>
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+    <!-- 網頁圖示 -->
+    <link rel="icon" type="image/x-icon" href="images/hacker.png" />
+    <!-- 自定義CSS -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <!-- 自定義Script -->
+    <script>
+      $(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 200) {
+                $("#backToTop").css("display", "flex");
+            } else {
+                $("#backToTop").css("display", "none");
+            }
+        });
+        $("#backToTop").click(function () {
+            $("html").animate({ scrollTop: 0 });
+        });
+        $(".spec-btn").click(function () {
+          $(".intro").show();
+          $(".comment").hide();
+        });
+        $(".comment-btn").click(function () {
+          $(".intro").hide();
+          $(".comment").show();
+        });
+        $(".spec-comment").click(function(){
+          $(".spec-comment").removeClass("active");
+          $(this).addClass("active");
+        })
+        $(".item-color").click(function(){
+          $(".item-color").removeClass("active");
+          $(this).addClass("active");
+        })
+        $(".rating i").hover(
+          function(){
+            $(this).prevAll().addBack().addClass("hovered");
+          },
+          function(){
+            $(".rating i").removeClass("hovered");
+        })
+        $(".rating i").on('click',function(){
+          $(".rating i").removeClass("selected");
+          $(this).prevAll().addBack().addClass("selected");
+          $("#ratingValue").val($(this).data("value"));
+        })
+        $.validator.addMethod("ratingRequired", function(value, element) {
+          return value !== "";
+        }, "請選擇星星評分");
+        $("#com").validate({
+          ignore:[],
+          submitHandler: function(form) {
+              form.submit();
+          },
+          rules: {
+            ratingValue: {
+              ratingRequired: true
+            },
+            content: {
+              required: true
+            }
+          },
+          messages: {
+            content: {
+              required: "請輸入留言"
+            }
+          },
+          errorPlacement: function (error, element) {
+            if (element.attr("name") === "ratingValue") {
+              error.insertAfter(".rating");
+            }else if(element.attr("name") === "content"){
+              $("#error-container-1").html(error);
+            } else{
+              error.insertAfter(element);
+            }
+          }
+        });
+        $("#subscribe").validate({
+          submitHandler: function(form) {
+              form.submit();
+          },
+          rules:{
+            email:{
+              required:true,
+            }
+          },
+          messages: {
+            email: {
+                required:"信箱為必填欄位",
+            }
+          },
+          errorPlacement: function (error, element) {
+            $("#error-container-2").html(error);
+        }
+        });
+      });
+    </script>
+    <style>
+      body .rating i.hovered, body .rating i.selected{
+        color: #ffd43b;
+      }
+      .fa-brands{
+         color:#3f465a;
+         font-size:40px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 導覽列 -->
+    <header>
+      <nav class="navbar navbar-expand-lg bg-light border-bottom border-1 border-black">
+        <div class="container-fluid">
+          <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="images/hacker.png" alt="logo" class="logo">
+            <span class="logo-context fs-3 fw-bold">3C用品店|商品頁面</span>
+          </a>
+          <nav aria-label="breadcrumb" class="ms-auto me-3">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="login.html" class="link-underline link-underline-opacity-0">登入</a></li>
+              <li class="breadcrumb-item"><a href="register.html" class="link-underline link-underline-opacity-0">註冊</a></li>
+            </ol>
+          </nav>
+          <div class="tool-right me-4 d-flex">
+            <a href="personal_id.html" alt="account">
+              <img src="images/user.png" class="icon pe-2">
+            </a>
+            <a href="shopping_list.html" alt="shopping-cart">
+              <img src="images/shopping-cart.png" class="icon" >
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- 商品 -->
+    <main>
+      <div class="container">
+        <div class="row pt-3">
+          <div class="col-12 col-md-4">
+            <img src="images/sonyWH-1000XM5.png" alt="" class="w-100 border border-3 border-black"/>
+          </div>
+          <div class="col-12 col-md-8">
+            <h4 class="p-3">
+              SONY 索尼 WH-1000XM5 主動式降噪旗艦藍芽耳機(台灣公司貨保固12+6)
+            </h4>
+            <ul>
+              <li class="text-body-secondary">業界領先降噪技術</li>
+              <li class="text-body-secondary">碳纖維驅動單體創造超凡音質</li>
+              <li class="text-body-secondary">卓越的無噪音通話</li>
+            </ul>
+            <p class="border-top border-bottom p-3">售價<span class="price">11,900</span>元</p>
+            <p>品牌名稱:SONY索尼</p>
+            <div class="d-flex align-items-center">
+              <p>顏色:</p>
+              <ul class="list-group list-group-horizontal text-center shop-color ms-2 pb-3">
+                <button type="button" class="list-group-item list-group-item-action item-color active" aria-current="true">
+                  黑色
+                </button>
+                <button type="button" class="list-group-item list-group-item-action item-color">
+                  白色
+                </button>
+                <button type="button" class="list-group-item list-group-item-action item-color">
+                  玫瑰灰
+                </button>
+              </ul>
+            </div>
+            <div class="mb-3">
+              <span>數量：</span>
+              <select
+                class="form-select-sm"
+                aria-label="Default select example"
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <div class="d-flex gap-3">
+              <button type="button" class="btn btn-danger">直接購買</button>
+              <button type="button" class="btn btn-primary">加入購物車</button>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="mt-1 w-100">
+            <ul class="list-group list-group-horizontal text-center w-50 pb-3">
+              <button type="button"class="list-group-item list-group-item-action spec-comment spec-btn active"aria-current="true">
+                商品規格
+              </button>
+              <button type="button" class="list-group-item list-group-item-action spec-comment comment-btn">
+                商品評價
+              </button>
+            </ul>
+          </div>
+          <div class="intro">
+            <table class="table w-75 border border-2">
+              <tbody>
+                <tr>
+                  <th scope="row" class="w-25 border-end border-2">品牌名稱</th>
+                  <td>SONY 索尼</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="w-25 border-end border-2">款式</th>
+                  <td>耳罩式</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="w-25 border-end border-2">類型</th>
+                  <td>藍芽主體</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="w-25 border-end border-2">商品規格</th>
+                  <td>
+                    尺寸與重量 <br />
+                    尺寸與重量細節敘述 <br />
+                    重量 約 250 g <br />
+                    一般功能 <br />
+                    一般功能細節敘述 <br />
+                    耳機類型 封閉式、動態 <br />
+                    驅動單體 30 mm <br />
+                    磁體 釹 <br />
+                    阻抗 (Ohm) 48 ohm (1 kHz) (裝置開啟並透過耳機線連接)、16 ohm
+                    (1 kHz) (裝置未開啟並透過耳機線連接) <br />
+                    頻率響應 4 Hz 至 40,000 Hz (JEITA) <br />
+                    頻率響應 (啟動模式) 4 Hz 至 40,000 Hz <br />
+                    頻率響應 (藍牙通訊模式) 20 Hz 至 20,000 Hz (44.1 kHz 取樣)
+                    20 Hz 至 40,000Hz (LDAC 96 kHz 取樣，990 kbps) <br />
+                    靈敏度 (dB/mW) 102 dB (1 kHz) / mW
+                    (透過耳機線連接至開啟的裝置)、100 dB (1 kHz) / mW
+                    (透過耳機線連接至未開啟的裝置) <br />
+                    音量控制 觸控感應器 <br />
+                    電線類型 單邊 (可拆式) <br />
+                    電線長度 約 1.2 m <br />
+                    插座 鍍金 L 型立體聲迷你插頭 <br />
+                    輸入 立體聲迷你插孔 <br />
+                    穿戴方式 耳掛式 <br />
+                    DSEE Extreme 有 <br />
+                    被動操作 有 <br />
+                    環境聲模式 有 <br />
+                    電池 <br />
+                    電池細節敘述 <br />
+                    電池充電時間 約 3.5 小時 <br />
+                    電池充電方式 USB <br />
+                    電池續航力 (音樂連續播放時間) 最長 30 小時
+                    (降噪功能開啟)，最長 40 小時 (降噪功能關閉) <br />
+                    電池續航力 (連續通訊時間) 最長 24 小時 (降噪功能開啟)，最長
+                    32 小時 (降噪功能關閉) <br />
+                    Bluetooth☆ 規格 <br />
+                    Bluetooth☆ 規格細節敘述 <br />
+                    Bluetooth☆ 版本 藍牙規格 5.2 版 <br />
+                    有效範圍 10 m <br />
+                    頻率範圍 2.4 GHz 頻段 (2.4000 GHz-2.4835 GHz) <br />
+                    外型 A2DP、AVRCP、HFP、HSP <br />
+                    支援的音訊格式 SBC、AAC、LDAC <br />
+                    支援的內容保護 SCMS-T <br />
+                    降噪功能 <br />
+                    降噪功能細節敘述 <br />
+                    個人NC優化器 自動降噪優化器 <br />
+                    氣壓優化 有 <br />
+                    環境聲模式 有 <br />
+                    快速注意模式 有 <br />
+                    證書號碼 CI33206021I813-00
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="border border-2 mb-2 comment" style="display: none">
+            <form action="" method="" class="mt-2 d-flex flex-column" id="com">
+              <div class="border-bottom border-2 my-2 rating">
+                <span>商品評價:</span>
+                <i class="fa-solid fa-star" data-value="1"></i>
+                <i class="fa-solid fa-star" data-value="2"></i>
+                <i class="fa-solid fa-star" data-value="3"></i>
+                <i class="fa-solid fa-star" data-value="4"></i>
+                <i class="fa-solid fa-star" data-value="5"></i>
+              </div>
+              <input type="hidden" name="ratingValue" id="ratingValue">
+              <div class="d-flex align-items-center gap-2">
+                <span>客戶名字:</span>
+                <textarea name="content" rows="3" cols="100" placeholder="留下你的評論"></textarea>
+                <input type="submit" class="comment-submit mt-auto">
+                <span id="error-container-1"></span>
+              </div>
+            </form>
+            <!-- <div class="d-flex flex-column border border-2 my-2 w-75">
+              <div class="d-flex">
+                <div>名字:00000000</div>
+                <div class="ms-auto">日期:2025/03/23</div>
+              </div>
+              <div class="mt-3">
+                <span> 評論:11111111 </span>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- 頁尾 -->
+    <footer class="bg-dark">
+      <div class="container-fluid">
+        <div class="row bg-dark py-5 align-items-center">
+          <div class="col-12 col-md-6 text-light d-flex justify-content-center mt-3">
+            <span class="d-flex w-75 border border-2 border-white rounded">防詐騙提醒：3C用品店絕不會以電話或簡訊通知訂單/分期出錯、或變更付款方式，更不會要您前往ATM進行任何操作！不應在3C用品店以外的任何地方輸入3C用品店帳密(例如非政府官方的電子發票app)，以免權益受損！</span>
+          </div>
+          <div class="col-12 col-md-6 d-flex mt-3">
+            <div class="col-7 d-flex ms-3">
+              <div class="subscribe w-75 ms-auto">
+                <div class="text-light fs-5 mb-2">Email:</div>
+                <form action="" id="subscribe" class="d-flex">
+                  <input type="email" class="form-control w-75" id="email" name="email" placeholder="輸入E-mail" aria-label="Recipient's username" aria-describedby="button-addon2">
+                  <button class="btn btn-outline-secondary text-light" type="submit" id="button-addon2">訂閱</button>
+                </form>
+                <span id="error-container-2"></span>
+              </div>
+            </div>
+            <div class="col-5">
+              <div class="followus">
+                <div class="title text-light text-center followus_title">FOLLOW US ON</div>
+                <div class="d-flex justify-content-center gap-3 mt-3">
+                  <a href="#" title="facebook">
+                    <i class="fa-brands fa-square-facebook"></i>
+                  </a>
+                  <a href="#" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                  </a>
+                  <a href="#"title="Line">
+                    <i class="fa-brands fa-line"></i>
+                  </a>
+                </div>
+              </div>
+            </div>          
+          </div>
+        </div>
+      </div>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col">
+            <p class="copyright text-light">COPYRIGHT@3C用品店 CO.,LTD.ALL RIGHTS RESERVED.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <button id="backToTop" class="back-to-top"></button>
+  </body>
+</html>

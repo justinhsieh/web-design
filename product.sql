@@ -52,11 +52,9 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`id`, `username`, `password`, `email`, `name`, `phone`, `address`, `gender`, `birthdate`, `created_at`, `updated_at`, `last_login_at`, `status`, `role`) VALUES
-(9, '12345', '$2y$10$8IG3fiuwXgroT7SFgLS2K.sNtCTrlUnz0nKmMwke34asji1XetuUq', '5555@sss.555', NULL, NULL, NULL, 'O', NULL, NULL, NULL, NULL, 0, 'user'),
-(10, '111111', '$2y$10$dqDsEyor0f8rvdE4zQ0N5OH9gxdfqBsrXrOclWBQV5WV9e8RAL86.', '5555@sss.5551', NULL, NULL, NULL, 'O', NULL, NULL, NULL, NULL, 0, 'user'),
-(11, '123456', '$2y$10$/K3wlgHYz9VR8Yvbz8ctQutjbak6N1LF0tmB8NpT9PXWQGKB7clSO', 'justinhsieh670@gmail.com', NULL, NULL, NULL, 'O', NULL, NULL, '2025-05-08 18:53:46', NULL, 0, 'user'),
-(12, 'admin123', '$2y$10$avaDEvQdk6t3RgR8Cf1Equ7XwrPBSvbdXmKsRGfBR2HGHcWvpnncS', 'aaa@gmail.com', NULL, NULL, NULL, 'O', NULL, NULL, '2025-05-09 21:13:33', NULL, 0, 'admin'),
-(13, '1234566', '$2y$10$nQZemwB2tGqPMmlDZmJxquelvjbcPJYpSlTxivqkzC/AMc4NWHMcu', 'kzhan0828@gmail.com', NULL, NULL, NULL, 'O', NULL, NULL, NULL, NULL, 0, 'user');
+(1, '12345', '$2y$10$8IG3fiuwXgroT7SFgLS2K.sNtCTrlUnz0nKmMwke34asji1XetuUq', '5555@sss.555', NULL, NULL, NULL, 'O', NULL, NULL, NULL, NULL, 0, 'user'),
+(2, '111111', '$2y$10$dqDsEyor0f8rvdE4zQ0N5OH9gxdfqBsrXrOclWBQV5WV9e8RAL86.', '5555@sss.5551', NULL, NULL, NULL, 'O', NULL, NULL, NULL, NULL, 0, 'user'),
+(3, '123456', '$2y$10$/K3wlgHYz9VR8Yvbz8ctQutjbak6N1LF0tmB8NpT9PXWQGKB7clSO', 'justinhsieh670@gmail.com', NULL, NULL, NULL, 'O', NULL, NULL, '2025-05-08 18:53:46', NULL, 0, 'user');
 
 -- --------------------------------------------------------
 
@@ -129,7 +127,7 @@ INSERT INTO `product` (`pid`, `time`, `name`, `brand`, `color`, `price`, `functi
 --
 
 CREATE TABLE `reviews` (
-  `username` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `time` datetime NOT NULL,
   `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `pid` int(11) NOT NULL,
@@ -138,6 +136,13 @@ CREATE TABLE `reviews` (
   `like_cnt` int(11) NOT NULL,
   `unlike_cnt` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `reviews`
+--
+
+INSERT INTO `reviews` (`account`, `time`, `comment`, `pid`, `rating`, `review_id`, `like_cnt`, `unlike_cnt`) VALUES
+('', '2025-05-03 12:29:32', 'sad', 1, 4, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -149,6 +154,17 @@ CREATE TABLE `subscriber` (
   `id` int(11) NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `subscriber`
+--
+
+INSERT INTO `subscriber` (`id`, `email`) VALUES
+(4, 'jusss@gmaaa.ccc'),
+(2, 'justinhsieh@gmail.com'),
+(1, 'justinhsieh670@gmail.com'),
+(5, 'qweeqweqw@fdsfsdf.fff'),
+(3, 'www@mgg.cc');
 
 --
 -- 已傾印資料表的索引
@@ -189,7 +205,7 @@ ALTER TABLE `subscriber`
 -- 使用資料表自動增長(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '會員編號', AUTO_INCREMENT=14;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT COMMENT '會員編號', AUTO_INCREMENT=4;
 
 --
 -- 使用資料表自動增長(AUTO_INCREMENT) `product`
@@ -201,13 +217,13 @@ ALTER TABLE `product`
 -- 使用資料表自動增長(AUTO_INCREMENT) `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- 使用資料表自動增長(AUTO_INCREMENT) `subscriber`
 --
 ALTER TABLE `subscriber`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -5,7 +5,8 @@
 
     $account = $_POST['account'] ?? '';
     $pwd = $_POST['pwd'] ?? '';
-    $status = "BAD";
+    $status = "NOTFOUND";
+    $redirect = "index.php";
 
     $stmt = $conn->prepare('SELECT * FROM `member` WHERE `username` = ?');
     $stmt->bind_param("s",$account);
@@ -13,17 +14,16 @@
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
     if($row && password_verify($pwd,$row['password'])){
+        $_SESSION['user_email'] = $row['email'];
+        $status = "SUCCESS";
         if($row['role'] === "admin"){
-            $status = "ADMIN";
-        }else{
-            $status = "USER";
+            $redirect = "admin.php";
         }
-        $_SESSION['username'] = $row['username'];
-        $_SESSION['role'] = $row['role'];
     }
     $stmt->close();
     echo json_encode([
-        'status' => $status
+        'status' => $status,
+        'redirect' => $redirect
     ]);
     $conn->close();
 ?>

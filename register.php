@@ -1,96 +1,127 @@
-<?php 
-  session_start();
-  include 'head.php' 
-?>
-<script src="js/subscribe.js"></script>
-<script src="js/showToast.js"></script>
-<script>
-  $(function() {
-    $("#register").validate({
-      submitHandler: function(form) {
-        let account = $('#account').val().trim();
-        let pwd = $('#pwd').val().trim();
-        let email = $('#email_2').val().toLowerCase().trim();
-        $.post('register2db.php',{account:account,password:pwd,email:email},function(response){
-          if(response.status === 'SUCCESS'){
-            showToast("註冊成功，請前往登入頁面登入！");
-            $('#register input').val('');
-          }else{
-            showToast("註冊失敗，請檢查是否符合條件！");
-          }
-        })
-        return false;
-      },
-      rules:{
-        account:{
-          required:true,
-          minlength:5,
-          maxlength:10,
-          remote:{
-            url:'check_register.php',
-            type:'post',
-            data:{
-              field:"username",
-              value:function(){
-                return $('#account').val().trim();
+<?php include 'head.php' ?>
+    <script>
+      $(function() {
+        $("#register").validate({
+          submitHandler: function(form) {
+            let account = $('#account').val().trim();
+            let pwd = $('#pwd').val().trim();
+            let email = $('#email_2').val().toLowerCase().trim();
+            $.post('register2db.php',{account:account,password:pwd,email:email},function(response){
+              if(response.status === 'SUCCESS'){
+                showToast("註冊成功，請前往登入頁面登入！");
+                $('#register input').val('');
+              }else{
+                showToast("註冊失敗，請檢查是否符合條件！");
+              }
+            })
+            return false;
+          },
+          rules:{
+            account:{
+              required:true,
+              minlength:5,
+              maxlength:10,
+              remote:{
+                url:'check_register.php',
+                type:'post',
+                data:{
+                  field:"username",
+                  value:function(){
+                    return $('#account').val().trim();
+                  }
+                }
+              }
+            },
+            pwd:{
+                required:true,
+                minlength:6,
+                maxlength:12
+            },
+            pwd2:{
+              required:true,
+              equalTo:"#pwd"
+            },
+            email_2:{
+              required:true,
+              remote:{
+                url:'check_register.php',
+                type:'post',
+                data:{
+                  field:"email",
+                  value:function(){
+                    return $('#email_2').val().toLowerCase().trim();
+                  }
+                }
               }
             }
-          }
-        },
-        pwd:{
-            required:true,
-            minlength:6,
-            maxlength:12
-        },
-        pwd2:{
-          required:true,
-          equalTo:"#pwd"
-        },
-        email_2:{
-          required:true,
-          remote:{
-            url:'check_register.php',
-            type:'post',
-            data:{
-              field:"email",
-              value:function(){
-                return $('#email_2').val().toLowerCase().trim();
-              }
+          },
+          messages: {
+            account: {
+                required:"帳號為必填欄位",
+                minlength:"帳號最少要5個字",
+                maxlength:"帳號最長10個字",
+                remote:"帳號已存在"
+            },
+            pwd:{
+                required:"密碼為必填欄位",
+                minlength:"密碼最少要6個字",
+                maxlength:"密碼最少要12個字"
+            },
+            pwd2: {
+              required:"密碼確認為必填欄位",
+              equalTo:"兩次密碼不相符"
+            },
+            email_2:{
+              required:"電子信箱為必填欄位",
+              email:"請輸入正確的電子信箱格式",
+              remote:"電子信箱已被使用"
             }
           }
+        });
+
+        $("#subscribe").validate({
+          submitHandler: function(form) {
+            let email = $('#email').val().toLowerCase().trim();
+            $.post('subscriber.php',{email:email},function(response){
+              if(response.status === "OK"){
+                showToast("感謝訂閱！")
+              }else{
+                $("#error-container").html("電子信箱已被使用過");
+              }
+            },'json');
+          },
+          rules:{
+            email:{
+              required:true,
+            }
+          },
+          messages: {
+            email: {
+                required:"信箱為必填欄位",
+                email:"請輸入正確的電子信箱格式"
+            }
+          },
+          errorPlacement: function (error, element) {
+            $("#error-container").html(error);
+          }
+        });
+
+        function showToast(message){
+          const toastEl = $('#liveToast')[0];
+            if (toastEl) {
+              $("#toast-message").text(message);
+              const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:2000});
+              toastBootstrap.show();
+            }
         }
-      },
-      messages: {
-        account: {
-            required:"帳號為必填欄位",
-            minlength:"帳號最少要5個字",
-            maxlength:"帳號最長10個字",
-            remote:"帳號已存在"
-        },
-        pwd:{
-            required:"密碼為必填欄位",
-            minlength:"密碼最少要6個字",
-            maxlength:"密碼最少要12個字"
-        },
-        pwd2: {
-          required:"密碼確認為必填欄位",
-          equalTo:"兩次密碼不相符"
-        },
-        email_2:{
-          required:"電子信箱為必填欄位",
-          email:"請輸入正確的電子信箱格式",
-          remote:"電子信箱已被使用"
-        }
+      });
+    </script>
+    <style>
+      .fa-brands{
+         color:#3f465a;
+         font-size:40px;
       }
-    });
-  });
-</script>
-<style>
-  .fa-brands{
-      color:#3f465a;
-      font-size:40px;
-  }
-</style>
+    </style>
 </head>
 <body>
   <?php include'header.php'; ?>
