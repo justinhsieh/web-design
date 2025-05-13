@@ -9,6 +9,8 @@
   $(function () {
     $(".spec-btn").click(function () {
       $(".intro").show();
+      $(".intro").addClass("fadein");
+      $(".comment").removeClass("fadein");
       $(".comment").hide();
       $("#show_review").hide();
       $("#review_pagination").hide();
@@ -17,6 +19,8 @@
     $(".comment-btn").click(function () {
       $(".intro").hide();
       $(".comment").show();
+      $(".comment").addClass("fadein");
+      $(".intro").removeClass("fadein");
       $("#show_review").show();
       $("#review_pagination").show();
     });
