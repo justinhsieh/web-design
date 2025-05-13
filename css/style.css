@@ -160,7 +160,19 @@ i.like_unlike.selected {
       width: 75%;
     }
 }
+
 .toast_1{
     top:40%;
     z-index: 3;
+}
+
+.main_nav{
+    color:lightslategray !important;
+}
+
+a.header_btn:hover{
+    background-color: #8794a2;
+    opacity:0.6;
+    border-radius: 10%;
+    color:#1a1f2b!important;
 }
