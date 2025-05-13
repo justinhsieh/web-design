@@ -32,7 +32,7 @@
 
     $html = '';
     while ($row = $result->fetch_assoc()) {
-    $html .= '<div class="col-auto d-flex justify-content-center mt-4">
+    $html .= '<div class="col-12 col-sm-6 col-md-4 d-flex justify-content-center mt-4">
             <div class="card" style="width: 18rem;">
                 <a href="#"><img src="'.$row['pic'].'" class="card-img-top"></a>
                 <div class="card-body">

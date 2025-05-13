@@ -172,7 +172,7 @@
         </div>
         <div class="col-12 col-lg-9">
           <!-- 商品欄 -->
-          <div class="row justify-content-center" id="product_list"></div>
+          <div class="row" id="product_list"></div>
           <div class="row mt-4">
             <div class="col">
               <nav aria-label="Page navigation example">
