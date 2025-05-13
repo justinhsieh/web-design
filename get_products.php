@@ -46,9 +46,33 @@
             </div>
         </div>';
     }
+    $page_html = '';
+
+    if($totalPages > 0){
+    $page_html .= '<li class="page-item page_f '. (($page === 1) ? 'disabled' : '') .'">
+        <a class="page-link text-dark" href="#" data-page="1" aria-label="First">
+        <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>';
+    }
+    
+    for ($i = 1; $i <= $totalPages; $i++) {
+    $page_html .= '<li class="page-item page_ '. (($i === $page) ? 'active' : '') .'">
+        <a class="page-link text-dark" href="#" data-page="'.$i.'">'.$i.'</a>
+    </li>';
+    }
+    if($totalPages > 0){
+    $page_html .= '<li class="page-item page_e '. (($page === $totalPages) ? 'disabled' : '').'">
+        <a class="page-link text-dark" href="#" data-page="'.$totalPages.'" aria-label="Last">
+        <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>';
+    }
+    
 
     echo json_encode([
         'products_html' => $html,
+        'page_html' => $page_html,
         'total_pages' => $totalPages
     ]);
 $conn->close();

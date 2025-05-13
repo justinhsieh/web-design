@@ -1,67 +1,23 @@
 <?php include 'head.php' ?>
-    <style>
-      .fa-brands{
-          color:#3f465a;
-          font-size:40px;
-      }
-    </style>
-    <script>
-      $(function () {
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 200) {
-                $("#backToTop").css("display", "flex");
-            } else {
-                $("#backToTop").css("display", "none");
-            }
-        });
-        $("#backToTop").click(function () {
-            $("html").animate({ scrollTop: 0 },0);
-        });
-
-        $("#subscribe").validate({
-          submitHandler: function(form) {
-            let email = $('#email').val().toLowerCase().trim();
-            $.post('subscriber.php',{email:email},function(response){
-              if(response.status === "OK"){
-                showToast("感謝訂閱！")
-              }else{
-                $("#error-container").html("電子信箱已被使用過");
-              }
-            },'json');
-          },
-          rules:{
-            email:{
-              required:true,
-            }
-          },
-          messages: {
-            email: {
-                required:"信箱為必填欄位",
-                email:"請輸入正確的電子信箱格式"
-            }
-          },
-          errorPlacement: function (error, element) {
-            $("#error-container").html(error);
-          }
-        });
-
-        $(document).on('click','.card a',function(e){
-          e.preventDefault();
-          let product_name = $(this).closest('.card').find('.card-title').text();
-          let url = 'shop.php?product_name=' + encodeURIComponent(product_name);
-          window.location.href = url;
-        })
-
-        function showToast(message){
-          const toastEl = $('#liveToast')[0];
-            if (toastEl) {
-              $(".toast-body").text(message);
-              const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
-              toastBootstrap.show();
-            }
-        }
-      });
-    </script>
+<script src="js/back2top.js"></script>
+<script src="js/subscribe.js"></script>
+<script src="js/showToast.js"></script>
+<script>
+  $(function () {
+    $(document).on('click','.card a',function(e){
+      e.preventDefault();
+      let product_name = $(this).closest('.card').find('.card-title').text();
+      let url = 'shop.php?product_name=' + encodeURIComponent(product_name);
+      window.location.href = url;
+    })
+  });
+</script>
+<style>
+  .fa-brands{
+      color:#3f465a;
+      font-size:40px;
+  }
+</style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary homepage-nav w-100">

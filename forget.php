@@ -2,126 +2,92 @@
   session_start();
   include 'head.php' 
 ?>
-    <script>
-      $(function() {
-        let countdown = 180;
-        let timer;
-        $("#send").validate({
-          submitHandler: function(form) {
-            $.post('send_auth.php',{email:$('[name="forget"]').val()},function(response){
-              $('.auth-btn').prop('disabled',true);
-                let count_time = countdown;
+<script src="js/subscribe.js"></script>
+<script src="js/showToast.js"></script>
+<script>
+  $(function() {
+    let countdown = 180;
+    let timer;
+    $("#send").validate({
+      submitHandler: function(form) {
+        $.post('send_auth.php',{email:$('[name="forget"]').val()},function(response){
+          $('.auth-btn').prop('disabled',true);
+            let count_time = countdown;
 
-                timer = setInterval(function(){
-                  if(count_time > 0){
-                    $('.auth-btn').text(`${count_time}秒後可再發送`);
-                  }
-                  else{
-                    clearInterval(timer);
-                    $('.auth-btn').prop('disabled',false).text('發送驗證碼');
-                  }
-                  count_time--;
-              },1000);
-              if(response.status === "OK"){
-                $("#authentication").show(); //顯示輸入驗證碼欄位
-                $("#error-container-1").text(""); //清空錯誤訊息
-              }else if(response.status === "BAD"){
-                $("#error-container-1").text("請輸入正確的電子信箱");
-                clearInterval(timer);
-                $('.auth-btn').prop('disabled',false).text('發送驗證碼');
-              }else{
-                $("#error-container-1").text("系統錯誤，請稍後再試");
+            timer = setInterval(function(){
+              if(count_time > 0){
+                $('.auth-btn').text(`${count_time}秒後可再發送`);
+              }
+              else{
                 clearInterval(timer);
                 $('.auth-btn').prop('disabled',false).text('發送驗證碼');
               }
-            },'json')
-          },
-          rules:{
-            forget:{
-              required:true,
-            }
-          },
-          messages: {
-            forget:{
-              required:"電子信箱為必填欄位",
-              email:"請輸入正確的電子信箱格式"
-            }
-          },
-          errorPlacement: function (error, element) {
-            $("#error-container-1").html(error);
+              count_time--;
+          },1000);
+          if(response.status === "OK"){
+            $("#authentication").show(); //顯示輸入驗證碼欄位
+            $("#error-container-1").text(""); //清空錯誤訊息
+          }else if(response.status === "BAD"){
+            $("#error-container-1").text("請輸入正確的電子信箱");
+            clearInterval(timer);
+            $('.auth-btn').prop('disabled',false).text('發送驗證碼');
+          }else{
+            $("#error-container-1").text("系統錯誤，請稍後再試");
+            clearInterval(timer);
+            $('.auth-btn').prop('disabled',false).text('發送驗證碼');
           }
-        });
-
-        $("#authentication").validate({
-          submitHandler: function(form) {
-              $.post('verify_auth.php',{code:$('[name="auth"]').val()},function(response){
-                if(response.status === "SUCCESS"){
-                  window.location.href = "reset.php";
-                }else if(response.status === "EXPIRE"){
-                  $("#error-container-2").html("驗證碼已過期");
-                }else{
-                  $("#error-container-2").html("請輸入正確的驗證碼");
-                }
-              },'json')
-          },
-          rules:{
-            auth:{
-              required:true,
-            }
-          },
-          messages: {
-            auth:{
-              required:"驗證碼為必填欄位"
-            }
-          },
-          errorPlacement: function (error, element) {
-            $("#error-container-2").html(error);
-          }
-        });
-
-        $("#subscribe").validate({
-          submitHandler: function(form) {
-            let email = $('#email').val().toLowerCase().trim();
-            $.post('subscriber.php',{email:email},function(response){
-              if(response.status === "OK"){
-                showToast("感謝訂閱！")
-              }else{
-                $("#error-container").html("電子信箱已被使用過");
-              }
-            },'json');
-          },
-          rules:{
-            email:{
-              required:true,
-            }
-          },
-          messages: {
-            email: {
-                required:"信箱為必填欄位",
-                email:"請輸入正確的電子信箱格式"
-            }
-          },
-          errorPlacement: function (error, element) {
-            $("#error-container").html(error);
-          }
-        });
-
-        function showToast(message){
-          const toastEl = $('#liveToast')[0];
-            if (toastEl) {
-              $(".toast-body").text(message);
-              const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
-              toastBootstrap.show();
-            }
+        },'json')
+      },
+      rules:{
+        forget:{
+          required:true,
         }
-      });
-    </script>
-    <style>
-      .fa-brands{
-         color:#3f465a;
-         font-size:40px;
+      },
+      messages: {
+        forget:{
+          required:"電子信箱為必填欄位",
+          email:"請輸入正確的電子信箱格式"
+        }
+      },
+      errorPlacement: function (error, element) {
+        $("#error-container-1").html(error);
       }
-    </style>
+    });
+
+    $("#authentication").validate({
+      submitHandler: function(form) {
+          $.post('verify_auth.php',{code:$('[name="auth"]').val()},function(response){
+            if(response.status === "SUCCESS"){
+              window.location.href = "reset.php";
+            }else if(response.status === "EXPIRE"){
+              $("#error-container-2").html("驗證碼已過期");
+            }else{
+              $("#error-container-2").html("請輸入正確的驗證碼");
+            }
+          },'json')
+      },
+      rules:{
+        auth:{
+          required:true,
+        }
+      },
+      messages: {
+        auth:{
+          required:"驗證碼為必填欄位"
+        }
+      },
+      errorPlacement: function (error, element) {
+        $("#error-container-2").html(error);
+      }
+    });
+  });
+</script>
+<style>
+  .fa-brands{
+      color:#3f465a;
+      font-size:40px;
+  }
+</style>
 </head>
 <body>
   <?php include'header.php'; ?>

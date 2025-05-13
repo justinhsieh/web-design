@@ -2,97 +2,63 @@
   session_start();
   include 'head.php' 
 ?>
-    <script>
-      $(function() {
-        $("#login").validate({
-          submitHandler: function(form) {
-            let account = $("#account").val();
-            let password = $("#pwd").val();
-            $.post('check_login.php',{account:account,pwd:password},function(response){
-              if(response.status === "USER"){
-                showToast("登入成功！3秒後跳轉到首頁");
-                setTimeout(() => {
-                    window.location.href = 'index.php';
-                }, 3000);
-              }else if(response.status === "ADMIN"){
-                window.location.href = 'admin.html';
-              }else{
-                $('#error-account').text("請輸入正確的帳號密碼");
-              }
-            })
-          },
-          rules:{
-            account:{
-              required:true,
-              minlength:5,
-              maxlength:10
-            },
-            pwd:{
-                required:true,
-                minlength:6,
-                maxlength:12
-            }
-          },
-          messages: {
-            account: {
-                required:"帳號為必填欄位",
-                minlength:"帳號最少要5個字",
-                maxlength:"帳號最長10個字"
-            },
-            pwd:{
-                required:"密碼為必填欄位",
-                minlength:"密碼最少要6個字",
-                maxlength:"密碼最長12個字"
-            }
+<script src="js/subscribe.js"></script>
+<script src="js/showToast.js"></script>
+<script>
+  $(function() {
+    $("#login").validate({
+      submitHandler: function(form) {
+        let account = $("#account").val();
+        let password = $("#pwd").val();
+        $.post('check_login.php',{account:account,pwd:password},function(response){
+          if(response.status === "USER"){
+            showToast("登入成功！3秒後跳轉到首頁");
+            setTimeout(() => {
+                window.location.href = 'index.php';
+            }, 3000);
+          }else if(response.status === "ADMIN"){
+            window.location.href = 'admin.html';
+          }else{
+            $('#error-account').text("請輸入正確的帳號密碼");
           }
-        });
-        $('#account,#pwd').on('input',function(){
-          $('#error-account').text('');
         })
-
-        $("#subscribe").validate({
-          submitHandler: function(form) {
-            let email = $('#email').val().toLowerCase().trim();
-            $.post('subscriber.php',{email:email},function(response){
-              if(response.status === "OK"){
-                showToast("感謝訂閱！")
-              }else{
-                $("#error-container").html("電子信箱已被使用過");
-              }
-            },'json');
-          },
-          rules:{
-            email:{
-              required:true,
-            }
-          },
-          messages: {
-            email: {
-                required:"信箱為必填欄位",
-                email:"請輸入正確的電子信箱格式"
-            }
-          },
-          errorPlacement: function (error, element) {
-            $("#error-container").html(error);
-          }
-        });
-
-        function showToast(message){
-          const toastEl = $('#liveToast')[0];
-            if (toastEl) {
-              $("#toast-message").text(message);
-              const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
-              toastBootstrap.show();
-            }
+      },
+      rules:{
+        account:{
+          required:true,
+          minlength:5,
+          maxlength:10
+        },
+        pwd:{
+            required:true,
+            minlength:6,
+            maxlength:12
         }
-      });
-    </script>
-    <style>
-      .fa-brands{
-          color:#3f465a;
-          font-size:40px;
+      },
+      messages: {
+        account: {
+            required:"帳號為必填欄位",
+            minlength:"帳號最少要5個字",
+            maxlength:"帳號最長10個字"
+        },
+        pwd:{
+            required:"密碼為必填欄位",
+            minlength:"密碼最少要6個字",
+            maxlength:"密碼最長12個字"
+        }
       }
-    </style>
+    });
+    $('#account,#pwd').on('input',function(){
+      $('#error-account').text('');
+    })
+  });
+</script>
+<style>
+  .fa-brands{
+      color:#3f465a;
+      font-size:40px;
+  }
+</style>
 </head>
 <body>
   <?php include'header.php'; ?>

@@ -2,20 +2,11 @@
   session_start();
   include 'head.php'; 
 ?>
+<script src="js/back2top.js"></script>
+<script src="js/subscribe.js"></script>
+<script src="js/showToast.js"></script>
 <script>
   $(function () {
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 200) {
-            $("#backToTop").css("display", "flex");
-        } else {
-            $("#backToTop").css("display", "none");
-        }
-    });
-
-    $("#backToTop").click(function () {
-        $("html").animate({ scrollTop: 0 },0);
-    });
-
     $(".drop_item").click(function(){
       $(".dropdown-toggle").html($(this).html());
       $(".drop_item").each(function(){
@@ -48,33 +39,6 @@
       }
     })
 
-    $("#subscribe").validate({
-      submitHandler: function(form) {
-        let email = $('#email').val().toLowerCase().trim();
-        $.post('subscriber.php',{email:email},function(response){
-          if(response.status === "OK"){
-            showToast("感謝訂閱！")
-          }else{
-            $("#error-container").html("電子信箱已被使用過");
-          }
-        },'json');
-      },
-      rules:{
-        email:{
-          required:true,
-        }
-      },
-      messages: {
-        email: {
-            required:"信箱為必填欄位",
-            email:"請輸入正確的電子信箱格式"
-        }
-      },
-      errorPlacement: function (error, element) {
-        $("#error-container").html(error);
-      }
-    });
-
     //載入商品
     function loadProducts(page, category, subcategory,keyword = '') {
       $.get('get_products.php', {
@@ -84,36 +48,11 @@
         keyword:keyword
       }, function (response) {
         $('#product_list').html(response.products_html);
+        $('.pagination').html(response.page_html);
         generatePagination(page, response.total_pages);
         currentCategory = category;
         currentSubcategory = subcategory;
       }, 'json');
-    }
-    //產生分頁按鈕
-    function generatePagination(currentPage, totalPages) {
-      let html = '';
-
-      if(totalPages > 0){
-        html += `<li class="page-item page_f ${currentPage === 1 ? 'disabled' : ''}">
-          <a class="page-link text-dark" href="#" data-page="1" aria-label="First">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>`;
-      }
-      
-      for (let i = 1; i <= totalPages; i++) {
-        html += `<li class="page-item page_ ${i === currentPage ? 'active' : ''}">
-          <a class="page-link text-dark" href="#" data-page="${i}">${i}</a>
-        </li>`;
-      }
-      if(totalPages > 0){
-        html += `<li class="page-item page_e ${currentPage === totalPages ? 'disabled' : ''}">
-          <a class="page-link text-dark" href="#" data-page="${totalPages}" aria-label="Last">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>`;
-      }
-      $('.pagination').html(html);
     }
 
     // 點擊分頁按鈕
@@ -162,15 +101,6 @@
 
     // 預設載入第一頁全部商品
     loadProducts(1, currentCategory, currentSubcategory);
-
-    function showToast(message){
-      const toastEl = $('#liveToast')[0];
-        if (toastEl) {
-          $("#toast-message").text(message);
-          const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastEl,{delay:3000});
-          toastBootstrap.show();
-        }
-    }
   });
 </script>
 <style>
