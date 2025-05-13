@@ -60,6 +60,9 @@ input:focus + .search-icon {
     font-family:"Noto+Sans+TC";
     white-space: nowrap;
 }
+.list-group-item:last-child{
+    border-bottom:1px solid #dee2e6 !important;
+}
 .card-img-top{
     height:350px;
     max-width:100%;
@@ -77,10 +80,6 @@ input:focus + .search-icon {
 .followus_title{
     font-family:"Noto+Sans+TC";
     letter-spacing:3px;
-}
-.price{
-    color: palevioletred;
-    font-size: 25px;
 }
 .back-to-top {
     position: fixed;
@@ -160,4 +159,8 @@ i.like_unlike.selected {
     .input-width-md-75 {
       width: 75%;
     }
+}
+.toast_1{
+    top:40%;
+    z-index: 3;
 }
