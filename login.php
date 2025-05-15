@@ -17,7 +17,7 @@
                 window.location.href = 'index.php';
             }, 3000);
           }else if(response.status === "ADMIN"){
-            window.location.href = 'admin.html';
+            window.location.href = 'admin.php';
           }else{
             $('#error-account').text("請輸入正確的帳號密碼");
           }
@@ -48,6 +48,7 @@
         }
       }
     });
+
     $('#account,#pwd').on('input',function(){
       $('#error-account').text('');
     })
@@ -89,7 +90,7 @@
                     <a href="forget.php" class="link-underline link-underline-opacity-0 text-black">忘記密碼</a>
                 </div>
             </div>
-            <div class="col-12 col-md-4 d-flex flex-column justify-content-center align-items-center border border-2 border-start-0 gap-3 p-5">
+            <div class="col-12 col-md-4 d-flex flex-column justify-content-center align-items-center border border-2 gap-3 p-5">
                 <span>首次購物，馬上加入會員!</span>
                 <a href="register.php"><button type="button" class="btn btn-dark">註冊會員</button></a>
             </div>

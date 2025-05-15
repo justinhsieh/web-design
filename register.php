@@ -81,6 +81,12 @@
           email:"請輸入正確的電子信箱格式",
           remote:"電子信箱已被使用"
         }
+      },
+      highlight: function (element) {
+        $(element).removeClass('is-valid').addClass('is-invalid');
+      },
+      unhighlight: function (element) {
+        $(element).removeClass('is-invalid').addClass('is-valid');
       }
     });
   });

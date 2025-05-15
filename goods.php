@@ -49,7 +49,6 @@
       }, function (response) {
         $('#product_list').html(response.products_html);
         $('.pagination').html(response.page_html);
-        generatePagination(page, response.total_pages);
         currentCategory = category;
         currentSubcategory = subcategory;
       }, 'json');
