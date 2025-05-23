@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $(".delete-member").on("click", function () {
+    $(document).on("click", ".delete-member", function () {
         const memberId = $(this).data("id");
         if (confirm("確定要刪除這個會員嗎？")) {
             $.ajax({
@@ -20,25 +20,48 @@ $(document).ready(function () {
             });
         }
     });
-    $(".cancel-productID").on("click", function () {
-        let row = $(this).closest("tr");
-        let productID = row.find("td:first").text();
-        if (confirm(`確定要刪除商品:${productID}嗎?`)) {
-            row.remove();
+    $(document).on("click", ".delete-product", function () {
+        const prodId = $(this).data("pid");
+        console.log(prodId);
+        if (confirm("確定要刪除這個商品嗎？")) {
+            $.ajax({
+                url: "delete_product.php",
+                type: "POST",
+                data: { pid: prodId },
+                success: function(response) {
+                    if (response.status === "SUCCESS") {
+                        alert(response.message);
+                        window.location.reload();  // 刷新頁面
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function() {
+                    alert("發生錯誤，請稍後再試。");
+                }
+            });
         }
     });
-    $(".cancel-discussion").on("click", function () {
-        let row = $(this).closest("tr");
-        let discussion = row.find("td:first").text();
-        if (confirm(`確定要刪除會員:${discussion}的留言嗎?`)) {
-            row.remove();
-        }
-    });
-    $(".cancel-paylist").on("click", function () {
-        let row = $(this).closest("tr");
-        let paylist = row.find("td:first").text();
-        if (confirm(`確定要刪除會員:${paylist}的訂單嗎?`)) {
-            row.remove();
+    $(document).on("click", ".delete-reviews", function(){
+        const reviewId = $(this).data("review_id"); 
+        console.log(reviewId);
+        if(confirm("確定要刪除這個留言嗎?")){
+            $.ajax({
+                url: "delete_review.php",
+                type: "POST",
+                data: {reviewid: reviewId},
+                success: function(response){
+                    if(response.status === "SUCCESS"){
+                        alert(response.message);
+                        window.location.reload() //刷新頁面
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(){
+                    alert("發生錯誤，請稍後嘗試");
+                }
+            });
         }
     });
 });

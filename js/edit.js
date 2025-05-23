@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $(".edit-member").on("click", function(){
+    $(document).on("click", ".edit-member", function(){
         $("#edit-id").val($(this).data("id"));
         $("#edit-name").val($(this).data("name"));
         $("#edit-account").val($(this).data("username"));
@@ -34,12 +34,12 @@ $(document).ready(function(){
         
         const mainCategory = $(this).data("cate");
         console.log(mainCategory);
-        const mainCategoryName = {
-            phone: "手機/平板",
-            camera: "相機/相機配件",
-            computer: "電腦/筆電"
-        }[mainCategory] || "商品分類";
-        $("#edit-cate-btn").text(mainCategoryName);
+        // const mainCategoryName = {
+        //     phone: "手機/平板",
+        //     camera: "相機/相機配件",
+        //     computer: "電腦/筆電"
+        // }[mainCategory] || "商品分類";
+        $("#edit-cate-btn").text(mainCategory);
         $("#edit-product-classifier").val(mainCategory);
         
         // 設定次分類

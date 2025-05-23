@@ -8,7 +8,18 @@ $(document).ready(function(){
             data: { keyword: keyword },
             dataType: "json",
             success: function(data){
-                let rows = "";
+                let rows = `<tr>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>帳號</th>
+                <th>生日</th>
+                <th>性別</th>
+                <th>電話</th>
+                <th>電子郵件</th>
+                <th>地址</th>
+                <th>權限</th>
+                <th>操作</th>
+                </tr>`;
                 if(data.length > 0){
                     data.forEach(function(member){
                         rows += `
@@ -52,47 +63,30 @@ $(document).ready(function(){
             }
         });
     });
-    $(document).on("click", ".edit-member", function(){
-        $("#edit-id").val($(this).data("id"));
-        $("#edit-name").val($(this).data("name"));
-        $("#edit-account").val($(this).data("username"));
-        $("#edit-birthdate").val($(this).data("birthdate"));
-        $("#edit-phone").val($(this).data("phone"));
-        $("#edit-email").val($(this).data("email"));
-        $("#edit-address").val($(this).data("address"));
-        $("#edit-role").val($(this).data("role"));
-
-        // 性別設定
-        const gender = $(this).data("gender");
-        $("input[name='sex'][value='" + gender + "']").prop("checked", true);
-    });
-    $(document).on("click", ".delete-member", function(){
-        const memberId = $(this).data("id");
-        if(confirm("確定要刪除這位會員嗎？")){
-            $.ajax({
-                url: "delete_member.php",
-                method: "POST",
-                data: { id: memberId },
-                success: function(response){
-                    alert(response.message);
-                    window.location.href = "admin.php";
-                },
-                error: function(){
-                    alert("刪除失敗，請稍後再試");
-                }
-            });
-        }
-    });
+    
     // 搜尋商品
     $("#search-prod-btn").on("click", function(){
         let keyword = $("#search-prod-keyword").val();
         $.ajax({
-            url: "search_prod.php",
+            url: "search_product.php",
             method: "GET",
             data: { keyword: keyword },
             dataType: "json",
             success: function(data){
-                let rows = "";
+                let rows = `<tr>
+                <th>ID</th>
+                <th>名稱</th>
+                <th>品牌</th>
+                <th>顏色</th>
+                <th>價格</th>
+                <th>功能</th>
+                <th>分類</th>
+                <th>類型</th>
+                <th>描述</th>
+                <th>次分類</th>
+                <th>庫存</th>
+                <th>操作</th>
+                </tr>`;
                 if(data.length > 0){
                     data.forEach(function(product){
                         rows += `
@@ -101,6 +95,7 @@ $(document).ready(function(){
                                 <td>${product.name}</td>
                                 <td>${product.brand}</td>
                                 <td>${product.color}</td>
+                                <td>${product.price}</td>
                                 <td>${product.function}</td>
                                 <td>${product.cate}</td>
                                 <td>${product.type}</td>
@@ -108,10 +103,11 @@ $(document).ready(function(){
                                 <td>${product.sub_cate}</td>
                                 <td>${product.stock}</td>
                                 <td>
-                                    <button class='btn btn-warning btn-sm edit-prod'
+                                    <button class='btn btn-warning btn-sm edit-product'
                                         data-bs-toggle='modal'
                                         data-bs-target='#editProductModal'
-                                        data-id='${product.pid}'
+                                        data-pid='${product.pid}'
+                                        data-time='${product.time}'
                                         data-name='${product.name}'
                                         data-brand='${product.brand}'
                                         data-color='${product.color}'
@@ -121,16 +117,17 @@ $(document).ready(function(){
                                         data-type='${product.type}'
                                         data-description='${product.description}'
                                         data-sub_cate='${product.sub_cate}'
-                                        data-stock='${product.stock}'>
+                                        data-stock='${product.stock}'
+                                        data-pic-link='${product.pic}'>
                                         編輯
                                     </button>
-                                    <button class='btn btn-danger btn-sm delete-prod' data-id='${product.pid}'>刪除</button>
+                                    <button class='btn btn-danger btn-sm delete-product' data-pid='${product.pid}'>刪除</button>
                                 </td>
                             </tr>
                         `;
                     });
                 } else {
-                    rows = "<tr><td colspan='10' class='text-center'>找不到符合的會員</td></tr>";
+                    rows = "<tr><td colspan='10' class='text-center'>找不到符合的商品</td></tr>";
                 }
                 $("#prod-list").html(rows);
             },
@@ -139,38 +136,51 @@ $(document).ready(function(){
             }
         });
     });
-    $(document).on("click", ".edit-prod", function(){
-        $("#edit-prodID").val($(this).data("pid"));
-        $("#edit-prodName").val($(this).data("name"));
-        $("#edit-prodBrand").val($(this).data("brand"));
-        $("#edit-prodColor").val($(this).data("color"));
-        $("#edit-prodPrice").val($(this).data("price"));
-        $("#edit-prodFunction").val($(this).data("function"));
-        $("#edit-prodType").val($(this).data("type"));
-        $("#edit-prodDescription").val($(this).data("description"));
-        $("#edit-stock").val($(this).data("stock"));
-
-        // 分類設定
-        const type = $(this).data("cate");
-        $("input[name='sex'][value='" + gender + "']").prop("checked", true);
-        // 次分類設定
-        
-    });
-    $(document).on("click", ".delete-member", function(){
-        const memberId = $(this).data("id");
-        if(confirm("確定要刪除這位會員嗎？")){
-            $.ajax({
-                url: "delete_member.php",
-                method: "POST",
-                data: { id: memberId },
-                success: function(response){
-                    alert(response.message);
-                    window.location.href = "admin.php";
-                },
-                error: function(){
-                    alert("刪除失敗，請稍後再試");
+    // 搜尋留言
+    $("#search-reviews-btn").on("click", function(){
+        let keyword = $("#search-reviews-keyword").val();
+        $.ajax({
+            url: "search_reviews.php",
+            method: "GET",
+            data: { keyword: keyword },
+            dataType: "json",
+            success: function(data){
+                let rows = `<tr>
+                <th>留言ID</th>
+                <th>時間</th>
+                <th>商品ID</th>
+                <th>會員</th>
+                <th>內容</th>
+                <th>星數</th>
+                <th>喜歡數</th>
+                <th>討厭數</th>
+                </tr>`;
+                if(data.length > 0){
+                    data.forEach(function(review){
+                        rows += `
+                            <tr>
+                                <td>${review.review_id}</td>
+                                <td>${review.time}</td>
+                                <td>${review.pid}</td>
+                                <td>${review.username}</td>
+                                <td>${review.comment}</td>
+                                <td>${review.rating}</td>
+                                <td>${review.like_cnt}</td>
+                                <td>${review.unlike_cnt}</td>
+                                <td>
+                                    <button class='btn btn-danger btn-sm delete-reviews' data-review_id='${review.review_id}'>刪除</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    rows = "<tr><td colspan='10' class='text-center'>找不到符合的留言</td></tr>";
                 }
-            });
-        }
+                $("#review-list").html(rows);
+            },
+            error: function(){
+                alert("查詢失敗，請稍後再試");
+            }
+        });
     });
 });

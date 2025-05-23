@@ -1,28 +1,5 @@
 $(document).ready(function () {
-$("#form-add-customerID").on("submit", function(event){
-        event.preventDefault();
-        $.ajax({
-            url: "add_user.php",
-            method: "POST",
-            data: $(this).serialize(),
-            dataType: "json",
-            success: function(response){
-                if(response.status == "SUCCESS"){
-                    alert(response.message);
-                    $("#addUserModal").modal("hide");
-                    $("#form-add-customerID")[0].reset();
-                    location.reload();
-                }else{
-                    alert(response.message);
-                }
-            },
-            error: function(xhr, status, error){
-                alert("發生錯誤: " + error);
-            }
-        });
-    });
-
-    // 定義主分類對應的次分類
+        // 定義主分類對應的次分類
     const subCategories = {
         phone: ["iPad", "iPhone", "安卓手機"],
         camera: ["微單眼/單眼", "單眼鏡頭", "數位/拍立得"],
