@@ -1,3 +1,16 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// 如果想限制只有 admin 才能進入 admin.php
+if ($_SESSION['role'] !== 'admin') {
+    echo "無權限訪問此頁面";
+    exit;
+}
+?>
 <?php include 'head.php';?>
     <!-- 自定義JS -->
     <script src="js/validate_personalID.js"></script>
@@ -45,20 +58,6 @@
                     <!-- 會員列表 -->
                     <div class="list-customerID">
                         <table class="table mt-2">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>姓名</th>
-                                    <th>帳號</th>
-                                    <th>生日</th>
-                                    <th>性別</th>
-                                    <th>電話</th>
-                                    <th>電子郵件</th>
-                                    <th>地址</th>
-                                    <th>權限</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
                             <tbody id="member-list">
                                 <!-- 結果將顯示在這裡 -->
                             </tbody>
@@ -138,6 +137,16 @@
                     <!-- 商品列表 -->
                     <div class="list-prodID">
                         <table class="table mt-2">
+                            <tbody id="prod-list">
+                                <!-- 結果將顯示在這裡 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                        新增商品
+                    </button>
+                    <div class="list-prodID">
+                        <table class="table mt-2">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -154,103 +163,116 @@
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="prod-list">
+                            <tbody>
+                                <?php
+                                    include "db.php";
+                                    $sql = "SELECT * FROM product";
+                                    $result = $conn->query($sql);
+                                    if($result->num_rows > 0){
+                                        while($row = $result->fetch_assoc()){
+                                            echo "<tr>
+                                                <td>{$row['pid']}</td>
+                                                <td>{$row['name']}</td>
+                                                <td>{$row['brand']}</td>
+                                                <td>{$row['color']}</td>
+                                                <td>{$row['price']}</td>
+                                                <td>{$row['function']}</td>
+                                                <td>{$row['cate']}</td>
+                                                <td>{$row['type']}</td>
+                                                <td>{$row['description']}</td>
+                                                <td>{$row['sub_cate']}</td>
+                                                <td>{$row['stock']}</td>
+                                                <td>
+                                                    <button class='btn btn-warning btn-sm edit-product'
+                                                            data-bs-toggle='modal'
+                                                            data-bs-target='#editProductModal'
+                                                            data-pid='{$row['pid']}'
+                                                            data-time='{$row['time']}'
+                                                            data-name='{$row['name']}'
+                                                            data-brand='{$row['brand']}'
+                                                            data-color='{$row['color']}'
+                                                            data-price='{$row['price']}'
+                                                            data-function='{$row['function']}'
+                                                            data-cate='{$row['cate']}'
+                                                            data-type='{$row['type']}'
+                                                            data-description='{$row['description']}'
+                                                            data-sub_cate='{$row['sub_cate']}'
+                                                            data-stock='{$row['stock']}'
+                                                            data-pic-link='{$row['pic']}'>
+                                                            編輯
+                                                    </button>
+                                                    <button class='btn btn-danger btn-sm delete-product' data-pid='{$row['pid']}'>刪除</button>
+                                                </td>
+                                                </tr>";
+                                        }
+                                    }else{
+                                        echo "<tr><td colspan='12' class='text-center'>尚無商品資料</td></tr>";
+                                    }
+                                    $conn->close();
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="messages" class="tab-pane fade">
+                    <h4>留言管理</h4>
+                    <!-- 查詢區域 -->
+                    <div class="mt-3">
+                        <input type="text" id="search-reviews-keyword" class="form-control" placeholder="搜尋留言 (會員/星數/內容)">
+                        <button class="btn btn-primary mt-2" id="search-reviews-btn">搜尋</button>
+                    </div>
+
+                    <!-- 留言列表 -->
+                    <div class="list-reviewID">
+                        <table class="table mt-2">
+                            <tbody id="review-list">
                                 <!-- 結果將顯示在這裡 -->
                             </tbody>
                         </table>
                     </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                        新增商品
-                    </button>
-                    <table class="table mt-2">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>名稱</th>
-                                <th>品牌</th>
-                                <th>顏色</th>
-                                <th>價格</th>
-                                <th>功能</th>
-                                <th>分類</th>
-                                <th>類型</th>
-                                <th>描述</th>
-                                <th>次分類</th>
-                                <th>庫存</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                include "db.php";
-                                $sql = "SELECT * FROM product";
-                                $result = $conn->query($sql);
-                                if($result->num_rows > 0){
-                                    while($row = $result->fetch_assoc()){
-                                        echo "<tr>
-                                            <td>{$row['pid']}</td>
-                                            <td>{$row['name']}</td>
-                                            <td>{$row['brand']}</td>
-                                            <td>{$row['color']}</td>
-                                            <td>{$row['price']}</td>
-                                            <td>{$row['function']}</td>
-                                            <td>{$row['cate']}</td>
-                                            <td>{$row['type']}</td>
-                                            <td>{$row['description']}</td>
-                                            <td>{$row['sub_cate']}</td>
-                                            <td>{$row['stock']}</td>
-                                            <td>
-                                                <button class='btn btn-warning btn-sm edit-product'
-                                                        data-bs-toggle='modal'
-                                                        data-bs-target='#editProductModal'
-                                                        data-pid='{$row['pid']}'
-                                                        data-time='{$row['time']}'
-                                                        data-name='{$row['name']}'
-                                                        data-brand='{$row['brand']}'
-                                                        data-color='{$row['color']}'
-                                                        data-price='{$row['price']}'
-                                                        data-function='{$row['function']}'
-                                                        data-cate='{$row['cate']}'
-                                                        data-type='{$row['type']}'
-                                                        data-description='{$row['description']}'
-                                                        data-sub_cate='{$row['sub_cate']}'
-                                                        data-stock='{$row['stock']}'
-                                                        data-pic-link='{$row['pic']}'>
-                                                        編輯
-                                                </button>
-                                                <button class='btn btn-danger btn-sm delete-product' data-pid='{$row['pid']}'>刪除</button>
-                                            </td>
-                                            </tr>";
+                    <div class="list-reviewID">
+                        <table class="table mt-2">
+                            <thead>
+                                <tr>
+                                    <th>留言ID</th>
+                                    <th>時間</th>
+                                    <th>商品ID</th>
+                                    <th>會員</th>
+                                    <th>內容</th>
+                                    <th>星數</th>
+                                    <th>喜歡數</th>
+                                    <th>討厭數</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    include "db.php";
+                                    $sql = "SELECT * FROM reviews";
+                                    $result = $conn->query($sql);
+                                    if($result->num_rows > 0){
+                                        while($row = $result->fetch_assoc()){
+                                            echo "<tr>
+                                                <td>{$row['review_id']}</td>
+                                                <td>{$row['time']}</td>
+                                                <td>{$row['pid']}</td>
+                                                <td>{$row['username']}</td>
+                                                <td>{$row['comment']}</td>
+                                                <td>{$row['rating']}</td>
+                                                <td>{$row['like_cnt']}</td>
+                                                <td>{$row['unlike_cnt']}</td>
+                                                <td>
+                                                    <button class='btn btn-danger btn-sm delete-reviews' data-review_id='{$row['review_id']}'>刪除</button>
+                                                </td>
+                                                </tr>";
+                                        }
+                                    }else{
+                                        echo "<tr><td colspan='12' class='text-center'>尚無留言資料</td></tr>";
                                     }
-                                }else{
-                                    echo "<tr><td colspan='12' class='text-center'>尚無會員資料</td></tr>";
-                                }
-                                $conn->close();
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="messages" class="tab-pane fade">
-                    <h4>留言管理</h4>
-                    <table class="table mt-2">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>會員</th>
-                                <th>留言內容</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>201</td>
-                                <td>王小明</td>
-                                <td>這個商品很好用！</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm cancel-discussion">刪除</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    $conn->close();
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div id="orders" class="tab-pane fade">
                     <h4>訂單管理</h4>
@@ -321,7 +343,6 @@
                     </table>
                 </div>
             </div>
-            <button class="btn btn-danger mt-3" id="logoutBtn">登出</button>
         </div>
     </div>
 
@@ -554,7 +575,7 @@
                     <h5 class="modal-title" id="editProductLabel">編輯商品</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="#" class="form-horizontal" id="form-edit-productID">
+                <form action="update_product.php" method="post" class="form-horizontal" id="form-edit-productID">
                     <div class="modal-body">
                         <div class="form-group py-2">
                             <label for="productID" class="form-label">商品編號</label>

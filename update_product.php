@@ -14,11 +14,10 @@
     $productType = $_POST['productType'] ?? '';
     $productDescription = $_POST['product_description'] ?? '';
     $productCount = $_POST['product_count'] ?? '';
-    $productPicLocation = $_POST['product_pic_location'];
-
+    $productPicLocation = $_POST['product_pic_location'] ?? '';
     if($productID && $productTime && $productName && $productBrand && $productColor && $productPrice && $productFunction 
     && $productClassifier && $productSubCate && $productType && $productDescription && $productCount && $productPicLocation){
-        $sql = "UPDATE product SET name = ?, brand = ?, color = ?, price = ?, function = ?, cate = ?, sub_cate = ?, type = ?, description = ?, stock = ?, pic = ? WHERE id = ?";
+        $sql = "UPDATE product SET name = ?, brand = ?, color = ?, price = ?, function = ?, cate = ?, sub_cate = ?, type = ?, description = ?, stock = ?, pic = ? WHERE pid = ?";
         $stmt = $conn->prepare($sql);
 
         $stmt->bind_param("sssisssssisi",  $productName, $productBrand, $productColor, $productPrice, $productFunction, 
@@ -35,5 +34,5 @@
     }
     $conn->close();
     echo json_encode($response);
-    // header("Location: admin.php");
+    header("Location: admin.php");
 ?>

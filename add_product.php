@@ -22,7 +22,13 @@
         //確保價格、庫存是整數
         $productPrice = intval($productPrice);
         $productCount = intval($productCount);
-
+        
+        if($productClassifier == "phone")
+            $productClassifier = "手機/平板";
+        elseif($productClassifier == "camera")
+            $productClassifier = "相機/相機配件";
+        else
+            $productClassifier = "電腦/筆電";
         $stmt->bind_param("sssisssssis",  $productName, $productBrand, $productColor, $productPrice, $productFunction, $productClassifier, $productSubCate, $productType, $productDescription, $productCount, $productPicLocation);
         
         if($stmt->execute()){

@@ -23,11 +23,26 @@
           </div>
           <div class="form-group py-2">
             <label for="account" class="form-label">帳號</label>
-            <input type="text" name="account" placeholder="Account" class="form-control" value="<?= htmlspecialchars($user['username'] ?? '')?>" required/>
+            <input type="text" name="account" placeholder="Account" class="form-control" value="<?= htmlspecialchars($user['username'] ?? '')?>" required readonly/>
           </div>
           <div class="form-group py-2">
             <label for="password" class="form-label">密碼</label>
             <input type="password" name="password" placeholder="Password" class="form-control" minlength="6" required />
+          </div>
+          <div class="form-group py-2">
+            <label class="form-label">性別</label><br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="genderM" value="M" <?= ($user['gender'] ?? '') == 'M' ? 'checked' : '' ?> required>
+              <label class="form-check-label" for="genderM">男</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="genderF" value="F" <?= ($user['gender'] ?? '') == 'F' ? 'checked' : '' ?>>
+              <label class="form-check-label" for="genderF">女</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="genderO" value="O" <?= ($user['gender'] ?? '') == 'O' ? 'checked' : '' ?>>
+              <label class="form-check-label" for="genderO">其他</label>
+            </div>
           </div>
           <div class="form-group py-2">
             <label for="phone_number" class="form-label">電話</label>
@@ -35,7 +50,7 @@
           </div>
           <div class="form-group py-2">
             <label for="email" class="form-label">電子郵件</label>
-            <input type="email" name="email" placeholder="example@gmail.com" class="form-control" value="<?= htmlspecialchars($user['email'] ?? '')?>" required/>
+            <input type="email" name="email" placeholder="example@gmail.com" class="form-control" value="<?= htmlspecialchars($user['email'] ?? '')?>" required readonly/>
           </div>
           <div class="form-group py-2">
             <label for="location" class="form-label">地址</label>

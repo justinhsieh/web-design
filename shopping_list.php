@@ -1,0 +1,346 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<?php include 'head.php';?>
+  <!-- 自定義JS -->
+  <script src="js/validate_personalID.js"></script>
+</head>
+
+<body>
+  <!-- 導覽列 -->
+  <?php include 'header.php';?>
+  <main>
+    <div class="container py-5">
+      <!-- 購物車標題 -->
+      <nav class="nav nav-tabs mt-3">
+        <a class="nav-link active" id="items-nav">全部 (<span id="items-count" data-itemsCount="3">3</span>)</a>
+        <a class="nav-link" id="phone-nav">手機/平板 (<span id="phone-count" data-phoneCount="1">1</span>)</a>
+        <a class="nav-link" id="camera-nav">相機/相機配件 (<span id="camera-count" data-cameraCount="1">1</span>)</a>
+        <a class="nav-link" id="computer-nav">電腦/筆電 (<span id="computer-count" data-computerCount="1">1</span>)</a>
+      </nav>
+      <!-- 購物車內容 -->
+      <div id="phone" class="type" data-category="phone">
+        <div class="cart-item row align-items-center">
+          <div class="col-auto">
+            <input type="checkbox" class="item-checkbox" checked />
+          </div>
+          <div class="col-auto">
+            <img src="images/xiaomi.png" alt="商品圖片" width="100" />
+          </div>
+          <div class="col">
+            <div class="fw-bold">Xiaomi 15 Ultra 5G (6.73吋/1TB)</div>
+            <div>編號：11</div>
+            <div>顏色：經典黑銀</div>
+          </div>
+          <div class="col-auto fs-5">
+            單價:
+            <span class="fs-6 text-danger"><i>$</i></span>
+            <span class="unit-price text-danger" data-price="37999">37,999</span>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-outline-secondary btn-sm decrease">-</button>
+            <input type="text" value="1" class="text-center quantity" id="quantity" readonly />
+            <button class="btn btn-outline-secondary btn-sm increase">+</button>
+          </div>
+          <div class="col-auto">
+            <a href="#" class="remove-item">移除</a>
+          </div>
+        </div>
+      </div>
+      <div id="camera" class="type" data-category="camera">
+        <div class="cart-item row align-items-center">
+          <div class="col-auto">
+            <input type="checkbox" class="item-checkbox" checked />
+          </div>
+          <div class="col-auto">
+            <img src="images/Canon EF.png" alt="商品圖片" width="100" />
+          </div>
+          <div class="col">
+            <div class="fw-bold">Canon EF 35mm f/1.4 L II USM</div>
+            <div>編號：20</div>
+            <div>顏色：黑色</div>
+          </div>
+          <div class="col-auto fs-5">
+            單價:
+            <span class="fs-6 text-danger"><i>$</i></span>
+            <span class="unit-price text-danger" data-price="56253">56,253</span>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-outline-secondary btn-sm decrease">-</button>
+            <input type="text" value="1" class="text-center quantity" id="quantity" readonly />
+            <button class="btn btn-outline-secondary btn-sm increase">+</button>
+          </div>
+          <div class="col-auto">
+            <a href="#" class="remove-item">移除</a>
+          </div>
+        </div>
+      </div>
+      <div id="computer" class="type" data-category="computer">
+        <div class="cart-item row align-items-center">
+          <div class="col-auto">
+            <input type="checkbox" class="item-checkbox" checked />
+          </div>
+          <div class="col-auto">
+            <img src="images/DELL筆電.png" alt="商品圖片" width="100" />
+          </div>
+          <div class="col">
+            <div class="fw-bold">DELL 14吋i5輕薄筆電</div>
+            <div>編號：29</div>
+            <div>顏色：藍色</div>
+          </div>
+          <div class="col-auto fs-5">
+            單價:
+            <span class="fs-6 text-danger"><i>$</i></span>
+            <span class="unit-price text-danger" data-price="25999">25,999</span>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-outline-secondary btn-sm decrease">-</button>
+            <input type="text" value="1" class="text-center quantity" id="quantity" readonly />
+            <button class="btn btn-outline-secondary btn-sm increase">+</button>
+          </div>
+          <div class="col-auto">
+            <a href="#" class="remove-item">移除</a>
+          </div>
+        </div>
+      </div>
+      <!-- 全選 -->
+      <div class="row mt-3 align-items-center">
+        <div class="col-auto">
+          <input type="checkbox" id="check-all" checked />
+          <label for="check-all">全選</label>
+        </div>
+        <div class="col text-end">
+          <span class="fs-5">商品總金額：</span>
+          <span class="text-danger">
+            <span class="fs-6">$</span>
+            <span class="fs-5" id="total-price">37,999</span>
+          </span>
+          <button class="btn btn-primary" id="payment-button">結帳(1)</button>
+        </div>
+      </div>
+      <div id="payment" style="display: none">
+        <!-- 付款資訊 -->
+        <div class="mt-4">
+          <div class="payment-section text-center">付款資料</div>
+          <form action="#" method="post" id="form-account">
+            <div class="mb-3">
+              <label for="name" class="form-label">姓名</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="ex. 王小明" minlength="2"
+                maxlength="5" required />
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">地址</label>
+              <input type="text" class="form-control" id="address" name="address" required />
+            </div>
+            <div class="mb-3">
+              <label for="card" class="form-label">卡號</label>
+              <input type="text" class="form-control" id="card" name="card" pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}"
+                placeholder="xxxx-xxxx-xxxx" required />
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">電話</label>
+              <input type="telNo" class="form-control" id="phone" name="phone" pattern="09[0-9]{2}-[0-9]{6}"
+                placeholder="09xx-xxxxxx" required />
+            </div>
+            <!-- 訂單金額 -->
+            <div class="total-section text-center mt-3">
+              <div class="row">
+                <div class="col">信用卡</div>
+                <div class="col">=</div>
+                <div class="col">本次訂單金額</div>
+              </div>
+              <div class="row text-danger">
+                <div class="col">$<span id="card-total">37,999</span></div>
+                <div class="col">=</div>
+                <div class="col">$<span id="order-total">37,999</span></div>
+              </div>
+            </div>
+  
+            <!-- 確認結帳按鈕 -->
+            <div class="text-center mt-3">
+              <input type="submit" class="btn btn-primary" id="confirm-checkout" value="確認結帳" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <button id="backToTop" class="back-to-top"></button>
+  <script>
+    $(document).ready(function ($) {
+      $("#form-account").validate({
+        submitHandler: function (form) {
+          alert("訂單已提交！");
+          form.submit();
+        },
+        rules: {},
+        messages: {
+          name: {
+            required: "帳號為必填欄位",
+            minlength: "最少需2個字",
+            maxlength: "最多需5個字",
+          },
+          address: {
+            required: "地址為必填欄位",
+          },
+          card: {
+            required: "卡號為必填欄位",
+            pattern: "錯誤格式",
+          },
+          phone: {
+            required: "電話為必填欄位",
+            pattern: "錯誤格式",
+          },
+        },
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 200) {
+          $("#backToTop").css("display", "flex");
+        } else {
+          $("#backToTop").css("display", "none");
+        }
+      });
+      $("#backToTop").click(function () {
+        $("html").animate({ scrollTop: 0 });
+      });
+      function updateTotal() {
+        let total = 0;
+        $(".cart-item").each(function () {
+          let checkbox = $(this).find(".item-checkbox");
+          if (checkbox.prop("checked")) {
+            let price = parseInt($(this).find(".unit-price").data("price"));
+            let quantity = parseInt($(this).find("#quantity").val());
+            total += price * quantity;
+          }
+        });
+        $("#total-price, #card-total, #order-total").text(
+          total.toLocaleString()
+        );
+      }
+
+      function updateCategoryCount(category, delta) {
+        let countSpan = $("#" + category + "-count");
+        let current =
+          parseInt(countSpan.attr("data-" + category + "Count")) || 0;
+        //console.log(current);
+        let newCount = current + delta;
+        countSpan.attr("data-" + category + "Count", newCount);
+        countSpan.text(newCount);
+      }
+
+      $(".increase").click(function () {
+        let quantityInput = $(this).siblings("#quantity");
+        let quantity = parseInt(quantityInput.val()) + 1;
+        quantityInput.val(quantity);
+        let category = $(this).closest(".type").data("category");
+        updateCategoryCount(category, 1);
+        updateCategoryCount("items", 1);
+        updateTotal();
+      });
+
+      $(".decrease").click(function () {
+        let quantityInput = $(this).siblings("#quantity");
+        let quantity = parseInt(quantityInput.val());
+        if (quantity > 1) {
+          quantityInput.val(quantity - 1);
+          let category = $(this).closest(".type").data("category");
+          updateCategoryCount(category, -1);
+          updateCategoryCount("items", -1);
+          updateTotal();
+        }
+      });
+
+      $(".remove-item").click(function () {
+        let category = $(this).closest(".type").data("category");
+        let count =
+          parseInt($(this).closest(".cart-item").find("#quantity").val()) ||
+          0;
+        console.log(count);
+        updateCategoryCount(category, -count);
+        updateCategoryCount("items", -count);
+        $(this).closest(".cart-item").remove();
+        updateTotal();
+      });
+
+      $("#check-all").change(function () {
+        let isChecked = $(this).prop("checked");
+        $(".item-checkbox").each(function () {
+          let category = $(this).closest(".type").data("category");
+          let quantity =
+            parseInt($(this).closest(".cart-item").find(".quantity").val()) ||
+            0;
+          let delta = isChecked ? quantity : -quantity;
+          updateCategoryCount(category, delta);
+          updateCategoryCount("items", delta);
+        });
+        $(".item-checkbox").prop("checked", isChecked);
+        updateTotal();
+      });
+
+      $(".item-checkbox").change(function () {
+        let isChecked = $(this).prop("checked");
+        let category = $(this).closest(".type").data("category");
+        let count =
+          parseInt($(this).closest(".cart-item").find("#quantity").val()) ||
+          0;
+        if (isChecked) {
+          //console.log(count);
+          updateCategoryCount(category, count);
+          updateCategoryCount("items", count);
+        } else {
+          //console.log(count);
+          updateCategoryCount(category, -count);
+          updateCategoryCount("items", -count);
+        }
+        updateTotal();
+      });
+
+      $("#payment-button").on("click", function () {
+        $("#payment").show();
+      });
+
+      $("#items-nav").on("click", function () {
+        $(".nav-link").removeClass("active");
+        $(this).addClass("active");
+        $(".type").show();
+      });
+
+      $("#phone-nav").on("click", function () {
+        $(".nav-link").removeClass("active");
+        $(this).addClass("active");
+        $(".type").hide();
+        $("#phone").show();
+      });
+
+      $("#camera-nav").on("click", function () {
+        $(".nav-link").removeClass("active");
+        $(this).addClass("active");
+        $(".type").hide();
+        $("#camera").show();
+      });
+
+      $("#computer-nav").on("click", function () {
+        $(".nav-link").removeClass("active");
+        $(this).addClass("active");
+        $(".type").hide();
+        $("#computer").show();
+      });
+      updateTotal();
+    });
+  </script>
+  <?php include 'footer.php';?>
+</body>
+
+</html>
