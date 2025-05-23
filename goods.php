@@ -73,6 +73,7 @@
       const category = $(this).data('category');
       currentCategory = category;
       currentSubcategory = 'all';
+      $('.searchbar').val('');
       loadProducts(1, currentCategory, currentSubcategory);
     });
 

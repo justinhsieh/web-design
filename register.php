@@ -13,7 +13,10 @@
         let email = $('#email_2').val().toLowerCase().trim();
         $.post('register2db.php',{account:account,password:pwd,email:email},function(response){
           if(response.status === 'SUCCESS'){
-            showToast("註冊成功，請前往登入頁面登入！");
+            showToast("註冊成功，即將前往登入！");
+            setTimeout(() => {
+                window.location.href = 'login.php';
+            }, 2000);
             $('#register input').val('');
           }else{
             showToast("註冊失敗，請檢查是否符合條件！");
