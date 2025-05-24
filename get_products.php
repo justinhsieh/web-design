@@ -38,9 +38,9 @@
                 <div class="card-body">
                     <span class="fs-5">'.$row['name'].'</span>
                     <h5 class="card-title">售價<span class="price text-danger fs-3">'.number_format($row['price']).'</span>元</h5>
-                    <div class="d-flex gap-3">
-                    <button type="button" class="btn btn-danger">直接購買</button>
-                    <button type="button" class="btn btn-primary">加入購物車</button>
+                    <div class="d-flex flex-column flex-xl-row gap-1 gap-xl-3 justify-content-center">
+                        <button type="button" class="btn btn-danger flex-grow-1">直接購買</button>
+                        <button type="button" class="btn btn-primary flex-grow-1">加入購物車</button>
                     </div>
                 </div>
             </div>
