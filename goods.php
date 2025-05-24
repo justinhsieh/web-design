@@ -128,7 +128,7 @@
           <img src="images/bt_2_095_01_e6.png" class="d-block carousel-img mx-auto">
         </div>
         <div class="carousel-item">
-          <img src="images/bt_2_095_02_e10.jpg" class="d-block carousel-img mx-auto">
+          <img src="images/bt_2_095_01_e4.jpg" class="d-block carousel-img mx-auto">
         </div>
       </div>
     </div>
