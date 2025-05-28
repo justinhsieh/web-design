@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2025-05-23 19:28:50
+-- 產生時間： 2025-05-28 16:09:39
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.1.25
 
@@ -51,12 +51,8 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`id`, `username`, `password`, `email`, `name`, `phone`, `address`, `gender`, `birthdate`, `created_at`, `updated_at`, `last_login_at`, `status`, `role`) VALUES
-(11, '123456', '$2y$10$/K3wlgHYz9VR8Yvbz8ctQutjbak6N1LF0tmB8NpT9PXWQGKB7clSO', 'justinhsieh670@gmail.com', '王小集', '0912-345657', '國立彰化師範大學', 'M', '1999-01-02', NULL, '2025-05-24 00:14:14', NULL, 0, 'user'),
-(13, '1234566', '$2y$10$nQZemwB2tGqPMmlDZmJxquelvjbcPJYpSlTxivqkzC/AMc4NWHMcu', 'kzhan0828@gmail.com', 'kk', '0912-345655', '國立彰化師範大學', 'M', '2025-04-05', NULL, '2025-05-24 00:22:54', NULL, 0, 'user'),
-(15, 'member', '$2y$10$vYG0f7zZ7uCrQ.Fdg9CYmuDhzTFD.gm5aQnLBZswVvai0cfw4rifu', 'member@gmail.com', 'member', '0912-34564', '國立彰化師範大學', 'M', '2025-04-04', NULL, '2025-05-24 00:26:04', NULL, 0, 'user'),
-(16, 'admin', '$2y$10$8MyWm.1gnPCa40G5y.agGeMcyK/H1ANUn/hbu/LI8zSZyOGufQH8C', 'admin@gmail.com', 'admin', '0912-345655', '國立彰化師範大學', 'M', '2025-04-04', NULL, '2025-05-22 17:24:28', NULL, 0, 'admin'),
-(21, 'hsuan', '$2y$10$BsSMUDRPlppLeS/ZQKUTOOKJytOJQvGWpLh6j2qloXIpMZfixcgoW', 'sam9tw@gmail.com', '宣', '0988-345681', '國立彰化師範大學', 'M', '2000-03-18', NULL, '2025-05-23 23:30:53', NULL, 0, 'user'),
-(23, 'ke', '$2y$10$Fq5hc3vj6F17rwBpyRdNO.6WQeBO6dsia5lEMwjMAMXQ9TGKNf4He', 'ke@gmail.com', '柯里里', '0988-345655', '國立彰化師範大學', 'M', '2000-03-16', NULL, '2025-05-24 00:15:29', NULL, 0, 'user');
+(15, 'member', '$2y$10$PtX1bvBfLHq7p4k62Z3iQ.yPGHWr2q80tFj.YTUwddik2u4rWCaDy', 'member@gmail.com', 'member', '0912-345634', '國立彰化師範大學', 'M', '2025-04-04', NULL, '2025-05-24 23:06:09', NULL, 0, 'user'),
+(16, 'admin', '$2y$10$8MyWm.1gnPCa40G5y.agGeMcyK/H1ANUn/hbu/LI8zSZyOGufQH8C', 'admin@gmail.com', 'admin', '0912-345655', '國立彰化師範大學', 'M', '2025-04-04', NULL, '2025-05-22 17:24:28', NULL, 0, 'admin');
 
 -- --------------------------------------------------------
 
@@ -112,7 +108,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`pid`, `time`, `name`, `brand`, `color`, `price`, `function`, `pic`, `cate`, `type`, `description`, `sub_cate`, `stock`) VALUES
-(1, '2025-04-30 12:04:44', 'iPad 11 11吋/WiFi/128G 平板電腦', 'Apple', '銀色 藍色 粉紅色', 11900, '11吋128GBA16仿生晶片', 'images/ipad11.png', '手機/平板', 'WIFI', '實際規格依Apple原廠公告為準:https://www.apple.com/tw/', 'iPad', 9),
+(1, '2025-04-30 12:04:44', 'iPad 11 11吋/WiFi/128G 平板電腦', 'Apple', '銀色 藍色 粉紅色', 11900, '11吋128GBA16仿生晶片', 'images/ipad11.png', '手機/平板', 'WIFI', '實際規格依Apple原廠公告為準:https://www.apple.com/tw/', 'iPad', 10),
 (2, '2025-04-30 12:04:44', 'iPad Air 11吋/WiFi/128G平板電腦', 'Apple', '銀色 黃色 粉紅色', 18690, 'Apple M2 晶片\n抗反射鍍膜\n1200 萬像素廣角相機', 'images/ipadair.png', '手機/平板', 'WIFI', '實際規格依Apple原廠公告為準:https://www.apple.com/tw/', 'iPad', 10),
 (3, '2025-04-30 12:04:44', 'iPad Pro 11吋/WiFi/256G/M4晶片 平板電腦', 'Apple', '白色 灰色', 35890, 'Apple M4 晶片\r\n1200 萬像素廣角相機\r\n256GB 儲存空間', 'images/ipadpro.png', '手機/平板', 'WIFI', 'Apple iPad Pro 11 (2024) Wi-Fi 256GB 功能特色\n採用 iPadOS 17 作業系統\n11 吋 2,420 x 1,668pixels 解析度 Ultra Retina XDR 顯示器\n內建 Apple M4 晶片（16 核心神經網路引擎）\n8GB RAM + 256GB ROM\n前置 1,200 萬畫素鏡頭\n後置 1,200 萬畫素鏡頭\n適應性原彩閃光燈、光學雷達掃描儀\nWi-Fi 6E、藍牙 5.3\nFace ID 人臉辨識\n內建 31.29 瓦特小時可充電鋰聚合物電池\n採用 USB Type-C 連接埠 (支援 Thunderbolt 3、USB 4；速度最高可達 40Gb/s)\n支援Apple Pencil Pro、巧控鍵盤', 'iPad', 10),
 (4, '2025-04-30 12:04:44', 'iPad Pro 第2代(11吋/256G/WiFi)平板電腦', 'Apple', '白色 灰色', 17800, 'A12Z仿生晶片\n8核心繪圖處理\n1200 萬像素超廣角相機', 'images/ipadpro2.png', '手機/平板', 'WIFI', '實際規格依Apple原廠公告為準:https://www.apple.com/tw/', 'iPad', 10),
@@ -171,7 +167,9 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`username`, `time`, `comment`, `pid`, `rating`, `review_id`, `like_cnt`, `unlike_cnt`) VALUES
-('member', '2025-05-24 00:24:15', 'bad', 5, 2, 7, 0, 0);
+('member', '2025-05-24 17:57:44', 'good', 2, 4, 8, 0, 0),
+('member', '2025-05-24 23:11:01', 'soso', 2, 3, 9, 0, 0),
+('member', '2025-05-24 23:11:36', 'bad', 26, 2, 10, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -186,7 +184,8 @@ CREATE TABLE `shoppingcart` (
   `quantity` int(11) UNSIGNED NOT NULL COMMENT '商品數量',
   `price` decimal(10,2) NOT NULL COMMENT '成交單價',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
-  `update_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新時間'
+  `update_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新時間',
+  `color` varchar(11) NOT NULL COMMENT '選擇顏色'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -199,6 +198,13 @@ CREATE TABLE `subscriber` (
   `id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `subscriber`
+--
+
+INSERT INTO `subscriber` (`id`, `email`) VALUES
+(8, 'member@gmail.com');
 
 --
 -- 已傾印資料表的索引
@@ -253,7 +259,7 @@ ALTER TABLE `subscriber`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '會員編號', AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '會員編號', AUTO_INCREMENT=27;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
@@ -265,13 +271,13 @@ ALTER TABLE `orders`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product`
 --
 ALTER TABLE `product`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `shoppingcart`
@@ -283,7 +289,7 @@ ALTER TABLE `shoppingcart`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `subscriber`
 --
 ALTER TABLE `subscriber`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
