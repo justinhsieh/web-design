@@ -189,3 +189,31 @@ a.header_btn:hover{
 .fadein{
     animation:fadein 0.3s ease-in-out;
 }
+
+.card-img-top {
+  transition: transform 0.3s ease;
+}
+
+.card-img-top:hover {
+  transform: scale(1.05);
+}
+
+.color-circle {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border: 3px double rgb(206, 203, 203);
+}
+
+.color-circle.active {
+  border: 3px solid rgb(72, 72, 72);
+}
+
+.bg-silver { background-color: silver; }
+.bg-blue { background-color: rgb(55, 129, 255); }
+.bg-pink { background-color: pink; }
+.bg-gray { background-color: gray; }
+.bg-green { background-color: green; }
+.bg-purple { background-color: purple; }
+.bg-rosegold { background-color: #E0BFB8; }
+.bg-darkgreen { background-color: darkgreen; }
