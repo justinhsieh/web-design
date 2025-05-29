@@ -10,9 +10,10 @@
   $row = $result->fetch_assoc();
   $html .= '<div class="row pt-3">
         <div class="col-12 col-md-6">
-          <img src="'.$row['pic'].'" alt="" class="w-100 border border-3 border-black"/>
+          <img src="'.$row['pic'].'" alt="" class="w-100 border border-3 border-black product_img"/>
         </div>
         <div class="col-12 col-md-6">
+          <input type="hidden" name="product_id" value="'.$row['pid'].'">
           <h4 class="p-3">'
             .$row['name'].'
           </h4>
@@ -49,8 +50,8 @@
   $html .= '</select>
           </div>
           <div class="d-flex gap-3">
-            <button type="button" class="btn btn-danger">直接購買</button>
-            <button type="button" class="btn btn-primary">加入購物車</button>
+            <button type="button" class="btn btn-danger" id="buy_now">直接購買</button>
+            <button type="button" class="btn btn-primary" id="buy_cart">加入購物車</button>
           </div>
         </div>
       </div>

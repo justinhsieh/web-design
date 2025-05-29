@@ -32,15 +32,43 @@
 
     $html = '';
     while ($row = $result->fetch_assoc()) {
-    $html .= '<div class="col-12 col-sm-6 col-md-4 d-flex justify-content-center mt-4">
-            <div class="card" style="width: 18rem;">
-                <a href="#"><img src="'.$row['pic'].'" class="card-img-top"></a>
-                <div class="card-body">
-                    <span class="fs-5">'.$row['name'].'</span>
-                    <h5 class="card-title">售價<span class="price text-danger fs-3">'.number_format($row['price']).'</span>元</h5>
+        $html .= '<div class="col-12 col-sm-6 col-md-4 d-flex justify-content-center mt-4">
+                <div class="card" style="width: 18rem;">
+                    <input type="hidden" name="product_id" value="'.$row['pid'].'">
+                    <a href="#"><img src="'.$row['pic'].'" class="card-img-top"></a>
+                    <div class="card-body">
+                        <span class="fs-5">'.$row['name'].'</span>
+                        <h5 class="card-title">售價<span class="price text-danger fs-3">'.number_format($row['price']).'</span>元</h5>
+                        <div class="color-options d-flex gap-2 pb-2">';
+        $colors = explode(' ',$row['color']);
+        $colorMap = [
+            '銀色' => 'bg-silver',
+            '藍色' => 'bg-blue',
+            '粉紅色' => 'bg-pink',
+            '黃色' => 'bg-yellow',
+            '白色' => 'bg-white',
+            '灰色' => 'bg-gray',
+            '黑色' => 'bg-black',
+            '綠色' => 'bg-green',
+            '紫色' => 'bg-purple',
+            '玫瑰金' => 'bg-rosegold',
+            '曜石黑' => 'bg-black',
+            '經典黑銀' => 'bg-black',
+            '夜黑'  => 'bg-black',
+            '墨綠' => 'bg-darkgreen',
+            '靜謐黑' => 'bg-black'
+        ];
+        foreach($colors as $index => $color){
+            $colorName = trim($color);
+            $colorClass = (isset($colorMap[$colorName]))? $colorMap[$colorName] : '';
+            $active = ($index == 0)? 'active' : '';
+            
+            $html .= '<div class="color-circle rounded-circle '.$colorClass . ' ' .$active .' " data-color="'.$colorName.'"></div>';
+        }                   
+        $html .= '</div>
                     <div class="d-flex flex-column flex-xl-row gap-1 gap-xl-3 justify-content-center">
-                        <button type="button" class="btn btn-danger flex-grow-1">直接購買</button>
-                        <button type="button" class="btn btn-primary flex-grow-1">加入購物車</button>
+                        <button type="button" class="btn btn-danger flex-grow-1 buy_now">直接購買</button>
+                        <button type="button" class="btn btn-primary flex-grow-1 buy_cart">加入購物車</button>
                     </div>
                 </div>
             </div>

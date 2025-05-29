@@ -68,7 +68,7 @@
         <a href="personal_id.php" class="header_btn main_nav"><i class="fa-solid fa-user fs-4">會員資料</i></a>
         <a href="shopping_list.php" class="header_btn main_nav text-decoration-none">
           <i class="fa-solid fa-cart-shopping fs-4 position-relative">
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill px-1 py-0 bg-warning text-black-50">9</span>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill px-1 py-0 bg-warning text-black-50 cart_cnt">9</span>
           </i>
           <span class="fa-solid fs-4">購物車</span>
         </a>

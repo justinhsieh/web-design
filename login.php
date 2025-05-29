@@ -109,7 +109,7 @@
         <div class="toast-body">
           <span id="toast-message" class="fw-bold fs-6">你好</span>
           <div class="mt-2 pt-2 border-top text-black">
-            如果您的瀏覽器沒有自動跳轉，請點擊<a href="login.php" class="link-primary text-decoration-none">這裡</a>。
+            如果您的瀏覽器沒有自動跳轉，請點擊<a href="index.php" class="link-primary text-decoration-none">這裡</a>。
           </div>
         </div>
       </div>

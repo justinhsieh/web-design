@@ -19,6 +19,7 @@
             $status = "USER";
         }
         $_SESSION['username'] = $row['username'];
+        $_SESSION['id'] = $row['id'];
         $_SESSION['role'] = $row['role'];
     }
     $stmt->close();

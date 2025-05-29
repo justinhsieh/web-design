@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
     <!-- 網頁圖示 -->
     <link rel="icon" type="image/x-icon" href="images/hacker.png">
     <!-- 自訂義script -->

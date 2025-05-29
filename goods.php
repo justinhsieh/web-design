@@ -5,6 +5,7 @@
 <script src="js/back2top.js"></script>
 <script src="js/subscribe.js"></script>
 <script src="js/showToast.js"></script>
+<script src="js/cart_cnt.js"></script>
 <script>
   $(function () {
     $(".drop_item").click(function(){
@@ -95,9 +96,94 @@
 
     //搜尋
     $('.searchbar').on('input',function(){
-      const keyword = $('.searchbar').val()?$('.searchbar').val().trim():'';
-      loadProducts(1, currentCategory, currentSubcategory, keyword);
+      const $keyword = $('.searchbar').val()?$('.searchbar').val().trim():'';
+      loadProducts(1, currentCategory, currentSubcategory, $keyword);
     })
+
+    function cart_cnt(){
+      $.get('get_cart_cnt.php',function(response){
+        $cnt = response.count;
+        if($cnt > 10){
+            $('.cart_cnt').text('10+');
+        }else{
+            $('.cart_cnt').text($cnt);
+        }
+      })
+    }
+
+    $(document).on('click','.buy_now',function(){
+      const $card = $(this).closest('.card');
+      const $pid = $card.find('input[name="product_id"]').val();
+      const $price_text = $card.find('.price').text();
+      const $price =  parseInt($price_text.replace(/,/g,''));
+      const $color = $card.find('.color-circle.active').data('color');
+
+      $.post('add_cart.php',{
+        oper:'add_goods',
+        pid:$pid,
+        price:$price,
+        color:$color
+      },function(response){
+        if(response.status === 'unauthorized'){
+          window.location.href = 'login.php';
+        }
+        else if(response.status === 'success'){
+          window.location.href = 'shopping_list.php';
+        }
+      },'json')
+    })
+
+    $(document).on('click','.buy_cart',function(){
+      const $card = $(this).closest('.card');
+      const $img = $card.find('.card-img-top');
+      const $cart = $('.fa-cart-shopping');
+
+      const $pid = $card.find('input[name="product_id"]').val();
+      const $price_text = $card.find('.price').text();
+      const $price =  parseInt($price_text.replace(/,/g,''));
+      const $color = $card.find('.color-circle.active').data('color');
+
+      $.post('add_cart.php',{
+        oper:'add_goods',
+        pid:$pid,
+        price:$price,
+        color:$color
+      },function(response){
+        if(response.status === 'unauthorized'){
+          window.location.href = 'login.php';
+        }else if(response.status === 'success'){
+          const $flyImg = $img.clone()
+          .css({
+            position: 'absolute',
+            top: $img.offset().top,
+            left: $img.offset().left,
+            width: $img.width(),
+            height: $img.height(),
+            opacity: 0.75,
+            zIndex: 1000
+          })
+          .appendTo('body');
+
+          const cartOffset = $cart.offset();
+
+          $flyImg.animate({
+            top: cartOffset.top,
+            left: cartOffset.left,
+            width: 30,
+            height: 30,
+            opacity: 0
+          }, 800, function () {
+            $flyImg.remove();
+            cart_cnt();
+          });
+        }
+      },'json')
+    })
+
+    $(document).on('click', '.color-circle', function () {
+      $(this).siblings().removeClass('active');
+      $(this).addClass('active');
+    });
 
     // 預設載入第一頁全部商品
     loadProducts(1, currentCategory, currentSubcategory);
