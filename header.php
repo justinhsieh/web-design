@@ -33,10 +33,13 @@
             }
           ?>
           <li class="nav-item ms-auto d-lg-none">
-            <a class="nav-link main_nav fs-4" href="shopping_list.php">購物車</a>
+            <a class="nav-link main_nav fs-4" href="personal_id.php">會員資料</a>
           </li>
           <li class="nav-item ms-auto d-lg-none">
-            <a class="nav-link main_nav fs-4" href="personal_id.php">會員資料</a>
+            <a class="nav-link main_nav fs-4" href="shopping_list.php">購物車</a>
+          </li>
+         <li class="nav-item ms-auto d-lg-none">
+            <a class="nav-link main_nav fs-4" href="order.php">個人歷史訂單</a>
           </li>
           
           <?php 
@@ -72,6 +75,7 @@
           </i>
           <span class="fa-solid fs-4">購物車</span>
         </a>
+        <a href="order.php" class="header_btn main_nav"><i class="fa-solid fa-clipboard-list fs-4">個人歷史訂單</i></a>
         <?php 
           if(isset($_SESSION['role']) && $_SESSION['role'] === "admin"){
             echo '<a href="admin.php" class="header_btn main_nav"><i class="fa-solid fa-gears fs-4">管理員介面</i></a>';
