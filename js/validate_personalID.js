@@ -1,35 +1,35 @@
 $(document).ready(function($){    
     $("#form-personalID, #form-add-customerID").validate({
-    submitHandler: function(form){
-        form.submit();
-    },
-    rules: {},
-    messages: {
-        name: {
-            required: "姓名為必填欄位"
+        submitHandler: function(form){
+            form.submit();
         },
-        birth: {
-            pattern: "生日格式錯誤"
-        },
-        account:{
-            account: "帳號為必填欄位"
-        },
-        password:{
-            required: "密碼為必填欄位",
-            minlength: "密碼至少需6位"
-        },
-        phone_number:{
-            required: "電話為必填欄位",
-            pattern: "電話格式錯誤"
-        },
-        email:{
-            required: "電子郵件為必填欄位",
-            email: "電子郵件格式錯誤"
-        },
-        location:{
-            required: "地址為必填欄位"
+        rules: {},
+        messages: {
+            name: {
+                required: "姓名為必填欄位"
+            },
+            birth: {
+                pattern: "生日格式錯誤"
+            },
+            account:{
+                account: "帳號為必填欄位"
+            },
+            password:{
+                required: "密碼為必填欄位",
+                minlength: "密碼至少需6位"
+            },
+            phone_number:{
+                required: "電話為必填欄位",
+                pattern: "電話格式錯誤"
+            },
+            email:{
+                required: "電子郵件為必填欄位",
+                email: "電子郵件格式錯誤"
+            },
+            location:{
+                required: "地址為必填欄位"
+            }
         }
-    }
     })
     $("#form-edit-customerID").validate({
         submitHandler: function(form){
@@ -67,6 +67,34 @@ $(document).ready(function($){
             }
         }
     })
+    // $("#form-add-subscriber").validate({
+    //     submitHandler: function(form) {
+    //         const email = $("#subscriberEmail").val();
+    
+    //         // 檢查是否是會員（AJAX 非同步查詢）
+    //         $.post("check_member_email.php", { email: email }, function(data) {
+    //             if (data.exists) {
+    //                 $("#email-exists-alert").removeClass("d-none");
+    //             } else {
+    //                 $("#email-exists-alert").addClass("d-none");
+    //                 form.submit(); // 提交表單
+    //             }
+    //         }, "json");
+    //     },
+    //     rules: {
+    //         email: {
+    //             required: true,
+    //             email: true
+    //         }
+    //     },
+    //     messages: {
+    //         email: {
+    //             required: "電子郵件為必填欄位",
+    //             email: "電子郵件格式錯誤"
+    //         }
+    //     }
+    // });
+    
     $("#form-add-productID").validate({
         submitHandler: function(form){
             alert("商品資料已儲存!");

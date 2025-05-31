@@ -53,6 +53,15 @@ $(document).ready(function(){
         $("#edit-prodAmmount").val($(this).data("stock"));
         $("#edit-prodLink").val($(this).data("pic-link"));
     });
+    $(document).on('click', '.edit-member', function () {
+        $('#edit-order-id').val($(this).data('order_id'));
+        $('#edit-member-name').val($(this).data('member_name'));
+        $('#edit-total-amount').val($(this).data('total_amount'));
+        $('#edit-payment-status').val($(this).data('payment_status'));
+        $('#edit-shipping-status').val($(this).data('shipping_status'));
+        $('#edit-shipping-address').val($(this).data('shipping_address'));
+    });
+
     $("#form-edit-customerID").submit(function(e) {
         e.preventDefault(); // 防止表單默認提交
         const formData = $(this).serialize();

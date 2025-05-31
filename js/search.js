@@ -63,7 +63,43 @@ $(document).ready(function(){
             }
         });
     });
-    
+    // 搜尋訂閱者
+    $("#search-subscriber-btn").on("click", function(){
+        let keyword = $("#search-subscriber-keyword").val();
+        console.log(keyword);
+        $.ajax({
+            url: "search_subscriber.php",
+            method: "GET",
+            data: { keyword: keyword },
+            dataType: "json",
+            success: function(data){
+                let rows = `<tr>
+                <th>ID</th>
+                <th>電子郵件</th>
+                <th>操作</th>
+                </tr>`;
+                if(data.length > 0){
+                    data.forEach(function(subscriber){
+                        rows += `
+                            <tr>
+                                <td>${subscriber.id}</td>
+                                <td>${subscriber.email}</td>
+                                <td>
+                                    <button class='btn btn-danger btn-sm delete-subscriber' data-id='${subscriber.id}'>刪除</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    rows = "<tr><td colspan='10' class='text-center'>找不到符合的訂閱者</td></tr>";
+                }
+                $("#subscriber-list").html(rows);
+            },
+            error: function(){
+                alert("查詢失敗，請稍後再試");
+            }
+        });
+    });
     // 搜尋商品
     $("#search-prod-btn").on("click", function(){
         let keyword = $("#search-prod-keyword").val();
@@ -183,4 +219,106 @@ $(document).ready(function(){
             }
         });
     });
+    $("#search-order-btn").click(function () {
+        const keyword = $("#search-order-keyword").val().trim();
+        console.log("Order: " + keyword);
+        $.ajax({
+            url: "search_orders.php",
+            type: "POST",
+            data: { keyword: keyword },
+            success: function (data) {
+                let rows = `<tr>
+                <th>訂單編號</th>
+                <th>會員帳號</th>
+                <th>總金額</th>
+                <th>付款狀態</th>
+                <th>運送狀態</th>
+                <th>收件地址</th>
+                <th>操作</th>
+                </tr>`;
+                if(data.length > 0){
+                    data.forEach(function(row){
+                        rows += `
+                            <tr>
+                            <td>${row['order_id']}</td>
+                            <td>${row['member_name']}</td>
+                            <td>${row['total_amount']}</td>
+                            <td>${row['payment_status']}</td>
+                            <td>${row['shipping_status']}</td>
+                            <td>${row['shipping_address']}</td>
+                            <td>
+                                <button class='btn btn-warning btn-sm edit-order'
+                                    data-bs-toggle='modal'
+                                    data-bs-target='#editOrderModal'
+                                    data-order_id='${row['order_id']}'
+                                    data-member_name='${row['member_name']}'
+                                    data-total_amount='${row['total_amount']}'
+                                    data-payment_status='${row['payment_status']}'
+                                    data-shipping_status='${row['shipping_status']}'
+                                    data-shipping_address='${row['shipping_address']}'>
+                                    編輯
+                                </button>
+                                <button class='btn btn-danger btn-sm delete-order' data-order_id='${row['order_id']}'>刪除</button>
+                            </td>
+                        </tr>
+                        `;
+                    });
+                } else {
+                    rows = "<tr><td colspan='10' class='text-center'>找不到符合的訂單</td></tr>";
+                }
+                $("#order-list").html(rows);
+            },
+            error: function () {
+                alert("搜尋失敗，請稍後再試。");
+            }
+        });
+    });
+    $("#search-shoppingcart-btn").click(function () {
+        const keyword = $("#search-shoppingcart-keyword").val().trim();
+        // console.log(keyword);
+        $.ajax({
+            url: "search_shoppingcart.php",
+            type: "POST",
+            data: { keyword: keyword },
+            dataType: "json",
+            success: function (data) {
+                let rows = `<tr>
+                    <th>購物車編號</th>
+                    <th>會員帳號</th>
+                    <th>產品名稱</th>
+                    <th>數量</th>
+                    <th>價格</th>
+                    <th>建立時間</th>
+                    <th>更新時間</th>
+                    <th>操作</th>
+                </tr>`;
+    
+                if (data.length > 0) {
+                    data.forEach(function (row) {
+                        rows += `
+                            <tr>
+                                <td>${row.id}</td>
+                                <td>${row.member_name}</td>
+                                <td>${row.product_name}</td>
+                                <td>${row.quantity}</td>
+                                <td>${row.price}</td>
+                                <td>${row.created_at}</td>
+                                <td>${row.update_at}</td>
+                                <td>
+                                    <button class='btn btn-danger btn-sm delete-shoppingcart' data-shopping_id='${row.id}'>刪除</button>
+                                </td>
+                            </tr>`;
+                    });
+                } else {
+                    rows += `<tr><td colspan='8' class='text-center'>找不到符合的購物車資料</td></tr>`;
+                }
+    
+                $("#shoppingcart-list").html(rows);
+            },
+            error: function () {
+                alert("搜尋失敗，請稍後再試。");
+            }
+        });
+    });
+    
 });
