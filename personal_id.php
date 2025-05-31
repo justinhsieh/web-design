@@ -2,6 +2,7 @@
 <?php include 'head.php';?>
   <!-- 自定義JS -->
   <script src="js/validate_personalID.js"></script>
+  <script src="js/cart_cnt.js"></script>
 </head>
 
 <body>

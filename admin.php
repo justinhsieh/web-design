@@ -18,6 +18,7 @@ if ($_SESSION['role'] !== 'admin') {
     <script src="js/edit.js"></script>
     <script src="js/cancel.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/cart_cnt.js"></script>
     <script>
         $(document).ready(function () {
             $(".drop_item").click(function () {
@@ -41,8 +42,10 @@ if ($_SESSION['role'] !== 'admin') {
         <div id="adminPanel">
             <nav class="nav nav-tabs mt-3">
                 <a class="nav-link active" data-bs-toggle="tab" href="#members">會員管理</a>
-                <a class="nav-link" data-bs-toggle="tab" href="#products">商品管理</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#subscriber">訂閱管理</a>
                 <a class="nav-link" data-bs-toggle="tab" href="#messages">留言管理</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#products">商品管理</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#shoppingCart">購物車管理</a>
                 <a class="nav-link" data-bs-toggle="tab" href="#orders">訂單管理</a>
             </nav>
 
@@ -118,6 +121,57 @@ if ($_SESSION['role'] !== 'admin') {
                                     }
                                 }else{
                                     echo "<tr><td colspan='10' class='text-center'>尚無會員資料</td></tr>";
+                                }
+                                $conn->close();
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <div class="tab-content mt-3">
+                <div id="subscriber" class="tab-pane fade">
+                    <h4>訂閱者管理</h4>
+                    <!-- 查詢區域 -->
+                    <div class="mt-3">
+                        <input type="text" id="search-subscriber-keyword" class="form-control" placeholder="搜尋訂閱者 (會員電子郵件)">
+                        <button class="btn btn-primary mt-2" id="search-subscriber-btn">搜尋</button>
+                    </div>
+
+                    <!-- 訂閱者列表 -->
+                    <div class="list-customerID">
+                        <table class="table mt-2">
+                            <tbody id="subscriber-list">
+                                <!-- 結果將顯示在這裡 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSubscriberModal">新增訂閱者</button> -->
+                    <div class="list-subscriberID">
+                        <table class="table mt-2">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>電子郵件</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include("db.php");
+                                $sql = "SELECT * FROM subscriber";
+                                $result = $conn->query($sql);
+                                if($result->num_rows > 0){
+                                    while($row = $result->fetch_assoc()){
+                                        echo "<tr>
+                                                <td>{$row['id']}</td>
+                                                <td>{$row['email']}</td>
+                                                <td>
+                                                  <button class='btn btn-danger btn-sm delete-subscriber' data-id='{$row['id']}'>刪除</button>
+                                                </td>
+                                              </tr>";
+                                    }
+                                }else{
+                                    echo "<tr><td colspan='10' class='text-center'>尚無訂閱者資料</td></tr>";
                                 }
                                 $conn->close();
                                 ?>
@@ -276,17 +330,29 @@ if ($_SESSION['role'] !== 'admin') {
                 </div>
                 <div id="orders" class="tab-pane fade">
                     <h4>訂單管理</h4>
+                    <!-- 查詢區域 -->
+                    <div class="mt-3">
+                        <input type="text" id="search-order-keyword" class="form-control" placeholder="搜尋訂單 (會員帳號/付款狀態/運送狀態)">
+                        <button class="btn btn-primary mt-2" id="search-order-btn">搜尋</button>
+                    </div>
+
+                    <!-- 訂單列表 -->
+                    <div class="list-orderID">
+                        <table class="table mt-2">
+                            <tbody id="order-list">
+                                <!-- 結果將顯示在這裡 -->
+                            </tbody>
+                        </table>
+                    </div>
                     <table class="table mt-2">
                         <thead>
                             <tr>
                                 <th>訂單編號</th>
-                                <th>會員</th>
+                                <th>會員帳號</th>
                                 <th>總金額</th>
                                 <th>付款狀態</th>
                                 <th>運送狀態</th>
                                 <th>收件地址</th>
-                                <th>付款方式</th>
-                                <th>備註</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -295,16 +361,14 @@ if ($_SESSION['role'] !== 'admin') {
                                 include "db.php";
                                 $sql = "SELECT o.order_id, 
                                                m.name AS member_name,
+                                               o.order_date,
                                                o.total_amount,
                                                o.payment_status,
                                                o.shipping_status,
-                                               o.shipping_address,
-                                               o.payment_method,
-                                               o.note,
-                                               o.created_at
+                                               o.shipping_address
                                         FROM orders o
                                         JOIN member m ON o.user_id = m.id
-                                        ORDER BY o.created_at DESC";
+                                        ORDER BY o.order_date DESC";
                                 $result = $conn->query($sql);
                                 if($result->num_rows > 0){
                                     while($row = $result->fetch_assoc()){
@@ -315,28 +379,86 @@ if ($_SESSION['role'] !== 'admin') {
                                                     <td>{$row['payment_status']}</td>
                                                     <td>{$row['shipping_status']}</td>
                                                     <td>{$row['shipping_address']}</td>
-                                                    <td>{$row['payment_method']}</td>
-                                                    <td>{$row['note']}</td>
                                                     <td>
                                                       <button class='btn btn-warning btn-sm edit-member'
                                                               data-bs-toggle='modal'
-                                                              data-bs-target='#editProductModal'
+                                                              data-bs-target='#editOrderModal'
                                                               data-order_id='{$row['order_id']}'
                                                               data-member_name='{$row['member_name']}'
                                                               data-total_amount='{$row['total_amount']}'
                                                               data-payment_status='{$row['payment_status']}'
                                                               data-shipping_status='{$row['shipping_status']}'
-                                                              data-shipping_address='{$row['shipping_address']}'
-                                                              data-payment_method='{$row['payment_method']}'
-                                                              data-note='{$row['note']}'>
+                                                              data-shipping_address='{$row['shipping_address']}'>
                                                               編輯
                                                       </button>
-                                                      <button class='btn btn-danger btn-sm delete-member data-order_id='{$row['order_id']}'>刪除</button>
+                                                      <button class='btn btn-danger btn-sm delete-order' data-order_id='{$row['order_id']}'>刪除</button>
                                                     </td>
                                                   </tr>";
                                     }
                                 }else{
                                     echo "<tr><td colspan=9 class='text-center'>尚無訂單資料</td></tr>";
+                                }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="shoppingCart" class="tab-pane fade">
+                    <h4>購物車管理</h4>
+                    <!-- 查詢區域 -->
+                    <div class="mt-3">
+                        <input type="text" id="search-shoppingcart-keyword" class="form-control" placeholder="搜尋購物車 (會員帳號/產品名稱)">
+                        <button class="btn btn-primary mt-2" id="search-shoppingcart-btn">搜尋</button>
+                    </div>
+
+                    <!-- 訂單列表 -->
+                    <div class="list-shoppingcartID">
+                        <table class="table mt-2">
+                            <tbody id="shoppingcart-list">
+                                <!-- 結果將顯示在這裡 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <table class="table mt-2">
+                        <thead>
+                            <tr>
+                                <th>購物車編號</th>
+                                <th>會員帳號</th>
+                                <th>產品名稱</th>
+                                <th>數量</th>
+                                <th>價格</th>
+                                <th>建立時間</th>
+                                <th>更新時間</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                include "db.php";
+                                $sql = "SELECT sc.*, 
+                                        m.name AS member_name, 
+                                        p.name AS product_name 
+                                        FROM shoppingcart sc
+                                        JOIN member m ON sc.user_id = m.id
+                                        JOIN product p ON sc.product_id = p.pid
+                                        ORDER BY sc.created_at DESC";
+                                $result = $conn->query($sql);
+                                if($result->num_rows > 0){
+                                    while($row = $result->fetch_assoc()){
+                                        echo "<tr>
+                                                    <td>{$row['id']}</td>
+                                                    <td>{$row['member_name']}</td>
+                                                    <td>{$row['product_name']}</td>
+                                                    <td>{$row['quantity']}</td>
+                                                    <td>{$row['price']}</td>
+                                                    <td>{$row['created_at']}</td>
+                                                    <td>{$row['update_at']}</td>
+                                                    <td>
+                                                      <button class='btn btn-danger btn-sm delete-shoppingcart' data-shopping_id='{$row['id']}'>刪除</button>
+                                                    </td>
+                                                  </tr>";
+                                    }
+                                }else{
+                                    echo "<tr><td colspan=9 class='text-center'>尚無購物車資料</td></tr>";
                                 }
                             ?>
                         </tbody>
@@ -412,6 +534,32 @@ if ($_SESSION['role'] !== 'admin') {
             </div>
         </div>
     </div>
+    
+    <!-- 新增訂閱者 Modal -->
+    <!-- <div class="modal fade" id="addSubscriberModal" tabindex="-1" aria-labelledby="addSubscriberLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <form id="form-add-subscriber" method="post" action="add_subscriber.php">
+            <div class="modal-header">
+            <h5 class="modal-title">新增訂閱者</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="關閉"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group py-2">
+                    <label for="email" class="form-label">電子郵件</label>
+                    <input type="email" name="email" id="subscriberEmail" class="form-control" required placeholder="example@gmail.com" />
+                </div>
+                <div class="alert alert-danger d-none" id="email-exists-alert">此電子郵件已是會員，無需訂閱</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary">儲存</button>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div> -->
+
 
     <!-- 新增商品 Modal -->
     <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductLabel" aria-hidden="true">
@@ -666,7 +814,59 @@ if ($_SESSION['role'] !== 'admin') {
             </div>
         </div>
     </div>
-    
+    <!-- 編輯訂單 Modal -->
+<div class="modal fade" id="editOrderModal" tabindex="-1" aria-labelledby="editOrderLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editOrderLabel">編輯訂單</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="update_order.php" method="post" id="form-edit-order">
+                <div class="modal-body">
+                    <input type="hidden" name="order_id" id="edit-order-id" />
+
+                    <div class="form-group py-2">
+                        <label for="edit-username" class="form-label">會員帳號</label>
+                        <input type="text" name="username" class="form-control" id="edit-member-name" required readonly/>
+                    </div>
+
+                    <div class="form-group py-2">
+                        <label for="edit-total-amount" class="form-label">訂單總金額</label>
+                        <input type="number" name="total_amount" class="form-control" id="edit-total-amount" required readonly/>
+                    </div>
+
+                    <div class="form-group py-2">
+                        <label for="edit-payment-status" class="form-label">付款狀態</label>
+                        <select name="payment_status" class="form-select" id="edit-payment-status" required>
+                            <option value="paid">已付款</option>
+                            <option value="unpaid">未付款</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group py-2">
+                        <label for="edit-shipping-status" class="form-label">運送狀態</label>
+                        <select name="shipping_status" class="form-select" id="edit-shipping-status" required>
+                            <option value="pending">待出貨</option>
+                            <option value="shipped">已出貨</option>
+                            <option value="delivered">已送達</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group py-2">
+                        <label for="edit-shipping-address" class="form-label">收件地址</label>
+                        <input type="text" name="shipping_address" class="form-control" id="edit-shipping-address" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">儲存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 
 </html>

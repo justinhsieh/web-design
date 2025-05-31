@@ -4,6 +4,27 @@ if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit;
 }
+$user_id = $_SESSION['id'];
+require 'db.php'; // 連接資料庫
+$sql = "SELECT sc.*, p.name, p.cate, p.pic, p.price, p.pid, p.color AS color_options
+        FROM shoppingcart sc
+        JOIN product p ON sc.product_id = p.pid
+        WHERE sc.user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->execute([$user_id]);
+$result = $stmt->get_result();
+$items = $result->fetch_all(MYSQLI_ASSOC);
+
+$stmt = $conn->prepare("SELECT name, address, phone FROM member WHERE id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$member = $stmt->get_result()->fetch_assoc();
+// 類別統計
+$categoryCount = ['總數' => 0, '手機/平板' => 0, '相機/相機配件' => 0, '電腦/筆電' => 0];
+foreach ($items as $item) {
+    $categoryCount['總數'] += $item['quantity'];
+    $categoryCount[$item['cate']] += $item['quantity'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +33,8 @@ if (!isset($_SESSION['username'])) {
 <?php include 'head.php';?>
   <!-- 自定義JS -->
   <script src="js/validate_personalID.js"></script>
+  <script src="js/shopping_list.js"></script>
+  <script src="js/cart_cnt.js"></script>
 </head>
 
 <body>
@@ -21,96 +44,61 @@ if (!isset($_SESSION['username'])) {
     <div class="container py-5">
       <!-- 購物車標題 -->
       <nav class="nav nav-tabs mt-3">
-        <a class="nav-link active" id="items-nav">全部 (<span id="items-count" data-itemsCount="3">3</span>)</a>
-        <a class="nav-link" id="phone-nav">手機/平板 (<span id="phone-count" data-phoneCount="1">1</span>)</a>
-        <a class="nav-link" id="camera-nav">相機/相機配件 (<span id="camera-count" data-cameraCount="1">1</span>)</a>
-        <a class="nav-link" id="computer-nav">電腦/筆電 (<span id="computer-count" data-computerCount="1">1</span>)</a>
+        <a class="nav-link active" id="items-nav">全部 (<span id="items-count" data-itemsCount="<?= $categoryCount['總數'] ?>"><?= $categoryCount['總數'] ?></span>)</a>
+        <a class="nav-link" id="phone-nav">手機/平板 (<span id="phone-count" data-phoneCount="<?= $categoryCount['手機/平板'] ?>"><?= $categoryCount['手機/平板'] ?></span>)</a>
+        <a class="nav-link" id="camera-nav">相機/相機配件 (<span id="camera-count" data-cameraCount="<?= $categoryCount['相機/相機配件'] ?>"><?= $categoryCount['相機/相機配件'] ?></span>)</a>
+        <a class="nav-link" id="computer-nav">電腦/筆電 (<span id="computer-count" data-computerCount="<?= $categoryCount['電腦/筆電'] ?>"><?= $categoryCount['電腦/筆電'] ?></span>)</a>
       </nav>
-      <!-- 購物車內容 -->
-      <div id="phone" class="type" data-category="phone">
-        <div class="cart-item row align-items-center">
-          <div class="col-auto">
-            <input type="checkbox" class="item-checkbox" checked />
-          </div>
-          <div class="col-auto">
-            <img src="images/xiaomi.png" alt="商品圖片" width="100" />
-          </div>
-          <div class="col">
-            <div class="fw-bold">Xiaomi 15 Ultra 5G (6.73吋/1TB)</div>
-            <div>編號：11</div>
-            <div>顏色：經典黑銀</div>
-          </div>
-          <div class="col-auto fs-5">
-            單價:
-            <span class="fs-6 text-danger"><i>$</i></span>
-            <span class="unit-price text-danger" data-price="37999">37,999</span>
-          </div>
-          <div class="col-auto">
-            <button class="btn btn-outline-secondary btn-sm decrease">-</button>
-            <input type="text" value="1" class="text-center quantity" id="quantity" readonly />
-            <button class="btn btn-outline-secondary btn-sm increase">+</button>
-          </div>
-          <div class="col-auto">
-            <a href="#" class="remove-item">移除</a>
-          </div>
+      <?php foreach (['手機/平板', '相機/相機配件', '電腦/筆電'] as $cate): ?>
+        <?php 
+          if($cate == '手機/平板') $cate_en = 'phone'; 
+          elseif($cate == '相機/相機配件') $cate_en = 'camera'; 
+          else $cate_en = 'computer'; 
+        ?>
+        <div id="<?= $cate_en ?>" class="type" data-category="<?= $cate_en ?>">
+          <?php foreach ($items as $item): ?>
+            <?php if ($item['cate'] == $cate): ?>
+              <div class="cart-item row align-items-center">
+                <div class="col-auto"><input type="checkbox" class="item-checkbox" checked></div>
+                <div class="col-auto"><img src="<?= htmlspecialchars($item['pic']) ?>" alt="商品圖片" width="100" /></div>
+                <div class="col">
+                  <div class="fw-bold"><?= htmlspecialchars($item['name']) ?></div>
+                  <div data-pid="<?= $item['pid'] ?>">編號：<?= $item['pid'] ?></div>
+                  <div class="d-flex align-items-center">
+                    <label class="me-2 mb-0">顏色 : </label>
+                    <select class="form-select form-select-sm color-select w-auto" style="min-width: 100px;" data-pid="<?= $item['pid'] ?>">
+                      <?php
+                        $colors = explode(' ', $item['color_options']);
+                        foreach ($colors as $color):
+                      ?>
+                        <option value="<?= $color ?>" <?= $color === $item['color'] ? 'selected' : '' ?>>
+                          <?= htmlspecialchars($color) ?>
+                        </option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-auto fs-5">
+                  單價: <span class="fs-6 text-danger"><i>$</i></span>
+                  <span class="unit-price text-danger" data-price="<?= $item['price'] ?>">
+                    <?= number_format($item['price']) ?>
+                  </span>
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-secondary btn-sm decrease" data-pid="<?= $item['pid']?>">-</button>
+                  <input type="text" value="<?= $item['quantity'] ?>" class="text-center quantity" id="quantity" readonly />
+                  <button class="btn btn-outline-secondary btn-sm increase" data-pid="<?=$item['pid']?>">+</button>
+                </div>
+                <div class="col-auto">
+                  <a href="#" class="remove-item text-danger" data-id="<?= $item['id'] ?>">移除</a>
+                </div>
+
+              </div>
+            <?php endif; ?>
+          <?php endforeach; ?>
         </div>
-      </div>
-      <div id="camera" class="type" data-category="camera">
-        <div class="cart-item row align-items-center">
-          <div class="col-auto">
-            <input type="checkbox" class="item-checkbox" checked />
-          </div>
-          <div class="col-auto">
-            <img src="images/Canon EF.png" alt="商品圖片" width="100" />
-          </div>
-          <div class="col">
-            <div class="fw-bold">Canon EF 35mm f/1.4 L II USM</div>
-            <div>編號：20</div>
-            <div>顏色：黑色</div>
-          </div>
-          <div class="col-auto fs-5">
-            單價:
-            <span class="fs-6 text-danger"><i>$</i></span>
-            <span class="unit-price text-danger" data-price="56253">56,253</span>
-          </div>
-          <div class="col-auto">
-            <button class="btn btn-outline-secondary btn-sm decrease">-</button>
-            <input type="text" value="1" class="text-center quantity" id="quantity" readonly />
-            <button class="btn btn-outline-secondary btn-sm increase">+</button>
-          </div>
-          <div class="col-auto">
-            <a href="#" class="remove-item">移除</a>
-          </div>
-        </div>
-      </div>
-      <div id="computer" class="type" data-category="computer">
-        <div class="cart-item row align-items-center">
-          <div class="col-auto">
-            <input type="checkbox" class="item-checkbox" checked />
-          </div>
-          <div class="col-auto">
-            <img src="images/DELL筆電.png" alt="商品圖片" width="100" />
-          </div>
-          <div class="col">
-            <div class="fw-bold">DELL 14吋i5輕薄筆電</div>
-            <div>編號：29</div>
-            <div>顏色：藍色</div>
-          </div>
-          <div class="col-auto fs-5">
-            單價:
-            <span class="fs-6 text-danger"><i>$</i></span>
-            <span class="unit-price text-danger" data-price="25999">25,999</span>
-          </div>
-          <div class="col-auto">
-            <button class="btn btn-outline-secondary btn-sm decrease">-</button>
-            <input type="text" value="1" class="text-center quantity" id="quantity" readonly />
-            <button class="btn btn-outline-secondary btn-sm increase">+</button>
-          </div>
-          <div class="col-auto">
-            <a href="#" class="remove-item">移除</a>
-          </div>
-        </div>
-      </div>
+      <?php endforeach; ?>
+
       <!-- 全選 -->
       <div class="row mt-3 align-items-center">
         <div class="col-auto">
@@ -133,12 +121,11 @@ if (!isset($_SESSION['username'])) {
           <form action="#" method="post" id="form-account">
             <div class="mb-3">
               <label for="name" class="form-label">姓名</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="ex. 王小明" minlength="2"
-                maxlength="5" required />
+              <input type="text" class="form-control" id="name" name="name" value="<?= htmlspecialchars($member['name']) ?>" placeholder="ex. 王小明" required />
             </div>
             <div class="mb-3">
               <label for="address" class="form-label">地址</label>
-              <input type="text" class="form-control" id="address" name="address" required />
+              <input type="text" class="form-control" id="address" name="address" value="<?= htmlspecialchars($member['address']) ?>" required />
             </div>
             <div class="mb-3">
               <label for="card" class="form-label">卡號</label>
@@ -147,7 +134,7 @@ if (!isset($_SESSION['username'])) {
             </div>
             <div class="mb-3">
               <label for="phone" class="form-label">電話</label>
-              <input type="telNo" class="form-control" id="phone" name="phone" pattern="09[0-9]{2}-[0-9]{6}"
+              <input type="telNo" class="form-control" id="phone" name="phone" value="<?= htmlspecialchars($member['phone']) ?>" pattern="09[0-9]{2}-[0-9]{6}"
                 placeholder="09xx-xxxxxx" required />
             </div>
             <!-- 訂單金額 -->
@@ -158,9 +145,9 @@ if (!isset($_SESSION['username'])) {
                 <div class="col">本次訂單金額</div>
               </div>
               <div class="row text-danger">
-                <div class="col">$<span id="card-total">37,999</span></div>
+                <div class="col">$<span id="card-total"></span></div>
                 <div class="col">=</div>
-                <div class="col">$<span id="order-total">37,999</span></div>
+                <div class="col">$<span id="order-total"></span></div>
               </div>
             </div>
   
@@ -174,172 +161,6 @@ if (!isset($_SESSION['username'])) {
     </div>
   </main>
   <button id="backToTop" class="back-to-top"></button>
-  <script>
-    $(document).ready(function ($) {
-      $("#form-account").validate({
-        submitHandler: function (form) {
-          alert("訂單已提交！");
-          form.submit();
-        },
-        rules: {},
-        messages: {
-          name: {
-            required: "帳號為必填欄位",
-            minlength: "最少需2個字",
-            maxlength: "最多需5個字",
-          },
-          address: {
-            required: "地址為必填欄位",
-          },
-          card: {
-            required: "卡號為必填欄位",
-            pattern: "錯誤格式",
-          },
-          phone: {
-            required: "電話為必填欄位",
-            pattern: "錯誤格式",
-          },
-        },
-      });
-    });
-  </script>
-  <script>
-    $(document).ready(function () {
-      $(window).scroll(function () {
-        if ($(this).scrollTop() > 200) {
-          $("#backToTop").css("display", "flex");
-        } else {
-          $("#backToTop").css("display", "none");
-        }
-      });
-      $("#backToTop").click(function () {
-        $("html").animate({ scrollTop: 0 });
-      });
-      function updateTotal() {
-        let total = 0;
-        $(".cart-item").each(function () {
-          let checkbox = $(this).find(".item-checkbox");
-          if (checkbox.prop("checked")) {
-            let price = parseInt($(this).find(".unit-price").data("price"));
-            let quantity = parseInt($(this).find("#quantity").val());
-            total += price * quantity;
-          }
-        });
-        $("#total-price, #card-total, #order-total").text(
-          total.toLocaleString()
-        );
-      }
-
-      function updateCategoryCount(category, delta) {
-        let countSpan = $("#" + category + "-count");
-        let current =
-          parseInt(countSpan.attr("data-" + category + "Count")) || 0;
-        //console.log(current);
-        let newCount = current + delta;
-        countSpan.attr("data-" + category + "Count", newCount);
-        countSpan.text(newCount);
-      }
-
-      $(".increase").click(function () {
-        let quantityInput = $(this).siblings("#quantity");
-        let quantity = parseInt(quantityInput.val()) + 1;
-        quantityInput.val(quantity);
-        let category = $(this).closest(".type").data("category");
-        updateCategoryCount(category, 1);
-        updateCategoryCount("items", 1);
-        updateTotal();
-      });
-
-      $(".decrease").click(function () {
-        let quantityInput = $(this).siblings("#quantity");
-        let quantity = parseInt(quantityInput.val());
-        if (quantity > 1) {
-          quantityInput.val(quantity - 1);
-          let category = $(this).closest(".type").data("category");
-          updateCategoryCount(category, -1);
-          updateCategoryCount("items", -1);
-          updateTotal();
-        }
-      });
-
-      $(".remove-item").click(function () {
-        let category = $(this).closest(".type").data("category");
-        let count =
-          parseInt($(this).closest(".cart-item").find("#quantity").val()) ||
-          0;
-        console.log(count);
-        updateCategoryCount(category, -count);
-        updateCategoryCount("items", -count);
-        $(this).closest(".cart-item").remove();
-        updateTotal();
-      });
-
-      $("#check-all").change(function () {
-        let isChecked = $(this).prop("checked");
-        $(".item-checkbox").each(function () {
-          let category = $(this).closest(".type").data("category");
-          let quantity =
-            parseInt($(this).closest(".cart-item").find(".quantity").val()) ||
-            0;
-          let delta = isChecked ? quantity : -quantity;
-          updateCategoryCount(category, delta);
-          updateCategoryCount("items", delta);
-        });
-        $(".item-checkbox").prop("checked", isChecked);
-        updateTotal();
-      });
-
-      $(".item-checkbox").change(function () {
-        let isChecked = $(this).prop("checked");
-        let category = $(this).closest(".type").data("category");
-        let count =
-          parseInt($(this).closest(".cart-item").find("#quantity").val()) ||
-          0;
-        if (isChecked) {
-          //console.log(count);
-          updateCategoryCount(category, count);
-          updateCategoryCount("items", count);
-        } else {
-          //console.log(count);
-          updateCategoryCount(category, -count);
-          updateCategoryCount("items", -count);
-        }
-        updateTotal();
-      });
-
-      $("#payment-button").on("click", function () {
-        $("#payment").show();
-      });
-
-      $("#items-nav").on("click", function () {
-        $(".nav-link").removeClass("active");
-        $(this).addClass("active");
-        $(".type").show();
-      });
-
-      $("#phone-nav").on("click", function () {
-        $(".nav-link").removeClass("active");
-        $(this).addClass("active");
-        $(".type").hide();
-        $("#phone").show();
-      });
-
-      $("#camera-nav").on("click", function () {
-        $(".nav-link").removeClass("active");
-        $(this).addClass("active");
-        $(".type").hide();
-        $("#camera").show();
-      });
-
-      $("#computer-nav").on("click", function () {
-        $(".nav-link").removeClass("active");
-        $(this).addClass("active");
-        $(".type").hide();
-        $("#computer").show();
-      });
-      updateTotal();
-    });
-  </script>
   <?php include 'footer.php';?>
 </body>
 
