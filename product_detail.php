@@ -1,5 +1,5 @@
 <?php
-  include 'config.php';
+  include 'db.php';
 
   $product_name = htmlspecialchars($_GET['product_name']);
   $where = "name = '$product_name'";

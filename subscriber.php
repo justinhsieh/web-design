@@ -1,4 +1,4 @@
-<?php include'config.php';
+<?php include'db.php';
     header('Content-Type: application/json');
 
     $email = $_POST['email'] ?? '';

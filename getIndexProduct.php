@@ -1,5 +1,5 @@
 <?php 
-    include'config.php';
+    include'db.php';
 
     $result = $conn->query('SELECT * FROM product ORDER BY pid LIMIT 3');
     $html = '';
