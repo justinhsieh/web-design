@@ -4,6 +4,7 @@
 ?>
 <script src="js/subscribe.js"></script>
 <script src="js/showToast.js"></script>
+<script src="js/cart_cnt.js"></script>
 <script>
   $(function() {
     $("#login").validate({
