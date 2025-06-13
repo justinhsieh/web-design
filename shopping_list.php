@@ -129,7 +129,7 @@ foreach ($items as $item) {
             </div>
             <div class="mb-3">
               <label for="card" class="form-label">卡號</label>
-              <input type="text" class="form-control" id="card" name="card" pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}"
+              <input type="text" class="form-control" id="card" name="card" pattern="^[0-9]{4}.[0-9]{4}.[0-9]{4}$"
                 placeholder="xxxx-xxxx-xxxx" required />
             </div>
             <div class="mb-3">

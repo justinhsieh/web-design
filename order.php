@@ -39,8 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order_id'])) {
     <script src="js/validate_personalID.js"></script>
     <script src="js/add.js"></script>
     <script src="js/edit.js"></script>
-    <script src="js/cancel.js"></script>
-    <script src="js/search.js"></script>
+    <script src="js/CRUD.js"></script>
     <script src="js/cart_cnt.js"></script>
     <script>
         $(document).ready(function () {

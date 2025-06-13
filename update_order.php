@@ -8,8 +8,14 @@ $shipping_address = $_POST['shipping_address'];
 
 $stmt = $conn->prepare("UPDATE orders SET payment_status = ?, shipping_status = ?, shipping_address = ?, updated_at = NOW() WHERE order_id = ?");
 $stmt->bind_param("sssi", $payment_status, $shipping_status, $shipping_address, $order_id);
-$stmt->execute();
 
-header("Location: order.php");
+$response = [];
+
+if ($stmt->execute()) {
+    $response['success'] = true;
+} else {
+    $response['success'] = false;
+}
+
+echo json_encode($response);
 exit;
-?>
