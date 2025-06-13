@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2025-05-28 16:09:39
+-- 產生時間： 2025-06-13 06:45:41
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.1.25
 
@@ -51,8 +51,8 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`id`, `username`, `password`, `email`, `name`, `phone`, `address`, `gender`, `birthdate`, `created_at`, `updated_at`, `last_login_at`, `status`, `role`) VALUES
-(15, 'member', '$2y$10$PtX1bvBfLHq7p4k62Z3iQ.yPGHWr2q80tFj.YTUwddik2u4rWCaDy', 'member@gmail.com', 'member', '0912-345634', '國立彰化師範大學', 'M', '2025-04-04', NULL, '2025-05-24 23:06:09', NULL, 0, 'user'),
-(16, 'admin', '$2y$10$8MyWm.1gnPCa40G5y.agGeMcyK/H1ANUn/hbu/LI8zSZyOGufQH8C', 'admin@gmail.com', 'admin', '0912-345655', '國立彰化師範大學', 'M', '2025-04-04', NULL, '2025-05-22 17:24:28', NULL, 0, 'admin');
+(15, 'member', '$2y$10$Ymgbp247owc4uCwGhaABY./G6fYcSlr4DEm97pUlzY7uFvo/5aYqO', 'member@gmail.com', 'member', '0912-345637', '國立彰化師範大學', 'M', '2025-04-04', NULL, '2025-06-13 10:15:08', NULL, 0, 'user'),
+(16, 'admin', '$2y$10$bzqxhjE47uIszKso7Lvlne1g030WKYF..0e9f.i4jNfFarkBOfMY.', 'admin@gmail.com', 'admin', '0912-345656', '國立彰化師範大學', 'M', '2025-04-04', NULL, '2025-06-10 21:07:30', NULL, 0, 'admin');
 
 -- --------------------------------------------------------
 
@@ -68,9 +68,6 @@ CREATE TABLE `orders` (
   `payment_status` enum('paid','unpaid','cancelled','') NOT NULL DEFAULT 'unpaid' COMMENT '付款狀態',
   `shipping_status` enum('pending','shipped','delivered','returned') NOT NULL DEFAULT 'pending' COMMENT '運送狀態',
   `shipping_address` text DEFAULT NULL COMMENT '收件地址',
-  `payment_method` varchar(50) DEFAULT NULL COMMENT '付款方式\r\n(ex. 信用卡、轉帳)',
-  `note` text DEFAULT NULL COMMENT '備註',
-  `created_at` datetime NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
   `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp() COMMENT '更新時間'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -78,8 +75,42 @@ CREATE TABLE `orders` (
 -- 傾印資料表的資料 `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `total_amount`, `payment_status`, `shipping_status`, `shipping_address`, `payment_method`, `note`, `created_at`, `updated_at`) VALUES
-(1, 0, '2025-05-03 22:00:08', 0.00, 'unpaid', 'pending', NULL, NULL, NULL, '2025-05-03 22:00:08', NULL);
+INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `total_amount`, `payment_status`, `shipping_status`, `shipping_address`, `updated_at`) VALUES
+(16, 15, '2025-06-12 23:24:31', 69951.00, 'paid', 'pending', '國立彰化師範大學', NULL),
+(17, 15, '2025-06-12 23:25:07', 54580.00, 'paid', 'pending', '國立彰化師範大學', NULL),
+(18, 15, '2025-06-13 00:03:18', 44290.00, 'paid', 'shipped', '國立彰化師範大學', '2025-06-13 10:18:49');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `id` int(10) UNSIGNED NOT NULL COMMENT 'KEY',
+  `order_id` int(10) UNSIGNED NOT NULL COMMENT '訂單編號',
+  `product_id` int(11) NOT NULL COMMENT '商品編號',
+  `product_name` varchar(100) NOT NULL COMMENT '商品名稱',
+  `price` decimal(10,2) NOT NULL COMMENT '商品單價',
+  `quantity` int(10) UNSIGNED NOT NULL COMMENT '購買數量',
+  `color` varchar(20) NOT NULL COMMENT '顏色',
+  `subtotal` decimal(10,2) GENERATED ALWAYS AS (`price` * `quantity`) STORED COMMENT '小計(price*quantity)',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新時間'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_name`, `price`, `quantity`, `color`, `created_at`, `updated_at`) VALUES
+(11, 16, 30, 'Acer N4505雙核電腦', 8888.00, 1, '黑色', '2025-06-12 09:24:31', '2025-06-12 09:24:31'),
+(12, 16, 35, 'AOC AG276QZD2 27型 240Hz 電競螢幕', 16999.00, 1, '黑色', '2025-06-12 09:24:31', '2025-06-12 09:24:31'),
+(13, 16, 15, 'Canon EOS R8 24-50mm f/4.5-6.3 IS STM', 44064.00, 1, '黑色', '2025-06-12 09:24:31', '2025-06-12 09:24:31'),
+(14, 17, 2, 'iPad Air 11吋/WiFi/128G平板電腦', 18690.00, 1, '銀色', '2025-06-12 09:25:07', '2025-06-12 09:25:07'),
+(15, 17, 3, 'iPad Pro 11吋/WiFi/256G/M4晶片 平板電腦', 35890.00, 1, '白色', '2025-06-12 09:25:07', '2025-06-12 09:25:07'),
+(16, 18, 4, 'iPad Pro 第2代(11吋/256G/WiFi)平板電腦', 17800.00, 1, '白色', '2025-06-12 10:03:18', '2025-06-12 10:03:18'),
+(17, 18, 6, ' iPhone 15 Pro 128GB 6.1吋', 26490.00, 1, '黑色', '2025-06-12 10:03:18', '2025-06-12 10:03:18');
 
 -- --------------------------------------------------------
 
@@ -143,7 +174,7 @@ INSERT INTO `product` (`pid`, `time`, `name`, `brand`, `color`, `price`, `functi
 (33, '2025-04-30 12:04:44', 'ASUS XG49VQ 49型 曲面 ROG電競 液晶螢幕', 'Asus', '黑色', 19888, '1800R 曲面超寬HDR\n支援144HZ高速畫面更率\nAMDFreeSync2HDR', 'images/Asus monitor.png', '電腦/筆電', '無觸控螢幕', '面板尺寸：49\" (124.46cm)\n支援最大解析度：3840 x 1080 144Hz\n面板類型:VA\n曲面:1800R\n點距：0.311 mm\n亮度(Max.)：450 cd/m2(Typ.)\n對比度CR(Typ.)：3,000:1\n可視角度(CR)=10)：178°(H) / 178°(V)\n顯示顏色數：16.7M\n反應時間：4ms (Gray to Gray)\nSPLENDID Preset Mode：GameVisual (Mode) : (Scenery, FPS, RTS/RPG, sRGB, Racing, Cinema, MOBA, user mode\n支援HDCP：Yes\nHDR support ：Yes\n數位-HDMI：Yes X2\n數位-Display port：Yes\nAV Audio Input：1DP 2HDMI\n耳機：3.5 mm Mini-jack\nUSB Hub：USB3.0 ports(Upstream x 1, Downstream x 2)\n數位：30 ~167 KHz (H) /48 ~144 Hz(V)\n支援電壓：100–240V, 50', 'LCD螢幕', 10),
 (34, '2025-04-30 12:04:44', 'Acer 宏碁 E271 G0 27型電競螢幕', 'Acer', '黑色', 2688, 'FHD解析度/IPS面板技術\n120Hz刷新率/5ms反應\n支援VESA壁掛', 'images/Acer E271 G0 27.png', '電腦/筆電', '無觸控螢幕', 'Display Size尺寸 ： 27”H\nMaximum Resolution and Refresh Rate解析度 ： VGA:1920x1080@75Hz / HDMI:1920x1080@120Hz\nGlare ： No\nPanel面板 ： In-Plane Switching\nResponse Time反應時間 ： 5ms (GTG)\nContrast Ratio對比 ： 100 million:1 max (ACM)\nBrightness亮度 ： 250 nits (cd/m2)\nViewing Angle可視角 ： 178° (H), 178° (V)\nColors支援顏色 ： 16.7M\nColor Gamut色域 ： 72% NTSC\nBits ： 8Bit\nInput Signal輸入介面 ： 1VGA+1HDMI(1.4)\nVESA Wall Mounting壁掛 ： 75 x 75 mm\nSpeaker喇叭 ： N/A\nPower Supply電源(100 - 240 V) ： External (C13/C14)\nTilt 傾斜 ： -5° to 15°', 'LCD螢幕', 10),
 (35, '2025-04-30 12:04:44', 'AOC AG276QZD2 27型 240Hz 電競螢幕', 'Aoc', '黑色', 16999, '2560 X 1440 解析度\n240Hz刷新0.03ms反應\nAdaptive Sync技術', 'images/AOC AG276QZD2.png', '電腦/筆電', '無觸控螢幕', '實際規格依AOC原廠公告為準:https://tw.aoc.com/', 'LCD螢幕', 10),
-(36, '2025-04-30 12:04:44', 'LG 樂金 27GR93U-B 27型 IPS 4K 144Hz 電競螢幕', 'Lg', '黑色', 13900, 'IPS 1ms 反應時間\n144Hz 更新率\n三年原廠保固', 'images/LG 27GR93U-B.png', '電腦/筆電', '無觸控螢幕', '實際規格依LG原廠公告為準:https://www.lg.com/tw/', 'LCD螢幕', 10);
+(36, '2025-04-30 12:04:44', 'LG 樂金 27GR93U-B 27型 IPS 4K 144Hz 電競螢幕', 'Lg', '黑色', 13900, 'IPS 1ms 反應時間144Hz 更新率三年原廠保固', 'images/LG 27GR93U-B.png', '電腦/筆電', '無觸控螢幕', '實際規格依LG原廠公告為準:https://www.lg.com/tw/', 'LCD螢幕', 10);
 
 -- --------------------------------------------------------
 
@@ -167,9 +198,7 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`username`, `time`, `comment`, `pid`, `rating`, `review_id`, `like_cnt`, `unlike_cnt`) VALUES
-('member', '2025-05-24 17:57:44', 'good', 2, 4, 8, 0, 0),
-('member', '2025-05-24 23:11:01', 'soso', 2, 3, 9, 0, 0),
-('member', '2025-05-24 23:11:36', 'bad', 26, 2, 10, 0, 0);
+('member', '2025-05-24 17:57:44', 'good', 2, 4, 8, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -188,6 +217,14 @@ CREATE TABLE `shoppingcart` (
   `color` varchar(11) NOT NULL COMMENT '選擇顏色'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- 傾印資料表的資料 `shoppingcart`
+--
+
+INSERT INTO `shoppingcart` (`id`, `user_id`, `product_id`, `quantity`, `price`, `created_at`, `update_at`, `color`) VALUES
+(42, 15, 2, 1, 18690.00, '2025-06-13 02:20:53', '2025-06-13 02:20:53', '銀色'),
+(43, 15, 3, 1, 35890.00, '2025-06-13 02:20:54', '2025-06-13 02:20:54', '白色');
+
 -- --------------------------------------------------------
 
 --
@@ -204,7 +241,8 @@ CREATE TABLE `subscriber` (
 --
 
 INSERT INTO `subscriber` (`id`, `email`) VALUES
-(8, 'member@gmail.com');
+(11, 'hsuan@gmail.com'),
+(12, 'member@gmail.com');
 
 --
 -- 已傾印資料表的索引
@@ -224,6 +262,12 @@ ALTER TABLE `member`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- 資料表索引 `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- 資料表索引 `product`
@@ -259,19 +303,25 @@ ALTER TABLE `subscriber`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '會員編號', AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '會員編號', AUTO_INCREMENT=34;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '訂單編號', AUTO_INCREMENT=2;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '訂單編號', AUTO_INCREMENT=23;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'KEY', AUTO_INCREMENT=23;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product`
 --
 ALTER TABLE `product`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `reviews`
@@ -283,13 +333,13 @@ ALTER TABLE `reviews`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `shoppingcart`
 --
 ALTER TABLE `shoppingcart`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '購物車編號';
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '購物車編號', AUTO_INCREMENT=44;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `subscriber`
 --
 ALTER TABLE `subscriber`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
