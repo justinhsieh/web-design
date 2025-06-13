@@ -1,7 +1,40 @@
 $(document).ready(function($){    
-    $("#form-personalID, #form-add-customerID").validate({
+    $("#form-personalID").validate({
         submitHandler: function(form){
             form.submit();
+        },
+        rules: {},
+        messages: {
+            name: {
+                required: "姓名為必填欄位"
+            },
+            birth: {
+                pattern: "生日格式錯誤"
+            },
+            account:{
+                account: "帳號為必填欄位"
+            },
+            password:{
+                required: "密碼為必填欄位",
+                minlength: "密碼至少需6位"
+            },
+            phone_number:{
+                required: "電話為必填欄位",
+                pattern: "電話格式錯誤"
+            },
+            email:{
+                required: "電子郵件為必填欄位",
+                email: "電子郵件格式錯誤"
+            },
+            location:{
+                required: "地址為必填欄位"
+            }
+        }
+    })
+    $("#form-add-customerID").validate({
+        submitHandler: function(form){
+            alert("會員資料已儲存!");
+            // form.submit();
         },
         rules: {},
         messages: {
@@ -34,7 +67,7 @@ $(document).ready(function($){
     $("#form-edit-customerID").validate({
         submitHandler: function(form){
             alert("會員資料已儲存!");
-            form.submit();
+            // form.submit();
         },
         rules: {},
         messages: {
@@ -98,7 +131,7 @@ $(document).ready(function($){
     $("#form-add-productID").validate({
         submitHandler: function(form){
             alert("商品資料已儲存!");
-            form.submit();
+            // form.submit();
         },
         rules: {},
         messages: {
@@ -127,7 +160,7 @@ $(document).ready(function($){
     $("#form-edit-productID").validate({
         submitHandler: function(form){
             alert("商品資料已儲存!");
-            form.submit();
+            // form.submit();
         },
         rules: {},
         messages: {

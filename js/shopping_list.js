@@ -59,28 +59,6 @@ $(document).ready(function () {
         countSpan.text(newCount);
     }
 
-    // $(".increase").click(function () {
-    // let quantityInput = $(this).siblings("#quantity");
-    // let quantity = parseInt(quantityInput.val()) + 1;
-    // quantityInput.val(quantity);
-    // let category = $(this).closest(".type").data("category");
-    // updateCategoryCount(category, 1);
-    // updateCategoryCount("items", 1);
-    // updateTotal();
-    // });
-
-    // $(".decrease").click(function () {
-    //     let quantityInput = $(this).siblings("#quantity");
-    //     let quantity = parseInt(quantityInput.val());
-    //     if (quantity > 1) {
-    //         quantityInput.val(quantity - 1);
-    //         let category = $(this).closest(".type").data("category");
-    //         updateCategoryCount(category, -1);
-    //         updateCategoryCount("items", -1);
-    //         updateTotal();
-    //     }
-    // });
-
     $(document).on("click", ".remove-item", function (e) {
         e.preventDefault();
         const $item = $(this).closest(".cart-item");

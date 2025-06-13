@@ -34,11 +34,6 @@ $(document).ready(function(){
         
         const mainCategory = $(this).data("cate");
         console.log(mainCategory);
-        // const mainCategoryName = {
-        //     phone: "手機/平板",
-        //     camera: "相機/相機配件",
-        //     computer: "電腦/筆電"
-        // }[mainCategory] || "商品分類";
         $("#edit-cate-btn").text(mainCategory);
         $("#edit-product-classifier").val(mainCategory);
         
@@ -53,7 +48,7 @@ $(document).ready(function(){
         $("#edit-prodAmmount").val($(this).data("stock"));
         $("#edit-prodLink").val($(this).data("pic-link"));
     });
-    $(document).on('click', '.edit-member', function () {
+    $(document).on('click', '.edit-order', function () {
         $('#edit-order-id').val($(this).data('order_id'));
         $('#edit-member-name').val($(this).data('member_name'));
         $('#edit-total-amount').val($(this).data('total_amount'));
@@ -61,28 +56,7 @@ $(document).ready(function(){
         $('#edit-shipping-status').val($(this).data('shipping_status'));
         $('#edit-shipping-address').val($(this).data('shipping_address'));
     });
-
-    $("#form-edit-customerID").submit(function(e) {
-        e.preventDefault(); // 防止表單默認提交
-        const formData = $(this).serialize();
     
-        $.ajax({
-            url: "update_member.php",
-            type: "POST",
-            data: formData,
-            success: function(response) {
-                if (response.status === "SUCCESS") {
-                    window.location.href = "admin.php"; // 成功後跳轉
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function() {
-                alert("發生錯誤，請稍後再試。");
-            }
-        });
-    });
-
     // 定義主分類對應的次分類
     const subCategories = {
         phone: ["iPad", "iPhone", "安卓手機"],
