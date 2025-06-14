@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2025-06-13 06:45:41
+-- 產生時間： 2025-06-14 16:36:02
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.1.25
 
@@ -52,7 +52,8 @@ CREATE TABLE `member` (
 
 INSERT INTO `member` (`id`, `username`, `password`, `email`, `name`, `phone`, `address`, `gender`, `birthdate`, `created_at`, `updated_at`, `last_login_at`, `status`, `role`) VALUES
 (15, 'member', '$2y$10$Ymgbp247owc4uCwGhaABY./G6fYcSlr4DEm97pUlzY7uFvo/5aYqO', 'member@gmail.com', 'member', '0912-345637', '國立彰化師範大學', 'M', '2025-04-04', NULL, '2025-06-13 10:15:08', NULL, 0, 'user'),
-(16, 'admin', '$2y$10$bzqxhjE47uIszKso7Lvlne1g030WKYF..0e9f.i4jNfFarkBOfMY.', 'admin@gmail.com', 'admin', '0912-345656', '國立彰化師範大學', 'M', '2025-04-04', NULL, '2025-06-10 21:07:30', NULL, 0, 'admin');
+(16, 'admin', '$2y$10$bzqxhjE47uIszKso7Lvlne1g030WKYF..0e9f.i4jNfFarkBOfMY.', 'admin@gmail.com', 'admin', '0912-345656', '國立彰化師範大學', 'M', '2025-04-04', NULL, '2025-06-10 21:07:30', NULL, 0, 'admin'),
+(34, 'wang2', '$2y$10$7hSdqibIK.PeNYrVHLZX1OMt8mL9PjaT8AOmjPl1SHQcInT3VQ.NG', 'wang@gmail.com', NULL, NULL, NULL, 'O', NULL, NULL, NULL, NULL, 0, 'user');
 
 -- --------------------------------------------------------
 
@@ -78,7 +79,9 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `total_amount`, `payment_status`, `shipping_status`, `shipping_address`, `updated_at`) VALUES
 (16, 15, '2025-06-12 23:24:31', 69951.00, 'paid', 'pending', '國立彰化師範大學', NULL),
 (17, 15, '2025-06-12 23:25:07', 54580.00, 'paid', 'pending', '國立彰化師範大學', NULL),
-(18, 15, '2025-06-13 00:03:18', 44290.00, 'paid', 'shipped', '國立彰化師範大學', '2025-06-13 10:18:49');
+(18, 15, '2025-06-13 00:03:18', 44290.00, 'paid', 'shipped', '國立彰化師範大學', '2025-06-13 10:18:49'),
+(23, 15, '2025-06-14 13:21:49', 35890.00, 'paid', 'pending', '國立彰化師範大學', NULL),
+(24, 15, '2025-06-14 19:13:42', 18690.00, 'paid', 'pending', '國立彰化師範大學', NULL);
 
 -- --------------------------------------------------------
 
@@ -110,7 +113,10 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_name`, `pric
 (14, 17, 2, 'iPad Air 11吋/WiFi/128G平板電腦', 18690.00, 1, '銀色', '2025-06-12 09:25:07', '2025-06-12 09:25:07'),
 (15, 17, 3, 'iPad Pro 11吋/WiFi/256G/M4晶片 平板電腦', 35890.00, 1, '白色', '2025-06-12 09:25:07', '2025-06-12 09:25:07'),
 (16, 18, 4, 'iPad Pro 第2代(11吋/256G/WiFi)平板電腦', 17800.00, 1, '白色', '2025-06-12 10:03:18', '2025-06-12 10:03:18'),
-(17, 18, 6, ' iPhone 15 Pro 128GB 6.1吋', 26490.00, 1, '黑色', '2025-06-12 10:03:18', '2025-06-12 10:03:18');
+(17, 18, 6, ' iPhone 15 Pro 128GB 6.1吋', 26490.00, 1, '黑色', '2025-06-12 10:03:18', '2025-06-12 10:03:18'),
+(23, 23, 2, 'iPad Air 11吋/WiFi/128G平板電腦', 18690.00, 1, '銀色', '2025-06-13 23:21:49', '2025-06-13 23:21:49'),
+(24, 23, 3, 'iPad Pro 11吋/WiFi/256G/M4晶片 平板電腦', 35890.00, 1, '白色', '2025-06-13 23:21:49', '2025-06-13 23:21:49'),
+(25, 24, 2, 'iPad Air 11吋/WiFi/128G平板電腦', 18690.00, 1, '銀色', '2025-06-14 05:13:42', '2025-06-14 05:13:42');
 
 -- --------------------------------------------------------
 
@@ -198,7 +204,11 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`username`, `time`, `comment`, `pid`, `rating`, `review_id`, `like_cnt`, `unlike_cnt`) VALUES
-('member', '2025-05-24 17:57:44', 'good', 2, 4, 8, 0, 0);
+('member', '2025-05-24 17:57:44', 'good', 2, 4, 8, 0, 0),
+('admin', '2025-06-14 14:02:56', '謝謝!', 2, 5, 11, 0, 0),
+('member', '2025-06-14 17:30:25', 'great', 6, 5, 12, 0, 0),
+('wang2', '2025-06-14 17:33:37', 'soso', 2, 3, 13, 0, 0),
+('member', '2025-06-14 22:12:09', 'bad', 2, 1, 14, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -222,8 +232,8 @@ CREATE TABLE `shoppingcart` (
 --
 
 INSERT INTO `shoppingcart` (`id`, `user_id`, `product_id`, `quantity`, `price`, `created_at`, `update_at`, `color`) VALUES
-(42, 15, 2, 1, 18690.00, '2025-06-13 02:20:53', '2025-06-13 02:20:53', '銀色'),
-(43, 15, 3, 1, 35890.00, '2025-06-13 02:20:54', '2025-06-13 02:20:54', '白色');
+(49, 15, 2, 1, 18690.00, '2025-06-14 12:32:02', '2025-06-14 12:32:02', '銀色'),
+(50, 15, 3, 1, 35890.00, '2025-06-14 12:32:10', '2025-06-14 12:32:10', '白色');
 
 -- --------------------------------------------------------
 
@@ -242,7 +252,8 @@ CREATE TABLE `subscriber` (
 
 INSERT INTO `subscriber` (`id`, `email`) VALUES
 (11, 'hsuan@gmail.com'),
-(12, 'member@gmail.com');
+(12, 'member@gmail.com'),
+(14, 'sam@gmail.com');
 
 --
 -- 已傾印資料表的索引
@@ -303,19 +314,19 @@ ALTER TABLE `subscriber`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '會員編號', AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '會員編號', AUTO_INCREMENT=35;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '訂單編號', AUTO_INCREMENT=23;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '訂單編號', AUTO_INCREMENT=25;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'KEY', AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'KEY', AUTO_INCREMENT=26;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product`
@@ -327,19 +338,19 @@ ALTER TABLE `product`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `shoppingcart`
 --
 ALTER TABLE `shoppingcart`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '購物車編號', AUTO_INCREMENT=44;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '購物車編號', AUTO_INCREMENT=51;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `subscriber`
 --
 ALTER TABLE `subscriber`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
