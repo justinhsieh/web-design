@@ -5,6 +5,7 @@
 <script src="js/back2top.js"></script>
 <script src="js/subscribe.js"></script>
 <script src="js/showToast.js"></script>
+<script src="js/cart_cnt.js"></script>
 <script>
   $(function () {
     $(".spec-btn").click(function () {
@@ -141,6 +142,89 @@
       }
       },'json')
     })
+
+    $(document).on('click','#buy_now',function(){
+      const $pid = $('input[name="product_id"]').val();
+      const $price_text = $('.price').text();
+      const $price = parseInt($price_text.replace(/,/g,''));
+      const $color = $('.item-color.active').text().trim();
+      const $quantity = $('.form-select-sm').val();
+
+      $.post('add_cart.php',{
+        oper:'add_shop',
+        pid:$pid,
+        price:$price,
+        color:$color,
+        quantity:$quantity
+      },function(response){
+        if(response.status === 'unauthorized'){
+          window.location.href = 'login.php';
+        }
+        else if(response.status === 'success'){
+          window.location.href = 'shopping_list.php';
+        }
+      },'json')
+    })
+
+    $(document).on('click','#buy_cart',function(){
+      const $img = $('.product_img');
+      const $cart = $('.fa-cart-shopping');
+
+      const $pid = $('input[name="product_id"]').val();
+      const $price_text = $('.price').text();
+      const $price = parseInt($price_text.replace(/,/g,''));
+      const $color = $('.item-color.active').text().trim();
+      const $quantity = $('.form-select-sm').val();
+
+      $.post('add_cart.php',{
+        oper:'add_shop',
+        pid:$pid,
+        price:$price,
+        color:$color,
+        quantity:$quantity
+      },function(response){
+        if(response.status === 'unauthorized'){
+          window.location.href = 'login.php';
+        }else if(response.status === 'success'){
+          const $flyImg = $img.clone()
+          .removeClass('w-100')
+          .css({
+            position: 'absolute',
+            top: $img.offset().top,
+            left: $img.offset().left,
+            width: $img.width(),
+            height: $img.height(),
+            opacity: 0.75,
+            zIndex: 1000
+          })
+          .appendTo('body');
+
+          const cartOffset = $cart.offset();
+
+          $flyImg.animate({
+            top: cartOffset.top,
+            left: cartOffset.left,
+            width: 30,
+            height: 30,
+            opacity: 0
+          }, 800, function () {
+            $flyImg.remove();
+            cart_cnt();
+          });
+        }
+      },'json')
+    })
+
+    function cart_cnt(){
+      $.get('get_cart_cnt.php',function(response){
+        $cnt = response.count;
+        if($cnt > 10){
+            $('.cart_cnt').text('10+');
+        }else{
+            $('.cart_cnt').text($cnt);
+        }
+      })
+    }
   });
 </script>
 <style>
