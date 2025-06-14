@@ -9,7 +9,7 @@
         exit;
     }
     $status = "SUCCESS";
-    include 'config.php';
+    include 'db.php';
     header('Content-Type: application/json');
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $rating = intval($_POST['rating']?? 0);

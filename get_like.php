@@ -1,4 +1,4 @@
-<?php include'config.php'; 
+<?php include'db.php'; 
     header('Content-Type: application/json');
 
     $review_id = intval($_GET['review_id'] ?? 0);
